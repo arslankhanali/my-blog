@@ -37,8 +37,16 @@
     <div style="position:absolute;width:0px;height:0px;">
       <div id="nav-dropdown-menu" class="hidden" href="#">
     <div class="nav-item">
-      <a
+      <a href="/posts/"
       >Posts</a>
+    </div>
+    <div class="nav-item">
+      <a href="/features/"
+      >Features</a>
+    </div>
+    <div class="nav-item">
+      <a href="/about/"
+      >About</a>
     </div>
 </div>
     </div>
@@ -48,8 +56,16 @@
 </a>
     <div id="nav-menu">
     <div class="nav-item">
-      <a
+      <a href="/posts/"
       >Posts</a>
+    </div>
+    <div class="nav-item">
+      <a href="/features/"
+      >Features</a>
+    </div>
+    <div class="nav-item">
+      <a href="/about/"
+      >About</a>
     </div>
 </div>
     <a id="theme-switcher" href="#">
@@ -66,8 +82,8 @@
 </header>
     <div class="flex grow">
       <div id="main-pane">
-        <main id="main-content"><div class="centered-container"><img style="border: var(--dim-color) 1px solid;border-radius:100%;" width="70px" src="images/profile.jpg"/><h1 class="margin-sm"></h1>
-    <div class="dim" style="width:70%;margin:0 15%;"></div>
+        <main id="main-content"><div class="centered-container"><img style="border: var(--dim-color) 1px solid;border-radius:100%;" width="70px" src="images/AK1.png"/><h1 class="margin-sm">Welcome to AK Blogs</h1>
+    <div class="dim" style="width:70%;margin:0 15%;">Tech &amp; Engineering</div>
   </div><div style="width:95%;margin:0 auto;">
     <div class="show-md" style="display:none;"><form onsubmit="searchBarSubmit(event)">
   <div class="search-bar"><svg style="min-width:16px;" width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -84,11 +100,57 @@
     window.location.href = relativeUrl;
   }
 </script>
-</div></div></main>
+</div><h2>Featured Posts</h2>
+<div class="flat-list"><div class="flat-list-item">
+      <div>
+        <a href="/posts/getting-started/">Getting Started</a>
+        <time class="text-sm dim" style="float: right;" datetime="2023-05-02T00:00:00Z">March 24, 2025</time>
+      </div>
+      <small><p>This post will guide you in setting up your very own Hugo site with this theme. It covers the essential parts: installation, basic usage and recommended next steps. After setting up the basics, feel free to also take a look at other posts!</p></small>
+    </div><div class="flat-list-item">
+      <div>
+        <a href="/posts/configuration/">Configuration</a>
+        <time class="text-sm dim" style="float: right;" datetime="2023-05-02T00:00:00Z">March 24, 2025</time>
+      </div>
+      <small><p>This page outlines the configuration options for the theme. There are plenty of settings for tweaking your site&rsquo;s layout and content presentation. Key features include options for controlling the side pane visibility, adjusting the number of items displayed on each list page, and managing elements such as featured posts, recent posts, taxonomies, and related content.</p></small>
+    </div></div>
+<h2>Recent Posts</h2>
+<div class="flat-list"><div class="flat-list-item">
+      <div>
+        <a href="/about/">About</a>
+        <time class="text-sm dim" style="float: right;" datetime="2023-05-02T00:00:00Z">August 2, 2025</time>
+      </div>
+      <small><p>Welcome to my blog — a space where I share practical insights, deployment patterns, and lessons from real-world IT architecture and automation projects.</p></small>
+    </div><div class="flat-list-item">
+      <div>
+        <a href="/features/dark-mode/">Dark Theme</a>
+        <time class="text-sm dim" style="float: right;" datetime="2023-05-02T00:00:00Z">March 24, 2025</time>
+      </div>
+      <small><p>You can change the current theme between dark and light mode by using the switcher icon at the right of the navbar.</p></small>
+    </div><div class="flat-list-item">
+      <div>
+        <a href="/posts/draft-post/">Draft</a>
+        <time class="text-sm dim" style="float: right;" datetime="2023-05-02T00:00:00Z">March 24, 2025</time>
+      </div>
+      <small><p>This is a draft post, and won&rsquo;t be shown in the site unless served with the -D flag in Hugo command (i.e. hugo server -D).</p></small>
+    </div><div class="flat-list-item">
+      <div>
+        <a href="/features/internationalization/">Internationalization</a>
+        <time class="text-sm dim" style="float: right;" datetime="2023-05-02T00:00:00Z">March 24, 2025</time>
+      </div>
+      <small><p>Rusty Typewriter supports internationalization (i18n) files for localizing its sentences. By default it fallsback to english, but you may use the values from an existing translations file or add your own translations in the i18n/&lt;lang&gt;.yaml dir of your site.</p></small>
+    </div><div class="flat-list-item">
+      <div>
+        <a href="/posts/showcase/">Showcase</a>
+        <time class="text-sm dim" style="float: right;" datetime="2023-05-02T00:00:00Z">March 24, 2025</time>
+      </div>
+      <small><p>This page focuses on what you can do in terms of markdown syntax. Here you can see which and how each of the components are rendered to HTML in terms of structure and styling.</p></small>
+    </div></div>
+</div></main>
         <footer id="main-footer"><div class="footer">
   <a href="#">Scroll to Top</a>
   <div class="footer-copyright">
-    <div class="dim">© 2025 </div>
+    <div class="dim">© 2025 Matheus Queiroz</div>
     <div>Made with ❤️ and powered by <a href="https://github.com/math-queiroz/rusty-typewriter" target="_blank">Rusty Typewriter</a> theme for <a href="https://gohugo.io/" target="_blank">Hugo</a></div>
   </div>
 </div>
@@ -108,7 +170,41 @@
     window.location.href = relativeUrl;
   }
 </script>
-</aside></div>
+<div class="side-content">
+      <h3></h3><a href="https://github.com/arslankhanali/my-blog" target="_blank" rel="noopener noreferrer">
+            <img class="side-content-image" src="images/AK5.png" width="100%" />
+          </a><p>Source code is available on GitHub</p>
+    </div><div class="side-content">
+      <h3>سبق پھر پڑھ صداقت کا، عدالت کا، شجاعت کا، لیا جائے گا تجھ سے کام دنیا کی امامت کا</h3><p>Learn again the lessons of truth, justice, and courage — for you are destined to lead the world - IQBAL</p>
+    </div><h3>Tags</h3>
+    <ul class="taxonomy-list"><li>
+    <a class="tag" href="http://localhost:1313/tags/guide/">
+      #guide&nbsp<span class="text-sm dim">3</span>
+    </a>
+      </li><li>
+    <a class="tag" href="http://localhost:1313/tags/example/">
+      #example&nbsp<span class="text-sm dim">2</span>
+    </a>
+      </li><li>
+    <a class="tag" href="http://localhost:1313/tags/starter/">
+      #starter&nbsp<span class="text-sm dim">1</span>
+    </a>
+      </li></ul><h3>Series</h3>
+    <ul class="taxonomy-list"><li>
+    <a class="tag" href="http://localhost:1313/series/features/">
+      #features&nbsp<span class="text-sm dim">3</span>
+    </a>
+      </li><li>
+    <a class="tag" href="http://localhost:1313/series/styling/">
+      #styling&nbsp<span class="text-sm dim">2</span>
+    </a>
+      </li><li>
+    <a class="tag" href="http://localhost:1313/series/content/">
+      #content&nbsp<span class="text-sm dim">1</span>
+    </a>
+      </li><li>
+        <a href="http://localhost:1313/series">See all...</a>
+      </li></ul></aside></div>
   </div>
 </body>
 </html>

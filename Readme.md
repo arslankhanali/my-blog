@@ -1,3 +1,4 @@
+``` sh
 cd ~/Codes
 
 hugo new site my-blog
@@ -13,5 +14,9 @@ git push -u origin main
 
 git submodule add https://github.com/math-queiroz/rusty-typewriter.git themes/rusty-typewriter
 
-
 hugo server -D
+
+git add -A
+git commit -m "Create hugo.yaml"
+git push
+```
