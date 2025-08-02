@@ -5,6 +5,7 @@ tags = ['starter','guide']
 topics = ['documentation']
 featured = true
 weight = 1
+draft = true
 +++
 
 This post will guide you in setting up your very own Hugo site with this theme. It covers the essential parts: [installation](#Installation), [basic usage](#usage) and recommended [next steps](#next-steps). After setting up the basics, feel free to also take a look at other [posts]({{< ref "/posts" >}})!

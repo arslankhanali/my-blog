@@ -4,6 +4,7 @@ date = '2025-03-24T23:00:00-03:00'
 tags = ['example']
 series = ['styling']
 weigth = 3
+draft = true
 +++
 
 This page focuses on what you can do in terms of markdown syntax. Here you can see which and how each of the components are rendered to HTML in terms of structure and styling.

@@ -2,6 +2,7 @@
 title = 'Static Content'
 date = '2025-03-24T23:00:00-03:00'
 series = ['content','features']
+draft = true
 +++
 
 Some of the static content on the site, like the home greetings and side pane content, can be defined in the file at `data/rtwt/content.yaml`. The structure to do so is as follows:

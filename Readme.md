@@ -1,3 +1,11 @@
+
+New Post
+```sh
+cd /Users/arslankhan/Codes/my-blog
+hugo new content content/posts/my-first-post.md
+```
+
+Setup the new blog site
 ``` sh
 cd ~/Codes
 
@@ -15,8 +23,12 @@ git push -u origin main
 git submodule add https://github.com/math-queiroz/rusty-typewriter.git themes/rusty-typewriter
 
 hugo server -D
+```
 
+
+Push Changes to 
+```sh
 git add -A
-git commit -m "Create hugo.yaml"
+git commit -m "Updated Site $time"
 git push
 ```

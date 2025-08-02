@@ -1,6 +1,7 @@
 +++
 title = 'Internationalization'
 date = '2025-03-24T23:00:00-03:00'
+draft = true
 +++
 
 Rusty Typewriter supports internationalization (i18n) files for localizing its sentences. By default it fallsback to english, but you may use the values from an existing translations file or add your own translations in the `i18n/<lang>.yaml` dir of your site.
