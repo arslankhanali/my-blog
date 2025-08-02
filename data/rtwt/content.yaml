@@ -1,0 +1,15 @@
+home:
+  image: 'images/AK1.png'
+  greetings: 'Welcome to AK Blogs'
+  text: 'Tech & Engineering'
+side:
+  home:
+  - content: 'Source code is available on GitHub'
+    imagePath: 'images/AK5.png'
+    imageHref: 'https://github.com/arslankhanali/my-blog'
+    imageWidth: '100%'
+  - title: 'سبق پھر پڑھ صداقت کا، عدالت کا، شجاعت کا، لیا جائے گا تجھ سے کام دنیا کی امامت کا'
+    content: 'Learn again the lessons of truth, justice, and courage — for you are destined to lead the world - IQBAL'
+  single:
+  - title: 'Static Content'
+    content: 'Single pages (a.k.a. blog posts) can also have static content like so!'
