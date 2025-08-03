@@ -10,8 +10,6 @@ featured = false
 draft = false
 +++
 
-# Title
 ## Introduction
-'سبق پھر پڑھ صداقت کا، عدالت کا، شجاعت کا، لیا جائے گا تجھ سے کام دنیا کی امامت کا'
-
+Coming Soon
 ### Let's get into it

@@ -1,8 +1,7 @@
 
 New Post
 ```sh
-cd /Users/arslankhan/Codes/my-blog
-hugo new content content/posts/my-first-post.md
+hugo new content ~/Codes/my-blog/content/posts/the-title-you-want.md
 ```
 
 Setup the new blog site

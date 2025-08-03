@@ -24,9 +24,9 @@
     </item>
     <item>
       <title>Dark Theme</title>
-      <link>http://localhost:1313/features/dark-mode/</link>
+      <link>http://localhost:1313/gallery/dark-mode/</link>
       <pubDate>Mon, 24 Mar 2025 23:00:00 -0300</pubDate>
-      <guid>http://localhost:1313/features/dark-mode/</guid>
+      <guid>http://localhost:1313/gallery/dark-mode/</guid>
       <description>&lt;p&gt;You can change the current theme between dark and light mode by using the switcher icon at the right of the navbar.&lt;/p&gt;&#xA;&lt;p&gt;The colors tweaked by the theme change are ideally defined in a non bundled CSS file (to optimize caching, since the theming is expected to change more than the rest) under the &lt;code&gt;:root[color-scheme^=&#39;dark/light&#39;]&lt;/code&gt; selector. Should you want to adjust them, a simple stylesheet rules override should suffice. You can read about it in &lt;a href=&#34;http://localhost:1313/features/customization&#34;&gt;customization&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
   </channel>
