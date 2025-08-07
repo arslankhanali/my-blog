@@ -103,7 +103,7 @@ This points to k3s right now
 ```bash
 kubectl apply -f root-app.yaml
 ```
-![oprah](/argocd-app-of-apps/oprah.png)
+![oprah](static/argocd-app-of-apps/oprah.png)
 #### Access apps
 - Kubernetes Dashboard [k3s.node1](https://k3s.node1)
 ```
