@@ -2,94 +2,214 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/posts/my-first-post/</loc>
-    <lastmod>2025-08-03T00:36:06+10:00</lastmod>
+    <loc>http://localhost:1313/posts/homelab-kubernetes/</loc>
+    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/getting-started/</loc>
-    <lastmod>2025-03-24T23:00:00-03:00</lastmod>
+    <loc>http://localhost:1313/posts/argocd-app-of-apps/</loc>
+    <lastmod>2025-08-06T18:00:00+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/configuration/</loc>
-    <lastmod>2025-03-24T23:00:00-03:00</lastmod>
+    <loc>http://localhost:1313/posts/haos-setup/</loc>
+    <lastmod>2025-08-04T23:55:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/ansible-fedora/</loc>
+    <lastmod>2025-08-04T22:50:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/ansible-quickstart-1/</loc>
+    <lastmod>2025-08-04T22:50:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/ansible-quickstart-2/</loc>
+    <lastmod>2025-08-04T22:45:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/terminal-zsh/</loc>
+    <lastmod>2025-08-04T22:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/squid-rh-lab/</loc>
+    <lastmod>2025-08-04T22:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/haproxy-ceph-story/</loc>
+    <lastmod>2025-08-04T21:45:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/k3s-dashboard/</loc>
+    <lastmod>2025-08-04T20:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/k3s-install/</loc>
+    <lastmod>2025-08-04T19:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/argocd-install/</loc>
+    <lastmod>2025-08-04T14:31:23+10:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2025-08-03T00:36:06+10:00</lastmod>
+    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/topics/deployment/</loc>
-    <lastmod>2025-08-03T00:36:06+10:00</lastmod>
+    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/fedora/</loc>
-    <lastmod>2025-08-03T00:36:06+10:00</lastmod>
+    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/series/homelab/</loc>
-    <lastmod>2025-08-03T00:36:06+10:00</lastmod>
+    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/ml/</loc>
-    <lastmod>2025-08-03T00:36:06+10:00</lastmod>
+    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/podman/</loc>
-    <lastmod>2025-08-03T00:36:06+10:00</lastmod>
+    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2025-08-03T00:36:06+10:00</lastmod>
+    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/series/</loc>
-    <lastmod>2025-08-03T00:36:06+10:00</lastmod>
+    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2025-08-03T00:36:06+10:00</lastmod>
+    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/topics/</loc>
-    <lastmod>2025-08-03T00:36:06+10:00</lastmod>
+    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/argocd/</loc>
+    <lastmod>2025-08-06T18:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/topics/automation/</loc>
+    <lastmod>2025-08-06T18:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/devops/</loc>
+    <lastmod>2025-08-06T18:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/gitops/</loc>
+    <lastmod>2025-08-06T18:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/topics/iac/</loc>
+    <lastmod>2025-08-06T18:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/kubernetes/</loc>
+    <lastmod>2025-08-06T18:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/series/patterns/</loc>
+    <lastmod>2025-08-06T18:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/haos/</loc>
+    <lastmod>2025-08-04T23:55:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/series/homeassistant/</loc>
+    <lastmod>2025-08-04T23:55:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/homeassistant/</loc>
+    <lastmod>2025-08-04T23:55:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/libvirt/</loc>
+    <lastmod>2025-08-04T23:55:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/topics/virtualization/</loc>
+    <lastmod>2025-08-04T23:55:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/vm/</loc>
+    <lastmod>2025-08-04T23:55:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/series/ansible/</loc>
+    <lastmod>2025-08-04T22:50:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/ansible/</loc>
+    <lastmod>2025-08-04T22:50:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/automation/</loc>
+    <lastmod>2025-08-04T22:50:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/macos/</loc>
+    <lastmod>2025-08-04T22:50:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/rhel/</loc>
+    <lastmod>2025-08-04T22:50:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/soe/</loc>
+    <lastmod>2025-08-04T22:50:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/ssh/</loc>
+    <lastmod>2025-08-04T22:45:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/vault/</loc>
+    <lastmod>2025-08-04T22:45:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/topics/customization/</loc>
+    <lastmod>2025-08-04T22:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/series/networking/</loc>
+    <lastmod>2025-08-04T22:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/topics/networking/</loc>
+    <lastmod>2025-08-04T22:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/powerlevel10k/</loc>
+    <lastmod>2025-08-04T22:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/series/productivity/</loc>
+    <lastmod>2025-08-04T22:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/proxy/</loc>
+    <lastmod>2025-08-04T22:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/redhat/</loc>
+    <lastmod>2025-08-04T22:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/remote-access/</loc>
+    <lastmod>2025-08-04T22:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/topics/remote-access/</loc>
+    <lastmod>2025-08-04T22:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/shell/</loc>
+    <lastmod>2025-08-04T22:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/squid/</loc>
+    <lastmod>2025-08-04T22:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/terminal/</loc>
+    <lastmod>2025-08-04T22:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/zsh/</loc>
+    <lastmod>2025-08-04T22:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/ceph/</loc>
+    <lastmod>2025-08-04T21:45:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/haproxy/</loc>
+    <lastmod>2025-08-04T21:45:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/linux/</loc>
+    <lastmod>2025-08-04T21:45:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/loadbalancer/</loc>
+    <lastmod>2025-08-04T21:45:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/selinux/</loc>
+    <lastmod>2025-08-04T21:45:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/dashboard/</loc>
+    <lastmod>2025-08-04T20:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/helm/</loc>
+    <lastmod>2025-08-04T20:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/series/kubernetes/</loc>
+    <lastmod>2025-08-04T20:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/traefik/</loc>
+    <lastmod>2025-08-04T20:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/k3s/</loc>
+    <lastmod>2025-08-04T19:00:00+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/topics/gitops/</loc>
+    <lastmod>2025-08-04T14:31:23+10:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/ingress/</loc>
+    <lastmod>2025-08-04T14:31:23+10:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/about/</loc>
     <lastmod>2025-08-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/search/</loc>
     <lastmod>2025-08-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/series/content/</loc>
-    <lastmod>2025-03-24T23:00:00-03:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/gallery/dark-mode/</loc>
-    <lastmod>2025-03-24T23:00:00-03:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/topics/documentation/</loc>
-    <lastmod>2025-03-24T23:00:00-03:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/draft-post/</loc>
-    <lastmod>2025-03-24T23:00:00-03:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/example/</loc>
-    <lastmod>2025-03-24T23:00:00-03:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/series/features/</loc>
-    <lastmod>2025-03-24T23:00:00-03:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/gallery/</loc>
-    <lastmod>2025-03-24T23:00:00-03:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/guide/</loc>
-    <lastmod>2025-03-24T23:00:00-03:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/gallery/internationalization/</loc>
-    <lastmod>2025-03-24T23:00:00-03:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/showcase/</loc>
-    <lastmod>2025-03-24T23:00:00-03:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/starter/</loc>
-    <lastmod>2025-03-24T23:00:00-03:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/gallery/static-content/</loc>
-    <lastmod>2025-03-24T23:00:00-03:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/series/structure/</loc>
-    <lastmod>2025-03-24T23:00:00-03:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/series/styling/</loc>
-    <lastmod>2025-03-24T23:00:00-03:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/gallery/taxonomies-support/</loc>
-    <lastmod>2025-03-24T23:00:00-03:00</lastmod>
   </url>
 </urlset>

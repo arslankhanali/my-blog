@@ -6,48 +6,272 @@
     <description>Recent content in Tags on AK Blogs</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 03 Aug 2025 00:36:06 +1000</lastBuildDate>
+    <lastBuildDate>Thu, 07 Aug 2025 15:12:10 +1000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Gitops</title>
+      <link>http://localhost:1313/tags/gitops/</link>
+      <pubDate>Thu, 07 Aug 2025 15:12:10 +1000</pubDate>
+      <guid>http://localhost:1313/tags/gitops/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Kubernetes</title>
+      <link>http://localhost:1313/tags/kubernetes/</link>
+      <pubDate>Thu, 07 Aug 2025 15:12:10 +1000</pubDate>
+      <guid>http://localhost:1313/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Devops</title>
+      <link>http://localhost:1313/tags/devops/</link>
+      <pubDate>Wed, 06 Aug 2025 18:00:00 +1000</pubDate>
+      <guid>http://localhost:1313/tags/devops/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Fedora</title>
       <link>http://localhost:1313/tags/fedora/</link>
-      <pubDate>Sun, 03 Aug 2025 00:36:06 +1000</pubDate>
+      <pubDate>Mon, 04 Aug 2025 23:55:00 +1000</pubDate>
       <guid>http://localhost:1313/tags/fedora/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Homeassistant</title>
+      <link>http://localhost:1313/tags/homeassistant/</link>
+      <pubDate>Mon, 04 Aug 2025 23:55:00 +1000</pubDate>
+      <guid>http://localhost:1313/tags/homeassistant/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Libvirt</title>
+      <link>http://localhost:1313/tags/libvirt/</link>
+      <pubDate>Mon, 04 Aug 2025 23:55:00 +1000</pubDate>
+      <guid>http://localhost:1313/tags/libvirt/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ansible</title>
+      <link>http://localhost:1313/tags/ansible/</link>
+      <pubDate>Mon, 04 Aug 2025 22:50:00 +1000</pubDate>
+      <guid>http://localhost:1313/tags/ansible/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Macos</title>
+      <link>http://localhost:1313/tags/macos/</link>
+      <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
+      <guid>http://localhost:1313/tags/macos/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Powerlevel10k</title>
+      <link>http://localhost:1313/tags/powerlevel10k/</link>
+      <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
+      <guid>http://localhost:1313/tags/powerlevel10k/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Redhat</title>
+      <link>http://localhost:1313/tags/redhat/</link>
+      <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
+      <guid>http://localhost:1313/tags/redhat/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Squid-Proxy</title>
+      <link>http://localhost:1313/tags/squid-proxy/</link>
+      <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
+      <guid>http://localhost:1313/tags/squid-proxy/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Zsh</title>
+      <link>http://localhost:1313/tags/zsh/</link>
+      <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
+      <guid>http://localhost:1313/tags/zsh/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ceph</title>
+      <link>http://localhost:1313/tags/ceph/</link>
+      <pubDate>Mon, 04 Aug 2025 21:45:00 +1000</pubDate>
+      <guid>http://localhost:1313/tags/ceph/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Haproxy</title>
+      <link>http://localhost:1313/tags/haproxy/</link>
+      <pubDate>Mon, 04 Aug 2025 21:45:00 +1000</pubDate>
+      <guid>http://localhost:1313/tags/haproxy/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>K3s</title>
+      <link>http://localhost:1313/tags/k3s/</link>
+      <pubDate>Mon, 04 Aug 2025 20:00:00 +1000</pubDate>
+      <guid>http://localhost:1313/tags/k3s/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Argocd</title>
+      <link>http://localhost:1313/tags/argocd/</link>
+      <pubDate>Mon, 04 Aug 2025 14:31:23 +1000</pubDate>
+      <guid>http://localhost:1313/tags/argocd/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Automation</title>
+      <link>http://localhost:1313/tags/automation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/automation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dashboard</title>
+      <link>http://localhost:1313/tags/dashboard/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/dashboard/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Haos</title>
+      <link>http://localhost:1313/tags/haos/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/haos/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Helm</title>
+      <link>http://localhost:1313/tags/helm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/helm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ingress</title>
+      <link>http://localhost:1313/tags/ingress/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/ingress/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Kubernetes-Dashboard</title>
+      <link>http://localhost:1313/tags/kubernetes-dashboard/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/kubernetes-dashboard/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Linux</title>
+      <link>http://localhost:1313/tags/linux/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Loadbalancer</title>
+      <link>http://localhost:1313/tags/loadbalancer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/loadbalancer/</guid>
       <description></description>
     </item>
     <item>
       <title>ML</title>
       <link>http://localhost:1313/tags/ml/</link>
-      <pubDate>Sun, 03 Aug 2025 00:36:06 +1000</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/tags/ml/</guid>
       <description></description>
     </item>
     <item>
       <title>Podman</title>
       <link>http://localhost:1313/tags/podman/</link>
-      <pubDate>Sun, 03 Aug 2025 00:36:06 +1000</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/tags/podman/</guid>
       <description></description>
     </item>
     <item>
-      <title>Example</title>
-      <link>http://localhost:1313/tags/example/</link>
-      <pubDate>Mon, 24 Mar 2025 23:00:00 -0300</pubDate>
-      <guid>http://localhost:1313/tags/example/</guid>
+      <title>Proxy</title>
+      <link>http://localhost:1313/tags/proxy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/proxy/</guid>
       <description></description>
     </item>
     <item>
-      <title>Guide</title>
-      <link>http://localhost:1313/tags/guide/</link>
-      <pubDate>Mon, 24 Mar 2025 23:00:00 -0300</pubDate>
-      <guid>http://localhost:1313/tags/guide/</guid>
+      <title>Remote-Access</title>
+      <link>http://localhost:1313/tags/remote-access/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/remote-access/</guid>
       <description></description>
     </item>
     <item>
-      <title>Starter</title>
-      <link>http://localhost:1313/tags/starter/</link>
-      <pubDate>Mon, 24 Mar 2025 23:00:00 -0300</pubDate>
-      <guid>http://localhost:1313/tags/starter/</guid>
+      <title>Rhel</title>
+      <link>http://localhost:1313/tags/rhel/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/rhel/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Selinux</title>
+      <link>http://localhost:1313/tags/selinux/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/selinux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Shell</title>
+      <link>http://localhost:1313/tags/shell/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/shell/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Soe</title>
+      <link>http://localhost:1313/tags/soe/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/soe/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Squid</title>
+      <link>http://localhost:1313/tags/squid/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/squid/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ssh</title>
+      <link>http://localhost:1313/tags/ssh/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/ssh/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Terminal</title>
+      <link>http://localhost:1313/tags/terminal/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/terminal/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Traefik</title>
+      <link>http://localhost:1313/tags/traefik/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/traefik/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vault</title>
+      <link>http://localhost:1313/tags/vault/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/vault/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vm</title>
+      <link>http://localhost:1313/tags/vm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/vm/</guid>
       <description></description>
     </item>
   </channel>

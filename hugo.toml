@@ -10,10 +10,35 @@ theme = 'rusty-typewriter'
 themesdir = '../..'
 enableRobotsTXT = true
 
-# rtwt = Rusty Typewriter Theme
+##########################
+# RUSTY THEME VARIABLES
+##########################
+[params.rtwt]
+  sidePane = true
+  countPageItems = 30
+
+[params.rtwt.home]
+  showBio = true
+  showAuthorImg = true
+  sidePaneTags = true
+  showFeatured = true
+  showRecent = true
+  hideRecentWhenFeatured = true
+  countRecent = 5
+
 [params.rtwt.side.home]
-taxonomies = ['tags','series']
-countTaxonomy = 3
+  sidePaneSticky = false
+  taxonomies = ['tags','series','topics']
+  countTaxonomy = 5
+
+[params.rtwt.side.single]
+  sidePaneSticky = true
+  showDetails = true
+  showTableOfContents = true
+  showAttachments = true
+  showRelated = true
+  countRelated = 5
+##########################
 
 [taxonomies]
 tag = 'tags'
@@ -21,8 +46,11 @@ topic = 'topics'
 series = 'series'
 
 [params.author]
-name = 'Matheus Queiroz'
+name = 'Arslan'
 
+##########################
+# Main menu items
+##########################
 [[menus.main]]
 name = 'Posts'
 pageRef = '/posts'
@@ -37,6 +65,7 @@ weight = 2
 name = 'About'
 pageRef = '/about.md'
 weight = 3
+##########################
 
 # build search index ================
 [outputFormats]
@@ -54,6 +83,7 @@ weight = 3
  home = ["HTML","RSS", "SearchIndex"]
 # ===================================
 
+##########################
 [security]
   enableInlineShortcodes = true
 
@@ -64,4 +94,9 @@ enableEmoji = true
     [markup.goldmark.parser]
       [markup.goldmark.parser.attribute]
         block = true
+    [markup.goldmark.renderer]
+      unsafe = true
 
+########################## Adding Buttons for edit and copy
+[params]
+  customCSS = ["css/custom.css"]

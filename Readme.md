@@ -2,6 +2,8 @@
 New Post
 ```sh
 hugo new content ~/Codes/my-blog/content/posts/the-title-you-want.md
+
+gp
 ```
 
 Setup the new blog site
@@ -30,4 +32,6 @@ Push Changes to
 git add -A
 git commit -m "Updated Site $time"
 git push
+# or
+gp
 ```
