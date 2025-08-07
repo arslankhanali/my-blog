@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Patterns on AK Blogs</title>
+    <link>http://localhost:1313/series/patterns/</link>
+    <description>Recent content in Patterns on AK Blogs</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 06 Aug 2025 18:00:00 +1000</lastBuildDate>
+    <atom:link href="http://localhost:1313/series/patterns/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mastering Kubernetes Deployments with the GitOps based App of Apps Pattern</title>
+      <link>http://localhost:1313/posts/argocd-app-of-apps/</link>
+      <pubDate>Wed, 06 Aug 2025 18:00:00 +1000</pubDate>
+      <guid>http://localhost:1313/posts/argocd-app-of-apps/</guid>
+      <description>&lt;h1 id=&#34;mastering-kubernetes-deployments-with-gitops&#34;&gt;Mastering Kubernetes Deployments with GitOps&lt;/h1&gt;&#xA;&lt;p&gt;Managing multiple Kubernetes clusters and applications can get complex fast. &lt;strong&gt;GitOps&lt;/strong&gt; helps tame this complexity—and the &lt;strong&gt;App of Apps pattern&lt;/strong&gt; takes it to the next level with declarative, scalable, and automated infrastructure management.&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;why-read-this-blog&#34;&gt;Why Read this blog?&lt;/h2&gt;&#xA;&lt;p&gt;To live like this&#xA;&lt;img src=&#34;https://images.unsplash.com/photo-1496046744122-2328018d60b6?q=80&amp;amp;w=2374&amp;amp;auto=format&amp;amp;fit=crop&amp;amp;ixlib=rb-4.1.0&amp;amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&#34; alt=&#34;relax&#34;&gt;&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;what-is-gitops&#34;&gt;What is GitOps?&lt;/h2&gt;&#xA;&lt;p&gt;GitOps is a &lt;strong&gt;DevOps operating model&lt;/strong&gt; where Git is the &lt;strong&gt;single source of truth&lt;/strong&gt; for declarative infrastructure and applications. Tools like Argo CD sync the state of your Kubernetes clusters to match Git, automatically and continuously.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

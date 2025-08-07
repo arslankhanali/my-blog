@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gitops on AK Blogs</title>
+    <link>http://localhost:1313/topics/gitops/</link>
+    <description>Recent content in Gitops on AK Blogs</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 04 Aug 2025 14:31:23 +1000</lastBuildDate>
+    <atom:link href="http://localhost:1313/topics/gitops/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ArgoCD: Installation</title>
+      <link>http://localhost:1313/posts/argocd-install/</link>
+      <pubDate>Mon, 04 Aug 2025 14:31:23 +1000</pubDate>
+      <guid>http://localhost:1313/posts/argocd-install/</guid>
+      <description>&lt;h1 id=&#34;install-argocd-on-k3s-with-traefik-ingress&#34;&gt;Install ArgoCD on K3s with Traefik Ingress&lt;/h1&gt;&#xA;&lt;p&gt;This post walks through installing &lt;a href=&#34;https://argo-cd.readthedocs.io/&#34;&gt;ArgoCD&lt;/a&gt; on a K3s cluster that uses Traefik as its default Ingress controller.&lt;/p&gt;&#xA;&lt;h2 id=&#34;setup&#34;&gt;Setup&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Kubernetes: &lt;a href=&#34;https://k3s.io&#34;&gt;K3s&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;Ingress Controller: &lt;a href=&#34;https://doc.traefik.io/&#34;&gt;Traefik&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;Deployment method: Helm&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;install-argocd-via-helm&#34;&gt;Install ArgoCD via Helm&lt;/h2&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;helm repo add argo https://argoproj.github.io/argo-helm&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;helm repo update&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kubectl create namespace argocd&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;option-1-without-ingress&#34;&gt;Option 1: Without Ingress&lt;/h3&gt;&#xA;&lt;p&gt;Access service locally. Access service locally. See &lt;a href=&#34;#port-forwarding-optional-access&#34;&gt;Port Forwarding&lt;/a&gt; section.&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;helm install argocd argo/argo-cd --create-namespace --namespace argocd&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;option-2-with-ingress-insecure&#34;&gt;Option 2: With Ingress (Insecure)&lt;/h3&gt;&#xA;&lt;p&gt;Ingress is needed to expose the Services out of the cluster&#xA;&lt;img src=&#34;http://localhost:1313/install-argocd/ingress.png&#34; alt=&#34;Ingress diagram&#34;&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

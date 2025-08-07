@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mastering Kubernetes Deployments with the GitOps based App of Apps Pattern | AK Blogs</title>
+<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" /><meta property="og:url" content="http://localhost:1313/posts/featured/argocd-app-of-apps/">
+  <meta property="og:site_name" content="AK Blogs">
+  <meta property="og:title" content="Mastering Kubernetes Deployments with the GitOps based App of Apps Pattern">
+  <meta property="og:description" content="Mastering Kubernetes Deployments with GitOps Managing multiple Kubernetes clusters and applications can get complex fast. GitOps helps tame this complexity—and the App of Apps pattern takes it to the next level with declarative, scalable, and automated infrastructure management.
+Why Read this blog? To live like this What is GitOps? GitOps is a DevOps operating model where Git is the single source of truth for declarative infrastructure and applications. Tools like Argo CD sync the state of your Kubernetes clusters to match Git, automatically and continuously.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-08-06T18:00:00+10:00">
+    <meta property="article:modified_time" content="2025-08-06T18:00:00+10:00">
+    <meta property="article:tag" content="Gitops">
+    <meta property="article:tag" content="Kubernetes">
+    <meta property="article:tag" content="Devops">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Mastering Kubernetes Deployments with the GitOps based App of Apps Pattern">
+  <meta name="twitter:description" content="Mastering Kubernetes Deployments with GitOps Managing multiple Kubernetes clusters and applications can get complex fast. GitOps helps tame this complexity—and the App of Apps pattern takes it to the next level with declarative, scalable, and automated infrastructure management.
+Why Read this blog? To live like this What is GitOps? GitOps is a DevOps operating model where Git is the single source of truth for declarative infrastructure and applications. Tools like Argo CD sync the state of your Kubernetes clusters to match Git, automatically and continuously.">
+
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/root.css">
+    <link rel="stylesheet" href="/css/bundle.css">
+
+      <script src="/js/copy-button.js"></script>
+      <script src="/js/bundle.js"></script><script defer src="/js/search/flexsearch.compact.64594b125f7b78bdf4fa8316955922bbebb1cd6baef3f16654bfca20309f18f8.js" integrity="sha256-ZFlLEl97eL30&#43;oMWlVkiu&#43;uxzWuu8/FmVL/KIDCfGPg="></script>
+<script defer src="/js/search/search.1d980f84df11f3eb7c8c5f17f541d49a0611608df179dd74fa7f06225eb56ace.js" integrity="sha256-HZgPhN8R8&#43;t8jF8X9UHUmgYRYI3xed10&#43;n8GIl61as4="></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+
+</head>
+<body class="notransition">
+  <div id="container">
+    <header id="main-header"><div role="navigation" aria-label="Main">
+  <div class="nav-left">
+    <a href="http://localhost:1313/" style="color: inherit;">AK Blogs</a>
+  </div>
+  <div class="nav-right">
+    <div style="position:absolute;width:0px;height:0px;">
+      <div id="nav-dropdown-menu" class="hidden" href="#">
+    <div class="nav-item">
+      <a aria-current="true" class="ancestor" href="/posts/"
+      >Posts</a>
+    </div>
+    <div class="nav-item">
+      <a
+      >Gallery</a>
+    </div>
+    <div class="nav-item">
+      <a href="/about/"
+      >About</a>
+    </div>
+</div>
+    </div>
+    <a id="nav-dropdown-button" href="#"><svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a>
+    <div id="nav-menu">
+    <div class="nav-item">
+      <a aria-current="true" class="ancestor" href="/posts/"
+      >Posts</a>
+    </div>
+    <div class="nav-item">
+      <a
+      >Gallery</a>
+    </div>
+    <div class="nav-item">
+      <a href="/about/"
+      >About</a>
+    </div>
+</div>
+    <a id="theme-switcher" href="#">
+<svg class="light-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 3V4M12 20V21M4 12H3M6.31412 6.31412L5.5 5.5M17.6859 6.31412L18.5 5.5M6.31412 17.69L5.5 18.5001M17.6859 17.69L18.5 18.5001M21 12H20M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+<svg class="dark-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.32031 11.6835C3.32031 16.6541 7.34975 20.6835 12.3203 20.6835C16.1075 20.6835 19.3483 18.3443 20.6768 15.032C19.6402 15.4486 18.5059 15.6834 17.3203 15.6834C12.3497 15.6834 8.32031 11.654 8.32031 6.68342C8.32031 5.50338 8.55165 4.36259 8.96453 3.32996C5.65605 4.66028 3.32031 7.89912 3.32031 11.6835Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a>
+  </div>
+</div>
+</header>
+    <div class="flex grow">
+      <div id="main-pane">
+        <main id="main-content"><div class="single-header">
+<ol class="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="http://localhost:1313/">
+        <span itemprop="name">Home</span>
+      </a>
+      <meta itemprop="position" content='1' />
+    </li>
+    <span>&nbsp»&nbsp</span>
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="http://localhost:1313/posts/">
+        <span itemprop="name">Posts</span>
+      </a>
+      <meta itemprop="position" content='2' />
+    </li>
+    <span>&nbsp»&nbsp</span>
+</ol>
+<h1>Mastering Kubernetes Deployments with the GitOps based App of Apps Pattern</h1><time class="dim" datetime="2025-08-06T18:00:00&#43;10:00">August 6, 2025</time><div class="term-container"><div class="tag">
+        <a href="http://localhost:1313/tags/gitops/">#gitops</a>
+      </div><div class="tag">
+        <a href="http://localhost:1313/tags/kubernetes/">#kubernetes</a>
+      </div><div class="tag">
+        <a href="http://localhost:1313/tags/devops/">#devops</a>
+      </div></ol></div>
+  <section class="page-section"><h1 id="mastering-kubernetes-deployments-with-gitops">Mastering Kubernetes Deployments with GitOps</h1>
+<p>Managing multiple Kubernetes clusters and applications can get complex fast. <strong>GitOps</strong> helps tame this complexity—and the <strong>App of Apps pattern</strong> takes it to the next level with declarative, scalable, and automated infrastructure management.</p>
+<hr>
+<h2 id="why-read-this-blog">Why Read this blog?</h2>
+<p>To live like this
+<img src="https://images.unsplash.com/photo-1496046744122-2328018d60b6?q=80&amp;w=2374&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="relax"></p>
+<hr>
+<h2 id="what-is-gitops">What is GitOps?</h2>
+<p>GitOps is a <strong>DevOps operating model</strong> where Git is the <strong>single source of truth</strong> for declarative infrastructure and applications. Tools like Argo CD sync the state of your Kubernetes clusters to match Git, automatically and continuously.</p>
+<h2 id="what-is-the-app-of-apps-pattern">WHAT is the &ldquo;App of Apps Pattern&rdquo;?</h2>
+<p>The <em>App of Apps</em> pattern uses a single Argo CD Application to manage many other Argo CD Applications. It enables <strong>modular</strong>, <strong>scalable</strong>, and <strong>environment-specific</strong> deployment structures.</p>
+<p>Imagine one app (<code>root-app.yaml</code>) that deploys:</p>
+<ul>
+<li>Platform apps like Ingress, Cert-Manager &amp; Operators</li>
+<li>Workload apps like Podinfo, Guestbook, etc.</li>
+</ul>
+<p>Each app lives in its own folder, can use Kustomize/Helm, and is deployed declaratively from Git.</p>
+<h2 id="why-use-the-app-of-apps-pattern">WHY use the &ldquo;App of Apps Pattern&rdquo;?</h2>
+<p>It offers:</p>
+<ul>
+<li><strong>Declarative control</strong> :  Everything is defined in Git.</li>
+<li><strong>Zero-touch provisioning</strong> :  GitOps installs and configures your entire stack.</li>
+<li><strong>Environment-specific overlays</strong> :  Adapt configurations for K3s, OpenShift, Dev, Prod etc.</li>
+<li><strong>Disaster recovery</strong> :  Rebuild any where</li>
+<li><strong>Auditable changes</strong> :  Every change is a Git commit.</li>
+<li><strong>No drift</strong> :  GitOps continuously reconciles desired vs. actual state.</li>
+<li><strong>Self Healing</strong> :  Accidently deleted something ? Let GitOps fix it for you.</li>
+</ul>
+<hr>
+<h1 id="lets-deploy-everything-in-seconds">Let&rsquo;s Deploy everything (in seconds)</h1>
+<p>Start the timer</p>
+<h2 id="prerequisites-to-deploy">Prerequisites to Deploy</h2>
+<ul>
+<li>A Kubernetes cluster: This demo is tested on <code>K3s</code> but should work on any cluster</li>
+<li>CLI tools :  <code>kubectl</code>, <code>helm</code></li>
+<li>Forked git repo :
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>git clone https://github.com/arslankhanali/GitOps-App-of-Apps-Pattern.git<span style="color:#e6db74">`</span>
+</span></span></code></pre></div></li>
+</ul>
+<p>Now! start the timer</p>
+<h2 id="1-install-argocd-on-your-kubernetes-cluster">1. Install argocd on your Kubernetes cluster</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export KUBECONFIG<span style="color:#f92672">=</span>~/k3s-config  <span style="color:#75715e"># &lt;-- To access Kubernetes cluster</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># kubectl get all -A</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>helm repo add argo https://argoproj.github.io/argo-helm
+</span></span><span style="display:flex;"><span>helm repo update
+</span></span><span style="display:flex;"><span>kubectl create namespace argocd
+</span></span><span style="display:flex;"><span>helm install argocd argo/argo-cd -n argocd -f argocd/values.yaml
+</span></span></code></pre></div><p>Apply environment-specific ingress for argocd :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># K3s</span>
+</span></span><span style="display:flex;"><span>kubectl apply -f argocd/ingress.yaml
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># OpenShift</span>
+</span></span><span style="display:flex;"><span>kubectl apply -f argocd/route.yaml
+</span></span></code></pre></div><hr>
+<h2 id="2-set-dns-locally">2. Set DNS locally</h2>
+<p>Make sure your <code>/etc/hosts</code> file has following entries.</p>
+<pre tabindex="0"><code># sudo vim /etc/hosts
+&lt;K3s-cluster-IP&gt; k3s.node1 argocd.node1 test.node1 hello.node1
+</code></pre><h2 id="3-login-to-argo-dashboard">3. Login to Argo dashboard</h2>
+<p>To see apps getting deployed.</p>
+<ul>
+<li>Argocd <a href="https://argocd.node1">argocd.node1</a></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Get Login password for admin user</span>
+</span></span><span style="display:flex;"><span>kubectl -n argocd get secret argocd-initial-admin-secret <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{.data.password}&#34;</span> | base64 -d
+</span></span></code></pre></div><h2 id="4-unleash-everything">4. Unleash everything</h2>
+<p>This points to k3s right now</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl apply -f root-app.yaml
+</span></span></code></pre></div><p><img src="/argocd-app-of-apps/oprah.png" alt="oprah"></p>
+<h4 id="access-apps">Access apps</h4>
+<ul>
+<li>Kubernetes Dashboard <a href="https://k3s.node1">k3s.node1</a></li>
+</ul>
+<pre tabindex="0"><code># Get Bearer Token
+kubectl get secret admin-user -n kubernetes-dashboard -o jsonpath=&#34;{.data.token}&#34; | base64 -d
+</code></pre><ul>
+<li>Guestbook <a href="http://test.node1">test.node1</a></li>
+<li>Podinfo <a href="http://hello.node1">hello.node1</a></li>
+</ul>
+<p>You can now stop the Timer. It tooks me &lt; 1min to deploy everything.</p>
+<h1 id="argocd-has-">ArgoCD has :</h1>
+<ol>
+<li>Synced the <code>env/{k3s}/</code> directory.</li>
+<li>Created child applications in {platform &amp; workloads} folders.</li>
+<li>Deployed all components declaratively.</li>
+</ol>
+<p>This pattern allows full cluster rebuilds and updates via Git commits alone.
+<img src="/argocd-app-of-apps/argocd.png" alt="alt text"></p>
+<hr>
+<h3 id="steps-to-deploy-new-app">Steps to deploy new app</h3>
+<ol>
+<li>Add application to the <code>apps/</code> folder.</li>
+<li>Test the application</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>kustomize build &lt;kustomization-dir&gt; | kubectl apply -f -
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># or</span>
+</span></span><span style="display:flex;"><span>kubectl apply -k k8s/overlays/dev
+</span></span></code></pre></div><ol start="3">
+<li>Create argocd-application in <code>env/{k3s}</code> folder</li>
+</ol>
+<details>
+<summary>See example: argoproj Application'</summary>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">argoproj.io/v1alpha1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Application</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">&lt;app-name&gt;     </span> <span style="color:#75715e"># &lt;-- CHANGE THIS as needed</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">argocd    </span> <span style="color:#75715e"># &lt;-- NEVER CHANGE</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">project</span>: <span style="color:#ae81ff">default</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">source</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">repoURL</span>: <span style="color:#ae81ff">git@github.com:arslankhanali/homelab-kubernetes.git</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">path</span>: <span style="color:#ae81ff">apps/&lt;app-name&gt;/overlays/k3s </span> <span style="color:#75715e"># &lt;-- CHANGE THIS as needed</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">targetRevision</span>: <span style="color:#ae81ff">HEAD</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">destination</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">server</span>: <span style="color:#ae81ff">https://kubernetes.default.svc</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">&lt;app-name&gt;</span> <span style="color:#75715e"># &lt;-- CHANGE THIS as needed</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">syncPolicy</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">automated</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">prune</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">selfHeal</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">syncOptions</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">CreateNamespace=true       </span> <span style="color:#75715e"># If namespace named above should be created</span>
+</span></span></code></pre></div></details>    
+<ol start="4">
+<li>Reference file you created in step3 in <code>/env/k3s/kustomization.yaml</code></li>
+<li>Push to git <code>git add . &amp;&amp; git commit -m &quot;new app&quot; &amp;&amp; git push</code></li>
+<li>Argo should sync automatically</li>
+</ol>
+<hr>
+<h2 id="delete-all">Delete All</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>kubectl delete -f root-app.yaml
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># delete all argocd apps</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> app in <span style="color:#66d9ef">$(</span>kubectl get applications -n argocd -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.items[*].metadata.name}&#39;</span><span style="color:#66d9ef">)</span>; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  kubectl patch application <span style="color:#e6db74">&#34;</span>$app<span style="color:#e6db74">&#34;</span> -n argocd -p <span style="color:#e6db74">&#39;{&#34;metadata&#34;:{&#34;finalizers&#34;:[]}}&#39;</span> --type<span style="color:#f92672">=</span>merge
+</span></span><span style="display:flex;"><span>  kubectl delete application <span style="color:#e6db74">&#34;</span>$app<span style="color:#e6db74">&#34;</span> -n argocd --force --grace-period<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>kubectl delete ns argocd
+</span></span><span style="display:flex;"><span>kubectl delete ns kubernetes-dashboard
+</span></span><span style="display:flex;"><span>kubectl delete ns podinfo
+</span></span><span style="display:flex;"><span>kubectl delete ns guestbook
+</span></span></code></pre></div><hr>
+<h2 id="summary">Summary</h2>
+<p>The ArgoCD App of Apps pattern offers a scalable, Git-driven blueprint for managing Kubernetes clusters :</p>
+<ul>
+<li>Manage everything declaratively in Git</li>
+<li>Scale across environments like K3s and OpenShift</li>
+<li>Rebuild or recover your clusters on demand</li>
+</ul>
+<blockquote>
+<p>The App of Apps pattern isn&rsquo;t just a tool—it&rsquo;s a mindset shift for cloud-native GitOps. Adopt it to bring structure, repeatability, and security to your infrastructure.</p></blockquote>
+<hr>
+<h1 id="appendix">Appendix</h1>
+<h2 id="repository-structure-overview">Repository Structure Overview</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>├── apps             <span style="color:#75715e"># Apps &amp; workload YAMLS, Helm charts or Kustomize can go here</span>
+</span></span><span style="display:flex;"><span>│   ├── guestbook    <span style="color:#75715e"># Sample App from https://github.com/argoproj/argocd-example-apps/tree/master/kustomize-guestbook</span>
+</span></span><span style="display:flex;"><span>│   │   ├── base
+</span></span><span style="display:flex;"><span>│   │   └── overlays
+</span></span><span style="display:flex;"><span>│   ├── kubernetes-dashboard    <span style="color:#75715e"># Upstream K8s dashboard https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/</span>
+</span></span><span style="display:flex;"><span>│   │   ├── base
+</span></span><span style="display:flex;"><span>│   │   └── overlays
+</span></span><span style="display:flex;"><span>│   └── podinfo       <span style="color:#75715e"># Sample App from https://github.com/stefanprodan/podinfo/tree/master/kustomize</span>
+</span></span><span style="display:flex;"><span>│       ├── base
+</span></span><span style="display:flex;"><span>│       └── overlays
+</span></span><span style="display:flex;"><span>├── env               <span style="color:#75715e"># ArgoCD Applications - Folders can be Cluster-specific (k3s,openshift) or Env Specific (dev,</span>
+</span></span><span style="display:flex;"><span>│   ├── k3s
+</span></span><span style="display:flex;"><span>│   │   ├── kustomization.yaml
+</span></span><span style="display:flex;"><span>│   │   ├── platform
+</span></span><span style="display:flex;"><span>│   │   └── workloads
+</span></span><span style="display:flex;"><span>│   └── openshift
+</span></span><span style="display:flex;"><span>│       ├── kustomization.yaml
+</span></span><span style="display:flex;"><span>│       ├── platform
+</span></span><span style="display:flex;"><span>│       └── workloads
+</span></span><span style="display:flex;"><span>├── ingress.yaml      <span style="color:#75715e"># Ingress to access ArgoCD dashboard</span>
+</span></span><span style="display:flex;"><span>├── README.md
+</span></span><span style="display:flex;"><span>├── root-app.yaml     <span style="color:#75715e"># Root ARGOCD application</span>
+</span></span><span style="display:flex;"><span>└── values.yaml       <span style="color:#75715e"># Deploy Argo with insecure access (needed for Ingress) &amp; enable Helm for kustomize</span>
+</span></span></code></pre></div><p><img src="/argocd-app-of-apps/flow1.png" alt="as"></p>
+<h3 id="1-apps--add-your-apps-in-a-folder-here">1. <code>apps/</code> – Add your Apps in a folder here</h3>
+<p>I have 3 apps here as an example :</p>
+<ul>
+<li>guestbook :  Kustomize based app <a href="https://github.com/argoproj/argocd-example-apps/tree/master/kustomize-guestbook">argocd-kustomize-guestbook</a></li>
+<li>kubernetes-dashboard/ :  Kustomize calls Helm to install K8s dashboard for K3s.</li>
+<li>podinfo :  Kustomize based app <a href="https://github.com/stefanprodan/podinfo/tree/master/kustomize">stefanprodan-podinfo</a></li>
+</ul>
+<blockquote>
+<p>You can use YAML manifests, kustomize or Helm charts to add more applications in this folder.</p></blockquote>
+<p>Each app follows :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>apps/
+</span></span><span style="display:flex;"><span>  └── &lt;app1&gt;/
+</span></span><span style="display:flex;"><span>      ├── base/
+</span></span><span style="display:flex;"><span>      └── overlays/
+</span></span><span style="display:flex;"><span>          ├── &lt;env1-name&gt;/    <span style="color:#75715e"># &lt;--- Can Change Name - e.g. DEV</span>
+</span></span><span style="display:flex;"><span>          └── &lt;env2-name&gt;/    <span style="color:#75715e"># &lt;--- Can Change Name - e.g. PROD</span>
+</span></span></code></pre></div><h3 id="2-env--create-your-argocd-applications-here-for-your-env">2. <code>env/</code> – Create your ARGOCD APPLICATIONS here for your env</h3>
+<p>&ldquo;ArgoCD Application&rdquo; definitions for different environments. They basically call different overlays in apps.</p>
+<ul>
+<li>env/k3s/ :  Deploys K8s Dashboard and uses <code>Ingress</code> for apps</li>
+<li>env/openshift/  :  No K8s Dashboard and uses <code>Route</code> for apps</li>
+</ul>
+<p>Each env follows :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>── env
+</span></span><span style="display:flex;"><span>│   ├── &lt;env1-name&gt;
+</span></span><span style="display:flex;"><span>│   │   ├── kustomization.yaml
+</span></span><span style="display:flex;"><span>│   │   ├── platform  <span style="color:#75715e"># &lt;--- Can Change Name - Just used to categorise `argocd-application`</span>
+</span></span><span style="display:flex;"><span>│   │   │   └── <span style="color:#e6db74">&#39;argocd-application-for-app1&#39;</span>.yaml
+</span></span><span style="display:flex;"><span>│   │   └── workloads <span style="color:#75715e"># &lt;--- Can Change Name - Just used to categorise `argocd-application`</span>
+</span></span><span style="display:flex;"><span>│   │       ├── <span style="color:#e6db74">&#39;argocd-application-for-app2&#39;</span>.yaml
+</span></span><span style="display:flex;"><span>│   │       └── <span style="color:#e6db74">&#39;argocd-application-for-app3&#39;</span>.yaml
+</span></span></code></pre></div><h3 id="3-root-appyaml--the-orchestrator">3. <code>root-app.yaml</code> – The Orchestrator</h3>
+<blockquote>
+<p>Main reason this pattern is called <code>APP OF APPS</code>.</p></blockquote>
+<p>This <code>top-level ArgoCD Application</code> points to env/{k3s} and deploys all children <code>ArgoCD Application</code> in it.</p>
+</section></main>
+        <footer id="main-footer">
+<script src="/js/copy-button.min.4876b98121977026b3ce53c9cb225d818299becf2f6ba9c345fdfbc99911d6dd.js" integrity="sha256-SHa5gSGXcCazzlPJyyJdgYKZvs8va6nDRf37yZkR1t0="></script>
+</footer>
+      </div><aside id="side-pane" class="side-sticky"><div class="side-content">
+      <h3>Please note</h3><p>Code blocks can be EDITED before you copy</p>
+    </div><div class="side-details">
+    <span>1064 words</span>
+    <span>8 - 10 minutes read</span><div class="side-details-taxonomy">
+        <small>series: 
+          <span class="details-taxonomy"><a href="http://localhost:1313/series/pattern">pattern</a></span></small>
+      </div><div class="side-details-taxonomy">
+        <small>topics: 
+          <span class="details-taxonomy"><a href="http://localhost:1313/topics/"></a></span></small>
+      </div></div><h3>Table Of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-read-this-blog">Why Read this blog?</a></li>
+    <li><a href="#what-is-gitops">What is GitOps?</a></li>
+    <li><a href="#what-is-the-app-of-apps-pattern">WHAT is the &ldquo;App of Apps Pattern&rdquo;?</a></li>
+    <li><a href="#why-use-the-app-of-apps-pattern">WHY use the &ldquo;App of Apps Pattern&rdquo;?</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#prerequisites-to-deploy">Prerequisites to Deploy</a></li>
+    <li><a href="#1-install-argocd-on-your-kubernetes-cluster">1. Install argocd on your Kubernetes cluster</a></li>
+    <li><a href="#2-set-dns-locally">2. Set DNS locally</a></li>
+    <li><a href="#3-login-to-argo-dashboard">3. Login to Argo dashboard</a></li>
+    <li><a href="#4-unleash-everything">4. Unleash everything</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#steps-to-deploy-new-app">Steps to deploy new app</a></li>
+      </ul>
+    </li>
+    <li><a href="#delete-all">Delete All</a></li>
+    <li><a href="#summary">Summary</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#repository-structure-overview">Repository Structure Overview</a>
+      <ul>
+        <li><a href="#1-apps--add-your-apps-in-a-folder-here">1. <code>apps/</code> – Add your Apps in a folder here</a></li>
+        <li><a href="#2-env--create-your-argocd-applications-here-for-your-env">2. <code>env/</code> – Create your ARGOCD APPLICATIONS here for your env</a></li>
+        <li><a href="#3-root-appyaml--the-orchestrator">3. <code>root-app.yaml</code> – The Orchestrator</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></aside></div>
+  </div>
+</body>
+</html>

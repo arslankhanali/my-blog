@@ -1,0 +1,13 @@
+document.addEventListener("DOMContentLoaded",function(){document.querySelectorAll("pre > code").forEach(function(e){const c=e.parentNode;c.style.position="relative";const i=document.createElement("div");i.className="pre-button-container";const o=document.createElement("button");o.className="copy-code-button",o.type="button",o.title="Copy code";const t=document.createElementNS("http://www.w3.org/2000/svg","svg");t.setAttribute("viewBox","0 0 24 24"),t.setAttribute("fill","none"),t.setAttribute("stroke","currentColor"),t.setAttribute("stroke-width","2"),t.setAttribute("stroke-linecap","round"),t.setAttribute("stroke-linejoin","round"),t.innerHTML=`
+      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+    `;const a=document.createElement("span");a.textContent="Copy",o.appendChild(t),o.appendChild(a),o.addEventListener("click",function(){navigator.clipboard.writeText(e.textContent).then(()=>{t.innerHTML=`<polyline points="20 6 9 17 4 12" />`,t.setAttribute("stroke","green"),a.textContent="Copied",setTimeout(()=>{t.innerHTML=`
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          `,t.setAttribute("stroke","currentColor"),a.textContent="Copy"},1500)})}),i.appendChild(o);const s=document.createElement("button");s.className="edit-code-button",s.type="button",s.title="Edit code";const n=document.createElementNS("http://www.w3.org/2000/svg","svg");n.setAttribute("viewBox","0 0 24 24"),n.setAttribute("fill","none"),n.setAttribute("stroke","currentColor"),n.setAttribute("stroke-width","2"),n.setAttribute("stroke-linecap","round"),n.setAttribute("stroke-linejoin","round"),n.innerHTML=`
+      <path d="M12 20h9" />
+      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
+    `;const r=document.createElement("span");r.textContent="Edit",s.appendChild(n),s.appendChild(r),s.addEventListener("click",()=>{e.isContentEditable?(e.contentEditable="false",s.title="Edit code",r.textContent="Edit",n.innerHTML=`
+          <path d="M12 20h9" />
+          <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
+        `):(e.contentEditable="true",e.focus(),s.title="Save code",r.textContent="Done",n.innerHTML=`<polyline points="20 6 9 17 4 12" />`)}),i.appendChild(s),c.appendChild(i)})})

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Redhat on AK Blogs</title>
+    <link>http://localhost:1313/tags/redhat/</link>
+    <description>Recent content in Redhat on AK Blogs</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 04 Aug 2025 22:00:00 +1000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/redhat/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Squid Proxy: Access Remote Red Hat Lab Environment</title>
+      <link>http://localhost:1313/posts/squid-rh-lab/</link>
+      <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
+      <guid>http://localhost:1313/posts/squid-rh-lab/</guid>
+      <description>&lt;p&gt;This blog shows how to access URLs available only on a remote Red Hat lab environment from your local MacOS laptop using SSH tunneling and a Squid proxy.&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;1-download-and-configure-ssh-key&#34;&gt;1. Download and Configure SSH Key&lt;/h2&gt;&#xA;&lt;p&gt;For the Red Hat certification lab, the SSH private key is provided in the &lt;strong&gt;Lab Environment&lt;/strong&gt; section.&lt;/p&gt;&#xA;&lt;p&gt;Run these commands on your Mac terminal:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Move the downloaded key to your SSH folder&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mv ~/Downloads/rht_classroom.rsa ~/.ssh/&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Secure the key with correct permissions&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod &lt;span style=&#34;color:#ae81ff&#34;&gt;0600&lt;/span&gt; ~/.ssh/rht_classroom.rsa&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Add the key to your ssh-agent&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ssh-add ~/.ssh/rht_classroom.rsa&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;test-ssh-login-to-remote-vm-via-jump-host&#34;&gt;Test SSH login to remote VM via jump host&lt;/h3&gt;&#xA;&lt;p&gt;Replace IPs and ports if different:&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

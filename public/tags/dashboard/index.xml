@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dashboard on AK Blogs</title>
+    <link>http://localhost:1313/tags/dashboard/</link>
+    <description>Recent content in Dashboard on AK Blogs</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 04 Aug 2025 20:00:00 +1000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/dashboard/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubernetes: Deploy Dashboard for K3s</title>
+      <link>http://localhost:1313/posts/k3s-dashboard/</link>
+      <pubDate>Mon, 04 Aug 2025 20:00:00 +1000</pubDate>
+      <guid>http://localhost:1313/posts/k3s-dashboard/</guid>
+      <description>&lt;p&gt;This post walks through deploying the Kubernetes Dashboard using Helm, with access via Traefik Ingress.&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;K3s on Fedora&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Install Helm:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo dnf install helm&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;helm repo update&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;&#xA;&lt;h2 id=&#34;deploy-the-dashboard&#34;&gt;Deploy the Dashboard&lt;/h2&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;To avoid the error &lt;code&gt;Unknown error (200): Http failure during parsing&lt;/code&gt;, configure Kong to enable HTTP access. This is needed for Ingress.&lt;/p&gt;&lt;/blockquote&gt;&#xA;&lt;h4 id=&#34;allow-http&#34;&gt;Allow http&lt;/h4&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tee dashboard-values.yaml &amp;gt; /dev/null &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;lt;&amp;lt;EOL&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;kong:&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;  proxy:&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;    http:&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;      enabled: true&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;EOL&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/install-argocd/ingress.png&#34; alt=&#34;Ingress diagram&#34;&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

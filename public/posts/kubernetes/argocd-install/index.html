@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ArgoCD: Installation | AK Blogs</title>
+<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" /><meta property="og:url" content="http://localhost:1313/posts/kubernetes/argocd-install/">
+  <meta property="og:site_name" content="AK Blogs">
+  <meta property="og:title" content="ArgoCD: Installation">
+  <meta property="og:description" content="Install ArgoCD on K3s with Traefik Ingress This post walks through installing ArgoCD on a K3s cluster that uses Traefik as its default Ingress controller.
+Setup Kubernetes: K3s Ingress Controller: Traefik Deployment method: Helm Install ArgoCD via Helm helm repo add argo https://argoproj.github.io/argo-helm helm repo update kubectl create namespace argocd Option 1: Without Ingress Access service locally. Access service locally. See Port Forwarding section.
+helm install argocd argo/argo-cd --create-namespace --namespace argocd Option 2: With Ingress (Insecure) Ingress is needed to expose the Services out of the cluster">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-08-04T14:31:23+10:00">
+    <meta property="article:modified_time" content="2025-08-04T14:31:23+10:00">
+    <meta property="article:tag" content="Argocd">
+    <meta property="article:tag" content="K3s">
+      <meta property="og:see_also" content="http://localhost:1313/posts/kubernetes/k3s-dashboard/">
+      <meta property="og:see_also" content="http://localhost:1313/posts/kubernetes/k3s-install/">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ArgoCD: Installation">
+  <meta name="twitter:description" content="Install ArgoCD on K3s with Traefik Ingress This post walks through installing ArgoCD on a K3s cluster that uses Traefik as its default Ingress controller.
+Setup Kubernetes: K3s Ingress Controller: Traefik Deployment method: Helm Install ArgoCD via Helm helm repo add argo https://argoproj.github.io/argo-helm helm repo update kubectl create namespace argocd Option 1: Without Ingress Access service locally. Access service locally. See Port Forwarding section.
+helm install argocd argo/argo-cd --create-namespace --namespace argocd Option 2: With Ingress (Insecure) Ingress is needed to expose the Services out of the cluster">
+
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/root.css">
+    <link rel="stylesheet" href="/css/bundle.css">
+
+      <script src="/js/copy-button.js"></script>
+      <script src="/js/bundle.js"></script><script defer src="/js/search/flexsearch.compact.64594b125f7b78bdf4fa8316955922bbebb1cd6baef3f16654bfca20309f18f8.js" integrity="sha256-ZFlLEl97eL30&#43;oMWlVkiu&#43;uxzWuu8/FmVL/KIDCfGPg="></script>
+<script defer src="/js/search/search.1d980f84df11f3eb7c8c5f17f541d49a0611608df179dd74fa7f06225eb56ace.js" integrity="sha256-HZgPhN8R8&#43;t8jF8X9UHUmgYRYI3xed10&#43;n8GIl61as4="></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+
+</head>
+<body class="notransition">
+  <div id="container">
+    <header id="main-header"><div role="navigation" aria-label="Main">
+  <div class="nav-left">
+    <a href="http://localhost:1313/" style="color: inherit;">AK Blogs</a>
+  </div>
+  <div class="nav-right">
+    <div style="position:absolute;width:0px;height:0px;">
+      <div id="nav-dropdown-menu" class="hidden" href="#">
+    <div class="nav-item">
+      <a aria-current="true" class="ancestor" href="/posts/"
+      >Posts</a>
+    </div>
+    <div class="nav-item">
+      <a
+      >Gallery</a>
+    </div>
+    <div class="nav-item">
+      <a href="/about/"
+      >About</a>
+    </div>
+</div>
+    </div>
+    <a id="nav-dropdown-button" href="#"><svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a>
+    <div id="nav-menu">
+    <div class="nav-item">
+      <a aria-current="true" class="ancestor" href="/posts/"
+      >Posts</a>
+    </div>
+    <div class="nav-item">
+      <a
+      >Gallery</a>
+    </div>
+    <div class="nav-item">
+      <a href="/about/"
+      >About</a>
+    </div>
+</div>
+    <a id="theme-switcher" href="#">
+<svg class="light-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 3V4M12 20V21M4 12H3M6.31412 6.31412L5.5 5.5M17.6859 6.31412L18.5 5.5M6.31412 17.69L5.5 18.5001M17.6859 17.69L18.5 18.5001M21 12H20M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+<svg class="dark-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.32031 11.6835C3.32031 16.6541 7.34975 20.6835 12.3203 20.6835C16.1075 20.6835 19.3483 18.3443 20.6768 15.032C19.6402 15.4486 18.5059 15.6834 17.3203 15.6834C12.3497 15.6834 8.32031 11.654 8.32031 6.68342C8.32031 5.50338 8.55165 4.36259 8.96453 3.32996C5.65605 4.66028 3.32031 7.89912 3.32031 11.6835Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a>
+  </div>
+</div>
+</header>
+    <div class="flex grow">
+      <div id="main-pane">
+        <main id="main-content"><div class="single-header">
+<ol class="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="http://localhost:1313/">
+        <span itemprop="name">Home</span>
+      </a>
+      <meta itemprop="position" content='1' />
+    </li>
+    <span>&nbsp»&nbsp</span>
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="http://localhost:1313/posts/">
+        <span itemprop="name">Posts</span>
+      </a>
+      <meta itemprop="position" content='2' />
+    </li>
+    <span>&nbsp»&nbsp</span>
+</ol>
+<h1>ArgoCD: Installation</h1><time class="dim" datetime="2025-08-04T14:31:23&#43;10:00">August 4, 2025</time><div class="term-container"><div class="tag">
+        <a href="http://localhost:1313/tags/argocd/">#argocd</a>
+      </div><div class="tag">
+        <a href="http://localhost:1313/tags/k3s/">#k3s</a>
+      </div></ol></div>
+  <section class="page-section"><h1 id="install-argocd-on-k3s-with-traefik-ingress">Install ArgoCD on K3s with Traefik Ingress</h1>
+<p>This post walks through installing <a href="https://argo-cd.readthedocs.io/">ArgoCD</a> on a K3s cluster that uses Traefik as its default Ingress controller.</p>
+<h2 id="setup">Setup</h2>
+<ul>
+<li>Kubernetes: <a href="https://k3s.io">K3s</a></li>
+<li>Ingress Controller: <a href="https://doc.traefik.io/">Traefik</a></li>
+<li>Deployment method: Helm</li>
+</ul>
+<hr>
+<h2 id="install-argocd-via-helm">Install ArgoCD via Helm</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>helm repo add argo https://argoproj.github.io/argo-helm
+</span></span><span style="display:flex;"><span>helm repo update
+</span></span><span style="display:flex;"><span>kubectl create namespace argocd
+</span></span></code></pre></div><h3 id="option-1-without-ingress">Option 1: Without Ingress</h3>
+<p>Access service locally. Access service locally. See <a href="#port-forwarding-optional-access">Port Forwarding</a> section.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>helm install argocd argo/argo-cd --create-namespace --namespace argocd
+</span></span></code></pre></div><h3 id="option-2-with-ingress-insecure">Option 2: With Ingress (Insecure)</h3>
+<p>Ingress is needed to expose the Services out of the cluster
+<img src="/install-argocd/ingress.png" alt="Ingress diagram"></p>
+<p>By setting the <code>server.insecure</code> flag to <code>true</code>, you&rsquo;re telling the <code>ArgoCD server</code> <strong>not</strong> to handle TLS itself to avoid common issue known as a &ldquo;redirect loop&rdquo; or <code>ERR_TOO_MANY_REDIRECTS</code>. Instead, it listens for and accepts plain HTTP traffic.</p>
+<ol>
+<li>Your browser sends an HTTPS request to Traefik.</li>
+<li>Traefik <strong>terminates the TLS</strong> and forwards an HTTP request to the argocd-server service.</li>
+<li>The argocd-server accepts this HTTP request on its insecure port (typically port 80), serves the content, and the connection is successful.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Using CLI flag</span>
+</span></span><span style="display:flex;"><span>helm install argocd argo/argo-cd --create-namespace --namespace argocd --set configs.params.<span style="color:#e6db74">&#34;server\.insecure&#34;</span><span style="color:#f92672">=</span>true
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># OR using values.yaml</span>
+</span></span><span style="display:flex;"><span>tee argocd-values.yaml &gt; /dev/null <span style="color:#e6db74">&lt;&lt;EOL
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">configs:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  params:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    server.insecure: true
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOL</span>
+</span></span><span style="display:flex;"><span>helm install argocd argo/argo-cd --create-namespace --namespace argocd -f argocd-values.yaml
+</span></span></code></pre></div><p>Verify that <code>server.insecure</code> is set:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>kubectl get cm argocd-cmd-params-cm -n argocd -o yaml | grep insecure
+</span></span></code></pre></div><hr>
+<h2 id="port-forwarding-optional-access">Port Forwarding (Optional Access)</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Kubeconfig</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Fetch kubeconfig to your local machine</span>
+</span></span><span style="display:flex;"><span>scp -r &lt;user&gt;@&lt;K8s-cluster-IP&gt;:~/.kube/config ~/k3s-config
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>export KUBECONFIG<span style="color:#f92672">=</span>~/k3s-config
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Port-forward to localhost</span>
+</span></span><span style="display:flex;"><span>kubectl port-forward svc/argocd-server -n argocd 8080:443
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Open in browser</span>
+</span></span><span style="display:flex;"><span>http://localhost:8080
+</span></span></code></pre></div><hr>
+<h2 id="get-default-admin-password">Get Default Admin Password</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Ignore the `%` sign at the end - It&#39;s not part of the password</span>
+</span></span><span style="display:flex;"><span>kubectl -n argocd get secret argocd-initial-admin-secret <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{.data.password}&#34;</span> | base64 -d
+</span></span></code></pre></div><p>Default username: <code>admin</code></p>
+<hr>
+<h2 id="ingress-setup-traefik">Ingress Setup (Traefik)</h2>
+<h3 id="1-make-sure-you-set-serverinsecuretrue">1. Make sure you set <code>server.insecure:true</code></h3>
+<p>If you did not Install argo with &ldquo;server.insecure&rdquo;:&ldquo;true&rdquo; then you can patch the configmap and restart pods.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Check current value</span>
+</span></span><span style="display:flex;"><span>kubectl get cm argocd-cmd-params-cm -n argocd -o yaml | grep insecure
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Change value to true if not already</span>
+</span></span><span style="display:flex;"><span>kubectl patch cm argocd-cmd-params-cm -n argocd --type<span style="color:#f92672">=</span>merge <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -p <span style="color:#e6db74">&#39;{&#34;data&#34;:{&#34;server.insecure&#34;:&#34;true&#34;}}&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Restart the server for changes to take effect</span>
+</span></span><span style="display:flex;"><span>kubectl -n argocd rollout restart deployment argocd-server
+</span></span></code></pre></div><h3 id="2-create-ingress-resource">2. Create Ingress Resource</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ae81ff">cat &lt;&lt; EOF | oc apply -f-</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">networking.k8s.io/v1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Ingress</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">argocd-ingress</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">argocd</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">ingressClassName</span>: <span style="color:#ae81ff">traefik</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">rules</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">host</span>: <span style="color:#ae81ff">argocd.node1</span> <span style="color:#75715e">#Change to your hostname</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">http</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">paths</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#f92672">path</span>: <span style="color:#ae81ff">/</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">pathType</span>: <span style="color:#ae81ff">Prefix</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">backend</span>:
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">service</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">name</span>: <span style="color:#ae81ff">argocd-server</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">port</span>:
+</span></span><span style="display:flex;"><span>                  <span style="color:#f92672">number</span>: <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">EOF</span>
+</span></span></code></pre></div><p>Apply it:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>kubectl apply -f argocd-ingress.yaml
+</span></span></code></pre></div><hr>
+<h2 id="add-local-dns">Add local DNS</h2>
+<p>Update your <code>/etc/hosts</code>:</p>
+<p><code>echo &quot;192.168.50.200 argocd.node1&quot; | sudo tee -a /etc/hosts</code></p>
+<p>or</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo vim /etc/hosts
+</span></span></code></pre></div><p>Add:</p>
+<pre tabindex="0"><code>192.168.50.200 argocd.node1
+</code></pre><p>Now you can access ArgoCD <a href="https://argocd.node1">https://argocd.node1</a></p>
+<hr>
+<h2 id="cleanup">Cleanup</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>helm uninstall argocd --namespace argocd
+</span></span><span style="display:flex;"><span>kubectl delete namespace argocd
+</span></span></code></pre></div><p>ArgoCD is now set up with Traefik Ingress on your K3s cluster.</p>
+</section></main>
+        <footer id="main-footer">
+<script src="/js/copy-button.min.4876b98121977026b3ce53c9cb225d818299becf2f6ba9c345fdfbc99911d6dd.js" integrity="sha256-SHa5gSGXcCazzlPJyyJdgYKZvs8va6nDRf37yZkR1t0="></script>
+</footer>
+      </div><aside id="side-pane" class="side-sticky"><div class="side-content">
+      <h3>Please note</h3><p>Code blocks can be EDITED before you copy</p>
+    </div><div class="side-details">
+    <span>462 words</span>
+    <span>3 - 4 minutes read</span><div class="side-details-taxonomy">
+        <small>series: 
+          <span class="details-taxonomy"><a href="http://localhost:1313/series/kubernetes">kubernetes</a></span></small>
+      </div><div class="side-details-taxonomy">
+        <small>topics: 
+          <span class="details-taxonomy"><a href="http://localhost:1313/topics/"></a></span></small>
+      </div></div><h3>Table Of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#setup">Setup</a></li>
+    <li><a href="#install-argocd-via-helm">Install ArgoCD via Helm</a>
+      <ul>
+        <li><a href="#option-1-without-ingress">Option 1: Without Ingress</a></li>
+        <li><a href="#option-2-with-ingress-insecure">Option 2: With Ingress (Insecure)</a></li>
+      </ul>
+    </li>
+    <li><a href="#port-forwarding-optional-access">Port Forwarding (Optional Access)</a></li>
+    <li><a href="#get-default-admin-password">Get Default Admin Password</a></li>
+    <li><a href="#ingress-setup-traefik">Ingress Setup (Traefik)</a>
+      <ul>
+        <li><a href="#1-make-sure-you-set-serverinsecuretrue">1. Make sure you set <code>server.insecure:true</code></a></li>
+        <li><a href="#2-create-ingress-resource">2. Create Ingress Resource</a></li>
+      </ul>
+    </li>
+    <li><a href="#add-local-dns">Add local DNS</a></li>
+    <li><a href="#cleanup">Cleanup</a></li>
+  </ul>
+</nav></aside></div>
+  </div>
+</body>
+</html>
