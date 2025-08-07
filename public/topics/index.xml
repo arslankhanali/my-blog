@@ -2,66 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Topics on AK Blogs</title>
-    <link>http://localhost:1313/topics/</link>
+    <link>//localhost:1313/topics/</link>
     <description>Recent content in Topics on AK Blogs</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 07 Aug 2025 15:12:10 +1000</lastBuildDate>
-    <atom:link href="http://localhost:1313/topics/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="//localhost:1313/topics/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Deployment</title>
-      <link>http://localhost:1313/topics/deployment/</link>
+      <link>//localhost:1313/topics/deployment/</link>
       <pubDate>Thu, 07 Aug 2025 15:12:10 +1000</pubDate>
-      <guid>http://localhost:1313/topics/deployment/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Automation</title>
-      <link>http://localhost:1313/topics/automation/</link>
-      <pubDate>Wed, 06 Aug 2025 18:00:00 +1000</pubDate>
-      <guid>http://localhost:1313/topics/automation/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Iac</title>
-      <link>http://localhost:1313/topics/iac/</link>
-      <pubDate>Wed, 06 Aug 2025 18:00:00 +1000</pubDate>
-      <guid>http://localhost:1313/topics/iac/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Virtualization</title>
-      <link>http://localhost:1313/topics/virtualization/</link>
-      <pubDate>Mon, 04 Aug 2025 23:55:00 +1000</pubDate>
-      <guid>http://localhost:1313/topics/virtualization/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Customization</title>
-      <link>http://localhost:1313/topics/customization/</link>
-      <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
-      <guid>http://localhost:1313/topics/customization/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Networking</title>
-      <link>http://localhost:1313/topics/networking/</link>
-      <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
-      <guid>http://localhost:1313/topics/networking/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Remote-Access</title>
-      <link>http://localhost:1313/topics/remote-access/</link>
-      <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
-      <guid>http://localhost:1313/topics/remote-access/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Gitops</title>
-      <link>http://localhost:1313/topics/gitops/</link>
-      <pubDate>Mon, 04 Aug 2025 14:31:23 +1000</pubDate>
-      <guid>http://localhost:1313/topics/gitops/</guid>
+      <guid>//localhost:1313/topics/deployment/</guid>
       <description></description>
     </item>
   </channel>

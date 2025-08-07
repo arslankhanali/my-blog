@@ -1,8 +1,9 @@
-baseURL = 'https://arslankhanali.github.io/'
+baseURL = '/'
 languageCode = 'en-us'
 title = 'AK Blogs'
 theme = 'rusty-typewriter'
 
+# For github pages
 [caches]
   [caches.images]
     dir = ':cacheDir/images'

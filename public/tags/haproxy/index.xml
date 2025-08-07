@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Haproxy on AK Blogs</title>
-    <link>http://localhost:1313/tags/haproxy/</link>
+    <link>//localhost:1313/tags/haproxy/</link>
     <description>Recent content in Haproxy on AK Blogs</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 04 Aug 2025 21:45:00 +1000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/haproxy/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="//localhost:1313/tags/haproxy/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>HAProxy: How Ceph Found L3 Balance</title>
-      <link>http://localhost:1313/posts/haproxy-ceph-story/</link>
+      <link>//localhost:1313/posts/random/haproxy-ceph-story/</link>
       <pubDate>Mon, 04 Aug 2025 21:45:00 +1000</pubDate>
-      <guid>http://localhost:1313/posts/haproxy-ceph-story/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;http://localhost:1313/basic-haproxy/haproxy.png&#34; alt=&#34;haproxy&#34;&gt;&#xA;In a lab far away, Ceph lived across three nodes — &lt;code&gt;ceph-node01&lt;/code&gt;, &lt;code&gt;ceph-node02&lt;/code&gt;, and &lt;code&gt;ceph-node03&lt;/code&gt;. Each node was a diligent guardian, managing storage and services on port &lt;strong&gt;8443&lt;/strong&gt;. But there was a problem: access was restricted, and only one gateway, a single door at IP &lt;code&gt;192.168.99.61&lt;/code&gt; on port &lt;strong&gt;9000&lt;/strong&gt;, was open to outsiders. No one could knock on port 80’s door anymore — it was locked tight.&lt;/p&gt;&#xA;&lt;p&gt;Ceph needed a wise gatekeeper to direct visitors fairly among the three nodes, so none got overwhelmed. Enter &lt;strong&gt;HAProxy&lt;/strong&gt;, a simple but powerful load balancer, ready to bring harmony.&lt;/p&gt;</description>
+      <guid>//localhost:1313/posts/random/haproxy-ceph-story/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;//localhost:1313/basic-haproxy/haproxy.png&#34; alt=&#34;haproxy&#34;&gt;&#xA;In a lab far away, Ceph lived across three nodes — &lt;code&gt;ceph-node01&lt;/code&gt;, &lt;code&gt;ceph-node02&lt;/code&gt;, and &lt;code&gt;ceph-node03&lt;/code&gt;. Each node was a diligent guardian, managing storage and services on port &lt;strong&gt;8443&lt;/strong&gt;. But there was a problem: access was restricted, and only one gateway, a single door at IP &lt;code&gt;192.168.99.61&lt;/code&gt; on port &lt;strong&gt;9000&lt;/strong&gt;, was open to outsiders. No one could knock on port 80’s door anymore — it was locked tight.&lt;/p&gt;&#xA;&lt;p&gt;Ceph needed a wise gatekeeper to direct visitors fairly among the three nodes, so none got overwhelmed. Enter &lt;strong&gt;HAProxy&lt;/strong&gt;, a simple but powerful load balancer, ready to bring harmony.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
