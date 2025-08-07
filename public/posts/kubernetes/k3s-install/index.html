@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head><script src="/my-blog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=my-blog/livereload" data-no-instant defer></script>
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Kubernetes: Install K3s on Fedora | AK Blogs</title>
-<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" /><meta property="og:url" content="//localhost:1313/posts/kubernetes/k3s-install/">
+<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" /><meta property="og:url" content="http://localhost:1313/my-blog/posts/kubernetes/k3s-install/">
   <meta property="og:site_name" content="AK Blogs">
   <meta property="og:title" content="Kubernetes: Install K3s on Fedora">
   <meta property="og:description" content="A minimal and secure K3s setup on a Fedora host with proper firewalld rules and SELinux support.
@@ -18,8 +18,8 @@ Create &#39;deploy-k3s.yaml&#39; tee deploy-k3s.yaml &gt; /dev/null &lt;&lt;EOL 
     <meta property="article:modified_time" content="2025-08-04T19:00:00+10:00">
     <meta property="article:tag" content="K3s">
     <meta property="article:tag" content="Fedora">
-      <meta property="og:see_also" content="//localhost:1313/posts/kubernetes/k3s-dashboard/">
-      <meta property="og:see_also" content="//localhost:1313/posts/kubernetes/argocd-install/">
+      <meta property="og:see_also" content="http://localhost:1313/my-blog/posts/kubernetes/k3s-dashboard/">
+      <meta property="og:see_also" content="http://localhost:1313/my-blog/posts/kubernetes/argocd-install/">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Kubernetes: Install K3s on Fedora">
@@ -27,13 +27,13 @@ Create &#39;deploy-k3s.yaml&#39; tee deploy-k3s.yaml &gt; /dev/null &lt;&lt;EOL 
 Prerequisites Fedora (Workstation or Server) firewalld active and running SELinux in enforcing mode — K3s works fine User with sudo privileges Deploy K3s via ansible This playbook deploys K3s on fedora
 Create &#39;deploy-k3s.yaml&#39; tee deploy-k3s.yaml &gt; /dev/null &lt;&lt;EOL --- - name: Deploy K3s on Fedora VM hosts: all vars: k3s_install_script_url: &#34;https://get.k3s.io&#34; tasks: - name: Ensure firewalld is running ansible.builtin.service: name: firewalld state: started enabled: yes become: yes - name: Add K3s API server ansible.posix.firewalld: port: 6443/tcp permanent: yes state: enabled become: yes notify: Reload firewalld - name: Add K3s Pod network ansible.posix.firewalld: zone: trusted source: 10.42.0.0/16 permanent: yes state: enabled become: yes notify: Reload firewalld - name: Add K3s Service network ansible.posix.firewalld: zone: trusted source: 10.43.0.0/16 permanent: yes state: enabled become: yes notify: Reload firewalld - name: Create kubeconfig group ansible.builtin.group: name: kubeconfig state: present become: yes - name: Add user to kubeconfig group ansible.builtin.user: name: &#34;{{ ansible_user }}&#34; groups: kubeconfig append: yes become: yes - name: Install K3s with custom kubeconfig permissions ansible.builtin.shell: | curl -sfL {{ k3s_install_script_url }} | INSTALL_K3S_EXEC=&#34;--write-kubeconfig-mode 640 --write-kubeconfig-group kubeconfig&#34; sh - args: creates: /usr/local/bin/k3s become: true - name: Create .kube directory for the user ansible.builtin.file: path: &#34;{{ ansible_user_dir }}/.kube&#34; state: directory mode: &#39;0755&#39; owner: &#34;{{ ansible_user }}&#34; group: &#34;{{ ansible_user }}&#34; - name: Symlink K3s kubeconfig to ~/.kube/config ansible.builtin.file: src: /etc/rancher/k3s/k3s.yaml dest: &#34;{{ ansible_user_dir }}/.kube/config&#34; state: link owner: &#34;{{ ansible_user }}&#34; group: &#34;{{ ansible_user }}&#34; become: true handlers: - name: Reload firewalld ansible.builtin.service: name: firewalld state: reloaded become: yes EOL ansible-playbook --ask-pass --ask-become-pass -u &lt;ssh-user&gt; -i &lt;IP-of-Server&gt;, deploy-k3s.yaml Step by Step via CLI Configure Firewalld sudo firewall-cmd --permanent --add-port=6443/tcp # API Server port sudo firewall-cmd --permanent --zone=trusted --add-source=10.42.0.0/16 # Pod CIDR sudo firewall-cmd --permanent --zone=trusted --add-source=10.43.0.0/16 # Service CIDR sudo firewall-cmd --reload # Optional: Confirm port is listening ss -tulpn | grep 6443 Install K3s # Create a secure group(kubeconfig) to access kubeconfig sudo groupadd kubeconfig sudo usermod -aG kubeconfig $USER newgrp kubeconfig # Install K3s with kubeconfig permissions curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC=&#34;--write-kubeconfig-mode 640 --write-kubeconfig-group kubeconfig&#34; sh - Verify kubeconfig permissions:">
 
-    <link rel="stylesheet" href="/css/custom.css">
-    <link rel="stylesheet" href="/css/root.css">
-    <link rel="stylesheet" href="/css/bundle.css">
+    <link rel="stylesheet" href="/my-blog/css/custom.css">
+    <link rel="stylesheet" href="/my-blog/css/root.css">
+    <link rel="stylesheet" href="/my-blog/css/bundle.css">
 
-      <script src="/js/copy-button.js"></script>
-      <script src="/js/bundle.js"></script><script defer src="/js/search/flexsearch.compact.64594b125f7b78bdf4fa8316955922bbebb1cd6baef3f16654bfca20309f18f8.js" integrity="sha256-ZFlLEl97eL30&#43;oMWlVkiu&#43;uxzWuu8/FmVL/KIDCfGPg="></script>
-<script defer src="/js/search/search.1d980f84df11f3eb7c8c5f17f541d49a0611608df179dd74fa7f06225eb56ace.js" integrity="sha256-HZgPhN8R8&#43;t8jF8X9UHUmgYRYI3xed10&#43;n8GIl61as4="></script>
+      <script src="/my-blog/js/copy-button.js"></script>
+      <script src="/my-blog/js/bundle.js"></script><script defer src="/my-blog/js/search/flexsearch.compact.64594b125f7b78bdf4fa8316955922bbebb1cd6baef3f16654bfca20309f18f8.js" integrity="sha256-ZFlLEl97eL30&#43;oMWlVkiu&#43;uxzWuu8/FmVL/KIDCfGPg="></script>
+<script defer src="/my-blog/js/search/search.9730b626c5ab6ac8769c6f6b6c61a2fc8fb5ca58d17402093a74330ed7bf1494.js" integrity="sha256-lzC2JsWrash2nG9rbGGi/I&#43;1yljRdAIJOnQzDte/FJQ="></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,13 +45,13 @@ Create &#39;deploy-k3s.yaml&#39; tee deploy-k3s.yaml &gt; /dev/null &lt;&lt;EOL 
   <div id="container">
     <header id="main-header"><div role="navigation" aria-label="Main">
   <div class="nav-left">
-    <a href="//localhost:1313/" style="color: inherit;">AK Blogs</a>
+    <a href="http://localhost:1313/my-blog/" style="color: inherit;">AK Blogs</a>
   </div>
   <div class="nav-right">
     <div style="position:absolute;width:0px;height:0px;">
       <div id="nav-dropdown-menu" class="hidden" href="#">
     <div class="nav-item">
-      <a aria-current="true" class="ancestor" href="/posts/"
+      <a aria-current="true" class="ancestor" href="/my-blog/posts/"
       >Posts</a>
     </div>
     <div class="nav-item">
@@ -59,7 +59,7 @@ Create &#39;deploy-k3s.yaml&#39; tee deploy-k3s.yaml &gt; /dev/null &lt;&lt;EOL 
       >Gallery</a>
     </div>
     <div class="nav-item">
-      <a href="/about/"
+      <a href="/my-blog/about/"
       >About</a>
     </div>
 </div>
@@ -70,7 +70,7 @@ Create &#39;deploy-k3s.yaml&#39; tee deploy-k3s.yaml &gt; /dev/null &lt;&lt;EOL 
 </a>
     <div id="nav-menu">
     <div class="nav-item">
-      <a aria-current="true" class="ancestor" href="/posts/"
+      <a aria-current="true" class="ancestor" href="/my-blog/posts/"
       >Posts</a>
     </div>
     <div class="nav-item">
@@ -78,7 +78,7 @@ Create &#39;deploy-k3s.yaml&#39; tee deploy-k3s.yaml &gt; /dev/null &lt;&lt;EOL 
       >Gallery</a>
     </div>
     <div class="nav-item">
-      <a href="/about/"
+      <a href="/my-blog/about/"
       >About</a>
     </div>
 </div>
@@ -99,14 +99,14 @@ Create &#39;deploy-k3s.yaml&#39; tee deploy-k3s.yaml &gt; /dev/null &lt;&lt;EOL 
         <main id="main-content"><div class="single-header">
 <ol class="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
     <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-      <a itemprop="item" href="//localhost:1313/">
+      <a itemprop="item" href="http://localhost:1313/my-blog/">
         <span itemprop="name">Home</span>
       </a>
       <meta itemprop="position" content='1' />
     </li>
     <span>&nbsp»&nbsp</span>
     <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-      <a itemprop="item" href="//localhost:1313/posts/">
+      <a itemprop="item" href="http://localhost:1313/my-blog/posts/">
         <span itemprop="name">Posts</span>
       </a>
       <meta itemprop="position" content='2' />
@@ -114,9 +114,9 @@ Create &#39;deploy-k3s.yaml&#39; tee deploy-k3s.yaml &gt; /dev/null &lt;&lt;EOL 
     <span>&nbsp»&nbsp</span>
 </ol>
 <h1>Kubernetes: Install K3s on Fedora</h1><time class="dim" datetime="2025-08-04T19:00:00&#43;10:00">August 4, 2025</time><div class="term-container"><div class="tag">
-        <a href="//localhost:1313/tags/k3s/">#k3s</a>
+        <a href="http://localhost:1313/my-blog/tags/k3s/">#k3s</a>
       </div><div class="tag">
-        <a href="//localhost:1313/tags/fedora/">#fedora</a>
+        <a href="http://localhost:1313/my-blog/tags/fedora/">#fedora</a>
       </div></ol></div>
   <section class="page-section"><p>A minimal and secure K3s setup on a Fedora host with proper firewalld rules and SELinux support.</p>
 <hr>
@@ -308,7 +308,7 @@ Create &#39;deploy-k3s.yaml&#39; tee deploy-k3s.yaml &gt; /dev/null &lt;&lt;EOL 
 <p><img src="https://images.unsplash.com/photo-1499744937866-d7e566a20a61?q=80&amp;w=2070&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="thank you"></p>
 </section></main>
         <footer id="main-footer">
-<script src="/js/copy-button.min.4876b98121977026b3ce53c9cb225d818299becf2f6ba9c345fdfbc99911d6dd.js" integrity="sha256-SHa5gSGXcCazzlPJyyJdgYKZvs8va6nDRf37yZkR1t0="></script>
+<script src="/my-blog/js/copy-button.min.4876b98121977026b3ce53c9cb225d818299becf2f6ba9c345fdfbc99911d6dd.js" integrity="sha256-SHa5gSGXcCazzlPJyyJdgYKZvs8va6nDRf37yZkR1t0="></script>
 </footer>
       </div><aside id="side-pane" class="side-sticky"><div class="side-content">
       <h3>Please note</h3><p>Code blocks can be EDITED before you copy</p>
@@ -316,10 +316,10 @@ Create &#39;deploy-k3s.yaml&#39; tee deploy-k3s.yaml &gt; /dev/null &lt;&lt;EOL 
     <span>501 words</span>
     <span>4 - 6 minutes read</span><div class="side-details-taxonomy">
         <small>series: 
-          <span class="details-taxonomy"><a href="//localhost:1313/series/kubernetes">kubernetes</a></span></small>
+          <span class="details-taxonomy"><a href="http://localhost:1313/my-blog/series/kubernetes">kubernetes</a></span></small>
       </div><div class="side-details-taxonomy">
         <small>topics: 
-          <span class="details-taxonomy"><a href="//localhost:1313/topics/deployment">deployment</a></span></small>
+          <span class="details-taxonomy"><a href="http://localhost:1313/my-blog/topics/deployment">deployment</a></span></small>
       </div></div><h3>Table Of Contents</h3><nav id="TableOfContents">
   <ul>
     <li><a href="#prerequisites">Prerequisites</a></li>
@@ -336,7 +336,7 @@ Create &#39;deploy-k3s.yaml&#39; tee deploy-k3s.yaml &gt; /dev/null &lt;&lt;EOL 
     <li><a href="#summary">Summary</a></li>
   </ul>
 </nav><h3>Related</h3>
-    <ul><li><a href="/posts/kubernetes/argocd-install/">ArgoCD: Installation</a></li></ul></aside></div>
+    <ul><li><a href="/my-blog/posts/kubernetes/argocd-install/">ArgoCD: Installation</a></li></ul></aside></div>
   </div>
 </body>
 </html>

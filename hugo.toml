@@ -1,4 +1,4 @@
-baseURL = '/'
+baseURL = "https://arslankhanali.github.io/my-blog/"
 languageCode = 'en-us'
 title = 'AK Blogs'
 theme = 'rusty-typewriter'

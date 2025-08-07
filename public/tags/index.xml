@@ -2,122 +2,122 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on AK Blogs</title>
-    <link>//localhost:1313/tags/</link>
+    <link>http://localhost:1313/my-blog/tags/</link>
     <description>Recent content in Tags on AK Blogs</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 07 Aug 2025 15:12:10 +1000</lastBuildDate>
-    <atom:link href="//localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/my-blog/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Gitops</title>
-      <link>//localhost:1313/tags/gitops/</link>
+      <link>http://localhost:1313/my-blog/tags/gitops/</link>
       <pubDate>Thu, 07 Aug 2025 15:12:10 +1000</pubDate>
-      <guid>//localhost:1313/tags/gitops/</guid>
+      <guid>http://localhost:1313/my-blog/tags/gitops/</guid>
       <description></description>
     </item>
     <item>
       <title>Kubernetes</title>
-      <link>//localhost:1313/tags/kubernetes/</link>
+      <link>http://localhost:1313/my-blog/tags/kubernetes/</link>
       <pubDate>Thu, 07 Aug 2025 15:12:10 +1000</pubDate>
-      <guid>//localhost:1313/tags/kubernetes/</guid>
+      <guid>http://localhost:1313/my-blog/tags/kubernetes/</guid>
       <description></description>
     </item>
     <item>
       <title>Devops</title>
-      <link>//localhost:1313/tags/devops/</link>
+      <link>http://localhost:1313/my-blog/tags/devops/</link>
       <pubDate>Wed, 06 Aug 2025 18:00:00 +1000</pubDate>
-      <guid>//localhost:1313/tags/devops/</guid>
+      <guid>http://localhost:1313/my-blog/tags/devops/</guid>
       <description></description>
     </item>
     <item>
       <title>Fedora</title>
-      <link>//localhost:1313/tags/fedora/</link>
+      <link>http://localhost:1313/my-blog/tags/fedora/</link>
       <pubDate>Mon, 04 Aug 2025 23:55:00 +1000</pubDate>
-      <guid>//localhost:1313/tags/fedora/</guid>
+      <guid>http://localhost:1313/my-blog/tags/fedora/</guid>
       <description></description>
     </item>
     <item>
       <title>Homeassistant</title>
-      <link>//localhost:1313/tags/homeassistant/</link>
+      <link>http://localhost:1313/my-blog/tags/homeassistant/</link>
       <pubDate>Mon, 04 Aug 2025 23:55:00 +1000</pubDate>
-      <guid>//localhost:1313/tags/homeassistant/</guid>
+      <guid>http://localhost:1313/my-blog/tags/homeassistant/</guid>
       <description></description>
     </item>
     <item>
       <title>Libvirt</title>
-      <link>//localhost:1313/tags/libvirt/</link>
+      <link>http://localhost:1313/my-blog/tags/libvirt/</link>
       <pubDate>Mon, 04 Aug 2025 23:55:00 +1000</pubDate>
-      <guid>//localhost:1313/tags/libvirt/</guid>
+      <guid>http://localhost:1313/my-blog/tags/libvirt/</guid>
       <description></description>
     </item>
     <item>
       <title>Ansible</title>
-      <link>//localhost:1313/tags/ansible/</link>
+      <link>http://localhost:1313/my-blog/tags/ansible/</link>
       <pubDate>Mon, 04 Aug 2025 22:50:00 +1000</pubDate>
-      <guid>//localhost:1313/tags/ansible/</guid>
+      <guid>http://localhost:1313/my-blog/tags/ansible/</guid>
       <description></description>
     </item>
     <item>
       <title>Macos</title>
-      <link>//localhost:1313/tags/macos/</link>
+      <link>http://localhost:1313/my-blog/tags/macos/</link>
       <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
-      <guid>//localhost:1313/tags/macos/</guid>
+      <guid>http://localhost:1313/my-blog/tags/macos/</guid>
       <description></description>
     </item>
     <item>
       <title>Powerlevel10k</title>
-      <link>//localhost:1313/tags/powerlevel10k/</link>
+      <link>http://localhost:1313/my-blog/tags/powerlevel10k/</link>
       <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
-      <guid>//localhost:1313/tags/powerlevel10k/</guid>
+      <guid>http://localhost:1313/my-blog/tags/powerlevel10k/</guid>
       <description></description>
     </item>
     <item>
       <title>Redhat</title>
-      <link>//localhost:1313/tags/redhat/</link>
+      <link>http://localhost:1313/my-blog/tags/redhat/</link>
       <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
-      <guid>//localhost:1313/tags/redhat/</guid>
+      <guid>http://localhost:1313/my-blog/tags/redhat/</guid>
       <description></description>
     </item>
     <item>
       <title>Squid-Proxy</title>
-      <link>//localhost:1313/tags/squid-proxy/</link>
+      <link>http://localhost:1313/my-blog/tags/squid-proxy/</link>
       <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
-      <guid>//localhost:1313/tags/squid-proxy/</guid>
+      <guid>http://localhost:1313/my-blog/tags/squid-proxy/</guid>
       <description></description>
     </item>
     <item>
       <title>Zsh</title>
-      <link>//localhost:1313/tags/zsh/</link>
+      <link>http://localhost:1313/my-blog/tags/zsh/</link>
       <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
-      <guid>//localhost:1313/tags/zsh/</guid>
+      <guid>http://localhost:1313/my-blog/tags/zsh/</guid>
       <description></description>
     </item>
     <item>
       <title>Ceph</title>
-      <link>//localhost:1313/tags/ceph/</link>
+      <link>http://localhost:1313/my-blog/tags/ceph/</link>
       <pubDate>Mon, 04 Aug 2025 21:45:00 +1000</pubDate>
-      <guid>//localhost:1313/tags/ceph/</guid>
+      <guid>http://localhost:1313/my-blog/tags/ceph/</guid>
       <description></description>
     </item>
     <item>
       <title>Haproxy</title>
-      <link>//localhost:1313/tags/haproxy/</link>
+      <link>http://localhost:1313/my-blog/tags/haproxy/</link>
       <pubDate>Mon, 04 Aug 2025 21:45:00 +1000</pubDate>
-      <guid>//localhost:1313/tags/haproxy/</guid>
+      <guid>http://localhost:1313/my-blog/tags/haproxy/</guid>
       <description></description>
     </item>
     <item>
       <title>K3s</title>
-      <link>//localhost:1313/tags/k3s/</link>
+      <link>http://localhost:1313/my-blog/tags/k3s/</link>
       <pubDate>Mon, 04 Aug 2025 20:00:00 +1000</pubDate>
-      <guid>//localhost:1313/tags/k3s/</guid>
+      <guid>http://localhost:1313/my-blog/tags/k3s/</guid>
       <description></description>
     </item>
     <item>
       <title>Argocd</title>
-      <link>//localhost:1313/tags/argocd/</link>
+      <link>http://localhost:1313/my-blog/tags/argocd/</link>
       <pubDate>Mon, 04 Aug 2025 14:31:23 +1000</pubDate>
-      <guid>//localhost:1313/tags/argocd/</guid>
+      <guid>http://localhost:1313/my-blog/tags/argocd/</guid>
       <description></description>
     </item>
   </channel>
