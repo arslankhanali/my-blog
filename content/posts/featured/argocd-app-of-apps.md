@@ -123,7 +123,7 @@ You can now stop the Timer. It tooks me < 1min to deploy everything.
 3. Deployed all components declaratively.
 
 This pattern allows full cluster rebuilds and updates via Git commits alone.
-![alt text]([/argocd-app-of-apps/argocd.png](https://raw.githubusercontent.com/arslankhanali/my-blog/refs/heads/main/static/argocd-app-of-apps/argocd.png))
+![alt text](https://github.com/arslankhanali/my-blog/blob/main/static/argocd-app-of-apps/argocd.png?raw=true)
 
 ---
 
