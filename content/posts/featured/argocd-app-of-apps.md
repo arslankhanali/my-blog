@@ -114,7 +114,15 @@ kubectl apply -f root-app.yaml
 3. 
 ![oprah](/argocd-app-of-apps/oprah.png)
 
+4.   
 {{< figure src="/argocd-app-of-apps/oprah.png" alt="oprah meme" caption="ArgoCD deploying everything" >}}
+
+5.  
+![oprah]({{ "/argocd-app-of-apps/oprah.png" | relURL }})
+
+6.   
+![oprah]({{ "argocd-app-of-apps/oprah.png" | relURL }})
+
 
 #### Access apps
 - Kubernetes Dashboard [k3s.node1](https://k3s.node1)

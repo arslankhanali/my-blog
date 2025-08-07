@@ -2,122 +2,87 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on AK Blogs</title>
-    <link>http://localhost:1313/my-blog/tags/</link>
+    <link>https://arslankhanali.github.io/my-blog/tags/</link>
     <description>Recent content in Tags on AK Blogs</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 Aug 2025 15:12:10 +1000</lastBuildDate>
-    <atom:link href="http://localhost:1313/my-blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 06 Aug 2025 18:00:00 +1000</lastBuildDate>
+    <atom:link href="https://arslankhanali.github.io/my-blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Devops</title>
+      <link>https://arslankhanali.github.io/my-blog/tags/devops/</link>
+      <pubDate>Wed, 06 Aug 2025 18:00:00 +1000</pubDate>
+      <guid>https://arslankhanali.github.io/my-blog/tags/devops/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Gitops</title>
-      <link>http://localhost:1313/my-blog/tags/gitops/</link>
-      <pubDate>Thu, 07 Aug 2025 15:12:10 +1000</pubDate>
-      <guid>http://localhost:1313/my-blog/tags/gitops/</guid>
+      <link>https://arslankhanali.github.io/my-blog/tags/gitops/</link>
+      <pubDate>Wed, 06 Aug 2025 18:00:00 +1000</pubDate>
+      <guid>https://arslankhanali.github.io/my-blog/tags/gitops/</guid>
       <description></description>
     </item>
     <item>
       <title>Kubernetes</title>
-      <link>http://localhost:1313/my-blog/tags/kubernetes/</link>
-      <pubDate>Thu, 07 Aug 2025 15:12:10 +1000</pubDate>
-      <guid>http://localhost:1313/my-blog/tags/kubernetes/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Devops</title>
-      <link>http://localhost:1313/my-blog/tags/devops/</link>
+      <link>https://arslankhanali.github.io/my-blog/tags/kubernetes/</link>
       <pubDate>Wed, 06 Aug 2025 18:00:00 +1000</pubDate>
-      <guid>http://localhost:1313/my-blog/tags/devops/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Fedora</title>
-      <link>http://localhost:1313/my-blog/tags/fedora/</link>
-      <pubDate>Mon, 04 Aug 2025 23:55:00 +1000</pubDate>
-      <guid>http://localhost:1313/my-blog/tags/fedora/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Homeassistant</title>
-      <link>http://localhost:1313/my-blog/tags/homeassistant/</link>
-      <pubDate>Mon, 04 Aug 2025 23:55:00 +1000</pubDate>
-      <guid>http://localhost:1313/my-blog/tags/homeassistant/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Libvirt</title>
-      <link>http://localhost:1313/my-blog/tags/libvirt/</link>
-      <pubDate>Mon, 04 Aug 2025 23:55:00 +1000</pubDate>
-      <guid>http://localhost:1313/my-blog/tags/libvirt/</guid>
+      <guid>https://arslankhanali.github.io/my-blog/tags/kubernetes/</guid>
       <description></description>
     </item>
     <item>
       <title>Ansible</title>
-      <link>http://localhost:1313/my-blog/tags/ansible/</link>
+      <link>https://arslankhanali.github.io/my-blog/tags/ansible/</link>
       <pubDate>Mon, 04 Aug 2025 22:50:00 +1000</pubDate>
-      <guid>http://localhost:1313/my-blog/tags/ansible/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Macos</title>
-      <link>http://localhost:1313/my-blog/tags/macos/</link>
-      <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
-      <guid>http://localhost:1313/my-blog/tags/macos/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Powerlevel10k</title>
-      <link>http://localhost:1313/my-blog/tags/powerlevel10k/</link>
-      <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
-      <guid>http://localhost:1313/my-blog/tags/powerlevel10k/</guid>
+      <guid>https://arslankhanali.github.io/my-blog/tags/ansible/</guid>
       <description></description>
     </item>
     <item>
       <title>Redhat</title>
-      <link>http://localhost:1313/my-blog/tags/redhat/</link>
+      <link>https://arslankhanali.github.io/my-blog/tags/redhat/</link>
       <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
-      <guid>http://localhost:1313/my-blog/tags/redhat/</guid>
+      <guid>https://arslankhanali.github.io/my-blog/tags/redhat/</guid>
       <description></description>
     </item>
     <item>
       <title>Squid-Proxy</title>
-      <link>http://localhost:1313/my-blog/tags/squid-proxy/</link>
+      <link>https://arslankhanali.github.io/my-blog/tags/squid-proxy/</link>
       <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
-      <guid>http://localhost:1313/my-blog/tags/squid-proxy/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Zsh</title>
-      <link>http://localhost:1313/my-blog/tags/zsh/</link>
-      <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
-      <guid>http://localhost:1313/my-blog/tags/zsh/</guid>
+      <guid>https://arslankhanali.github.io/my-blog/tags/squid-proxy/</guid>
       <description></description>
     </item>
     <item>
       <title>Ceph</title>
-      <link>http://localhost:1313/my-blog/tags/ceph/</link>
+      <link>https://arslankhanali.github.io/my-blog/tags/ceph/</link>
       <pubDate>Mon, 04 Aug 2025 21:45:00 +1000</pubDate>
-      <guid>http://localhost:1313/my-blog/tags/ceph/</guid>
+      <guid>https://arslankhanali.github.io/my-blog/tags/ceph/</guid>
       <description></description>
     </item>
     <item>
       <title>Haproxy</title>
-      <link>http://localhost:1313/my-blog/tags/haproxy/</link>
+      <link>https://arslankhanali.github.io/my-blog/tags/haproxy/</link>
       <pubDate>Mon, 04 Aug 2025 21:45:00 +1000</pubDate>
-      <guid>http://localhost:1313/my-blog/tags/haproxy/</guid>
+      <guid>https://arslankhanali.github.io/my-blog/tags/haproxy/</guid>
       <description></description>
     </item>
     <item>
       <title>K3s</title>
-      <link>http://localhost:1313/my-blog/tags/k3s/</link>
+      <link>https://arslankhanali.github.io/my-blog/tags/k3s/</link>
       <pubDate>Mon, 04 Aug 2025 20:00:00 +1000</pubDate>
-      <guid>http://localhost:1313/my-blog/tags/k3s/</guid>
+      <guid>https://arslankhanali.github.io/my-blog/tags/k3s/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fedora</title>
+      <link>https://arslankhanali.github.io/my-blog/tags/fedora/</link>
+      <pubDate>Mon, 04 Aug 2025 19:00:00 +1000</pubDate>
+      <guid>https://arslankhanali.github.io/my-blog/tags/fedora/</guid>
       <description></description>
     </item>
     <item>
       <title>Argocd</title>
-      <link>http://localhost:1313/my-blog/tags/argocd/</link>
+      <link>https://arslankhanali.github.io/my-blog/tags/argocd/</link>
       <pubDate>Mon, 04 Aug 2025 14:31:23 +1000</pubDate>
-      <guid>http://localhost:1313/my-blog/tags/argocd/</guid>
+      <guid>https://arslankhanali.github.io/my-blog/tags/argocd/</guid>
       <description></description>
     </item>
   </channel>

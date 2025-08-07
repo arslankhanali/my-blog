@@ -2,127 +2,94 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/my-blog/posts/featured/argocd-app-of-apps/</loc>
+    <loc>https://arslankhanali.github.io/my-blog/posts/featured/argocd-app-of-apps/</loc>
     <lastmod>2025-08-06T18:00:00+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/posts/ansible/ansible-quickstart-1/</loc>
+    <loc>https://arslankhanali.github.io/my-blog/posts/ansible/ansible-quickstart-1/</loc>
     <lastmod>2025-08-04T22:50:00+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/posts/homelab/ansible-fedora/</loc>
-    <lastmod>2025-08-04T22:50:00+10:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/my-blog/posts/homelab/terminal-zsh/</loc>
+    <loc>https://arslankhanali.github.io/my-blog/posts/random/squid-rh-lab/</loc>
     <lastmod>2025-08-04T22:00:00+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/posts/random/squid-rh-lab/</loc>
-    <lastmod>2025-08-04T22:00:00+10:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/my-blog/posts/random/haproxy-ceph-story/</loc>
+    <loc>https://arslankhanali.github.io/my-blog/posts/random/haproxy-ceph-story/</loc>
     <lastmod>2025-08-04T21:45:00+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/posts/kubernetes/k3s-dashboard/</loc>
+    <loc>https://arslankhanali.github.io/my-blog/posts/kubernetes/k3s-dashboard/</loc>
     <lastmod>2025-08-04T20:00:00+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/posts/kubernetes/k3s-install/</loc>
+    <loc>https://arslankhanali.github.io/my-blog/posts/kubernetes/k3s-install/</loc>
     <lastmod>2025-08-04T19:00:00+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/posts/kubernetes/argocd-install/</loc>
+    <loc>https://arslankhanali.github.io/my-blog/posts/kubernetes/argocd-install/</loc>
     <lastmod>2025-08-04T14:31:23+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/posts/homelab/haos-setup/</loc>
-    <lastmod>2025-08-04T23:55:00+10:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/my-blog/posts/ansible/ansible-quickstart-2/</loc>
-    <lastmod>2025-08-04T22:45:00+10:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/my-blog/posts/homelab/homelab-kubernetes/</loc>
+    <loc>https://arslankhanali.github.io/my-blog/</loc>
     <lastmod>2025-08-07T15:12:10+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/</loc>
+    <loc>https://arslankhanali.github.io/my-blog/posts/</loc>
     <lastmod>2025-08-07T15:12:10+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/topics/deployment/</loc>
-    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/my-blog/tags/gitops/</loc>
-    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/my-blog/series/homelab/</loc>
-    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/my-blog/tags/kubernetes/</loc>
-    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/my-blog/posts/</loc>
-    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/my-blog/series/</loc>
-    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/my-blog/tags/</loc>
-    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/my-blog/topics/</loc>
-    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/my-blog/tags/devops/</loc>
+    <loc>https://arslankhanali.github.io/my-blog/tags/devops/</loc>
     <lastmod>2025-08-06T18:00:00+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/series/pattern/</loc>
+    <loc>https://arslankhanali.github.io/my-blog/tags/gitops/</loc>
     <lastmod>2025-08-06T18:00:00+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/tags/fedora/</loc>
-    <lastmod>2025-08-04T23:55:00+10:00</lastmod>
+    <loc>https://arslankhanali.github.io/my-blog/tags/kubernetes/</loc>
+    <lastmod>2025-08-06T18:00:00+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/tags/homeassistant/</loc>
-    <lastmod>2025-08-04T23:55:00+10:00</lastmod>
+    <loc>https://arslankhanali.github.io/my-blog/series/pattern/</loc>
+    <lastmod>2025-08-06T18:00:00+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/tags/libvirt/</loc>
-    <lastmod>2025-08-04T23:55:00+10:00</lastmod>
+    <loc>https://arslankhanali.github.io/my-blog/series/</loc>
+    <lastmod>2025-08-06T18:00:00+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/tags/ansible/</loc>
+    <loc>https://arslankhanali.github.io/my-blog/tags/</loc>
+    <lastmod>2025-08-06T18:00:00+10:00</lastmod>
+  </url><url>
+    <loc>https://arslankhanali.github.io/my-blog/tags/ansible/</loc>
     <lastmod>2025-08-04T22:50:00+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/series/automation/</loc>
+    <loc>https://arslankhanali.github.io/my-blog/series/automation/</loc>
     <lastmod>2025-08-04T22:50:00+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/tags/macos/</loc>
+    <loc>https://arslankhanali.github.io/my-blog/series/networking/</loc>
     <lastmod>2025-08-04T22:00:00+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/series/networking/</loc>
+    <loc>https://arslankhanali.github.io/my-blog/tags/redhat/</loc>
     <lastmod>2025-08-04T22:00:00+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/tags/powerlevel10k/</loc>
+    <loc>https://arslankhanali.github.io/my-blog/tags/squid-proxy/</loc>
     <lastmod>2025-08-04T22:00:00+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/tags/redhat/</loc>
-    <lastmod>2025-08-04T22:00:00+10:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/my-blog/tags/squid-proxy/</loc>
-    <lastmod>2025-08-04T22:00:00+10:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/my-blog/tags/zsh/</loc>
-    <lastmod>2025-08-04T22:00:00+10:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/my-blog/tags/ceph/</loc>
+    <loc>https://arslankhanali.github.io/my-blog/tags/ceph/</loc>
     <lastmod>2025-08-04T21:45:00+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/tags/haproxy/</loc>
+    <loc>https://arslankhanali.github.io/my-blog/topics/deployment/</loc>
     <lastmod>2025-08-04T21:45:00+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/tags/k3s/</loc>
+    <loc>https://arslankhanali.github.io/my-blog/tags/haproxy/</loc>
+    <lastmod>2025-08-04T21:45:00+10:00</lastmod>
+  </url><url>
+    <loc>https://arslankhanali.github.io/my-blog/topics/</loc>
+    <lastmod>2025-08-04T21:45:00+10:00</lastmod>
+  </url><url>
+    <loc>https://arslankhanali.github.io/my-blog/tags/k3s/</loc>
     <lastmod>2025-08-04T20:00:00+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/series/kubernetes/</loc>
+    <loc>https://arslankhanali.github.io/my-blog/series/kubernetes/</loc>
     <lastmod>2025-08-04T20:00:00+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/tags/argocd/</loc>
+    <loc>https://arslankhanali.github.io/my-blog/tags/fedora/</loc>
+    <lastmod>2025-08-04T19:00:00+10:00</lastmod>
+  </url><url>
+    <loc>https://arslankhanali.github.io/my-blog/tags/argocd/</loc>
     <lastmod>2025-08-04T14:31:23+10:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/about/</loc>
+    <loc>https://arslankhanali.github.io/my-blog/about/</loc>
     <lastmod>2025-08-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/my-blog/search/</loc>
+    <loc>https://arslankhanali.github.io/my-blog/search/</loc>
     <lastmod>2025-08-02T00:00:00+00:00</lastmod>
   </url>
 </urlset>

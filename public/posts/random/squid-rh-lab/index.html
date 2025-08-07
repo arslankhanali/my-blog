@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-<head><script src="/my-blog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=my-blog/livereload" data-no-instant defer></script>
+<head>
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Squid Proxy: Access Remote Red Hat Lab Environment | AK Blogs</title>
-<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" /><meta property="og:url" content="http://localhost:1313/my-blog/posts/random/squid-rh-lab/">
+<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" /><meta property="og:url" content="https://arslankhanali.github.io/my-blog/posts/random/squid-rh-lab/">
   <meta property="og:site_name" content="AK Blogs">
   <meta property="og:title" content="Squid Proxy: Access Remote Red Hat Lab Environment">
   <meta property="og:description" content="This blog shows how to access URLs available only on a remote Red Hat lab environment from your local MacOS laptop using SSH tunneling and a Squid proxy.
@@ -19,7 +19,7 @@ Run these commands on your Mac terminal:
     <meta property="article:modified_time" content="2025-08-04T22:00:00+10:00">
     <meta property="article:tag" content="Squid-Proxy">
     <meta property="article:tag" content="Redhat">
-      <meta property="og:see_also" content="http://localhost:1313/my-blog/posts/random/haproxy-ceph-story/">
+      <meta property="og:see_also" content="https://arslankhanali.github.io/my-blog/posts/random/haproxy-ceph-story/">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Squid Proxy: Access Remote Red Hat Lab Environment">
@@ -28,12 +28,12 @@ Run these commands on your Mac terminal:
 Run these commands on your Mac terminal:
 # Move the downloaded key to your SSH folder mv ~/Downloads/rht_classroom.rsa ~/.ssh/ # Secure the key with correct permissions chmod 0600 ~/.ssh/rht_classroom.rsa # Add the key to your ssh-agent ssh-add ~/.ssh/rht_classroom.rsa Test SSH login to remote VM via jump host Replace IPs and ports if different:">
 
-    <link rel="stylesheet" href="/my-blog/css/custom.css">
-    <link rel="stylesheet" href="/my-blog/css/root.css">
-    <link rel="stylesheet" href="/my-blog/css/bundle.css">
+      <link rel="stylesheet" href="/my-blog/css/custom.min.f8f2f08282e8bf978b5c9b814f9ad258f3fc1c680bdc1eebb34776494403b8dd.css" integrity="sha256-&#43;PLwgoLov5eLXJuBT5rSWPP8HGgL3B7rs0d2SUQDuN0=" crossorigin="anonymous">
+      <link rel="stylesheet" href="/my-blog/css/root.min.0e732b812b9751962e01a7c4798a1211cd5f8ac8abec7f99793fe306989e459f.css" integrity="sha256-DnMrgSuXUZYuAafEeYoSEc1fisir7H&#43;ZeT/jBpieRZ8=" crossorigin="anonymous">
+      <link rel="stylesheet" href="/my-blog/css/bundle.min.f27a56e991be000b70f16c1055f85c5c8a52543dd12df8dc254055463a69e878.css" integrity="sha256-8npW6ZG&#43;AAtw8WwQVfhcXIpSVD3RLfjcJUBVRjpp6Hg=" crossorigin="anonymous">
 
-      <script src="/my-blog/js/copy-button.js"></script>
-      <script src="/my-blog/js/bundle.js"></script><script defer src="/my-blog/js/search/flexsearch.compact.64594b125f7b78bdf4fa8316955922bbebb1cd6baef3f16654bfca20309f18f8.js" integrity="sha256-ZFlLEl97eL30&#43;oMWlVkiu&#43;uxzWuu8/FmVL/KIDCfGPg="></script>
+      <script src="/my-blog/js/copy-button.caccbdbf274e161a59efd9bfb70b8f6837f907e125c891aed88b44ebad7533db.js" integrity="sha256-ysy9vydOFhpZ79m/twuPaDf5B&#43;ElyJGu2ItE6611M9s=" crossorigin="anonymous"></script>
+      <script src="/my-blog/js/bundle.934f9353a4755949390daf11509785f7f1211f8710e2ac20b3052873a637211c.js" integrity="sha256-k0&#43;TU6R1WUk5Da8RUJeF9/EhH4cQ4qwgswUoc6Y3IRw=" crossorigin="anonymous"></script><script defer src="/my-blog/js/search/flexsearch.compact.64594b125f7b78bdf4fa8316955922bbebb1cd6baef3f16654bfca20309f18f8.js" integrity="sha256-ZFlLEl97eL30&#43;oMWlVkiu&#43;uxzWuu8/FmVL/KIDCfGPg="></script>
 <script defer src="/my-blog/js/search/search.9730b626c5ab6ac8769c6f6b6c61a2fc8fb5ca58d17402093a74330ed7bf1494.js" integrity="sha256-lzC2JsWrash2nG9rbGGi/I&#43;1yljRdAIJOnQzDte/FJQ="></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,7 +46,7 @@ Run these commands on your Mac terminal:
   <div id="container">
     <header id="main-header"><div role="navigation" aria-label="Main">
   <div class="nav-left">
-    <a href="http://localhost:1313/my-blog/" style="color: inherit;">AK Blogs</a>
+    <a href="https://arslankhanali.github.io/my-blog/" style="color: inherit;">AK Blogs</a>
   </div>
   <div class="nav-right">
     <div style="position:absolute;width:0px;height:0px;">
@@ -100,14 +100,14 @@ Run these commands on your Mac terminal:
         <main id="main-content"><div class="single-header">
 <ol class="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
     <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-      <a itemprop="item" href="http://localhost:1313/my-blog/">
+      <a itemprop="item" href="https://arslankhanali.github.io/my-blog/">
         <span itemprop="name">Home</span>
       </a>
       <meta itemprop="position" content='1' />
     </li>
     <span>&nbsp»&nbsp</span>
     <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-      <a itemprop="item" href="http://localhost:1313/my-blog/posts/">
+      <a itemprop="item" href="https://arslankhanali.github.io/my-blog/posts/">
         <span itemprop="name">Posts</span>
       </a>
       <meta itemprop="position" content='2' />
@@ -115,9 +115,9 @@ Run these commands on your Mac terminal:
     <span>&nbsp»&nbsp</span>
 </ol>
 <h1>Squid Proxy: Access Remote Red Hat Lab Environment</h1><time class="dim" datetime="2025-08-04T22:00:00&#43;10:00">August 4, 2025</time><div class="term-container"><div class="tag">
-        <a href="http://localhost:1313/my-blog/tags/squid-proxy/">#squid-proxy</a>
+        <a href="https://arslankhanali.github.io/my-blog/tags/squid-proxy/">#squid-proxy</a>
       </div><div class="tag">
-        <a href="http://localhost:1313/my-blog/tags/redhat/">#redhat</a>
+        <a href="https://arslankhanali.github.io/my-blog/tags/redhat/">#redhat</a>
       </div></ol></div>
   <section class="page-section"><p>This blog shows how to access URLs available only on a remote Red Hat lab environment from your local MacOS laptop using SSH tunneling and a Squid proxy.</p>
 <hr>
@@ -198,10 +198,10 @@ If you get the error <code>Host key verification failed</code>, remove your know
     <span>372 words</span>
     <span>2 - 3 minutes read</span><div class="side-details-taxonomy">
         <small>series: 
-          <span class="details-taxonomy"><a href="http://localhost:1313/my-blog/series/networking">networking</a></span></small>
+          <span class="details-taxonomy"><a href="https://arslankhanali.github.io/my-blog/series/networking">networking</a></span></small>
       </div><div class="side-details-taxonomy">
         <small>topics: 
-          <span class="details-taxonomy"><a href="http://localhost:1313/my-blog/topics/"></a></span></small>
+          <span class="details-taxonomy"><a href="https://arslankhanali.github.io/my-blog/topics/"></a></span></small>
       </div></div><h3>Table Of Contents</h3><nav id="TableOfContents">
   <ul>
     <li><a href="#1-download-and-configure-ssh-key">1. Download and Configure SSH Key</a>
