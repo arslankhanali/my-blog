@@ -6,8 +6,29 @@
     <description>Recent content in Tags on AK Blogs</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 Aug 2025 15:12:10 +1000</lastBuildDate>
+    <lastBuildDate>Thu, 07 Aug 2025 20:53:55 +1000</lastBuildDate>
     <atom:link href="//localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fedora</title>
+      <link>//localhost:1313/tags/fedora/</link>
+      <pubDate>Thu, 07 Aug 2025 20:53:55 +1000</pubDate>
+      <guid>//localhost:1313/tags/fedora/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Install</title>
+      <link>//localhost:1313/tags/install/</link>
+      <pubDate>Thu, 07 Aug 2025 20:53:55 +1000</pubDate>
+      <guid>//localhost:1313/tags/install/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pihole</title>
+      <link>//localhost:1313/tags/pihole/</link>
+      <pubDate>Thu, 07 Aug 2025 20:53:55 +1000</pubDate>
+      <guid>//localhost:1313/tags/pihole/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Gitops</title>
       <link>//localhost:1313/tags/gitops/</link>
@@ -27,13 +48,6 @@
       <link>//localhost:1313/tags/devops/</link>
       <pubDate>Wed, 06 Aug 2025 18:00:00 +1000</pubDate>
       <guid>//localhost:1313/tags/devops/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Fedora</title>
-      <link>//localhost:1313/tags/fedora/</link>
-      <pubDate>Mon, 04 Aug 2025 23:55:00 +1000</pubDate>
-      <guid>//localhost:1313/tags/fedora/</guid>
       <description></description>
     </item>
     <item>
@@ -118,6 +132,13 @@
       <link>//localhost:1313/tags/argocd/</link>
       <pubDate>Mon, 04 Aug 2025 14:31:23 +1000</pubDate>
       <guid>//localhost:1313/tags/argocd/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Podman</title>
+      <link>//localhost:1313/tags/podman/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:1313/tags/podman/</guid>
       <description></description>
     </item>
   </channel>

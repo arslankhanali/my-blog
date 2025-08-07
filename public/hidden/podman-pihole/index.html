@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Podman: Pihole | AK Blogs</title>
+<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" /><meta property="og:url" content="//localhost:1313/hidden/podman-pihole/">
+  <meta property="og:site_name" content="AK Blogs">
+  <meta property="og:title" content="Podman: Pihole">
+  <meta property="og:description" content="What Pi-hole Does Pi-hole is a network-level ad blocker that acts as a DNS sinkhole. Here’s how to run it securely on your Fedora-based homelab using Podman and Traefik, with a clean and idempotent setup.
+Step-by-Step Setup 1. Prepare System # Create working directory mkdir ~/pihole &amp;&amp; cd ~/pihole 2. Allow Binding to Port 53 (as non-root) echo &#39;net.ipv4.ip_unprivileged_port_start=53&#39; | sudo tee -a /etc/sysctl.conf sudo sysctl -p # Reloads kernel parameters from the config /etc/sysctl.conf 3. Create podman-compose.yml tee ~/pihole/podman-compose.yml &gt; /dev/null &lt;&lt;&#39;EOL&#39; version: &#39;3&#39; services: pihole: container_name: pihole image: docker.io/pihole/pihole:latest restart: unless-stopped ports: - &#34;192.168.50.100:53:53/tcp&#34; # &lt;--- Change - &#34;192.168.50.100:53:53/udp&#34; # &lt;--- Change - &#34;192.168.50.100:8099:80/tcp&#34; # &lt;--- Change environment: TZ: &#34;Australia/Sydney&#34; FTLCONF_webserver_api_password: &#34;pihole&#34; # &lt;--- Change volumes: - pihole-etc:/etc/pihole - pihole-dnsmasq:/etc/dnsmasq.d cap_add: - NET_ADMIN dns: - 9.9.9.9 - 45.90.30.0 labels: - &#34;traefik.enable=true&#34; - &#34;traefik.http.routers.pihole.rule=Host(`pihole.node1`)&#34; # &lt;--- Change - &#34;traefik.http.routers.pihole.entrypoints=https&#34; - &#34;traefik.http.routers.pihole.tls=true&#34; - &#34;traefik.http.services.pihole.loadbalancer.server.port=80&#34; volumes: pihole-etc: pihole-dnsmasq: EOL 4. Deploy Pi-hole # Ensure clean state podman compose -f ~/pihole/podman-compose.yml down # Deploy podman compose -f ~/pihole/podman-compose.yml up -d --force-recreate Auto start # Allow the user&#39;s user services (like systemd --user) to run even when not logged in sudo loginctl enable-linger &#34;$USER&#34; # Enable and start the Podman API socket for the current user, required for systemd &#43; Podman integration systemctl --user enable --now podman.socket # Ensure the user systemd service directory exists mkdir -p ~/.config/systemd/user/ # Generate a systemd service unit file for the container containers=(pihole) # &lt;--- Change to your container name for name in &#34;${containers[@]}&#34;; do podman update --restart=no &#34;$name&#34; podman generate systemd --name &#34;$name&#34; --restart-policy=always --container-prefix=container --files mv &#34;container-$name.service&#34; ~/.config/systemd/user/ systemctl --user enable &#34;container-$name.service&#34; # systemctl --user start &#34;container-$name.service&#34; done systemctl --user daemon-reload 5. Post-deploy Actions # Check HTTP response curl -kI http://192.168.50.100:8099/admin/login # Set or reset password sudo podman exec -it pihole pihole setpassword 6. Open Firewall for DNS sudo firewall-cmd --permanent --add-service=dns sudo firewall-cmd --reload 7. Access Service Address Pi-hole UI https://pihole.node1 (via Traefik) Direct IP http://192.168.50.100:8099/admin 8. DNS: Enter your local DNS entries in pihole So you don’t have to add them manually to each devices /etc/hosts file">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="hidden">
+    <meta property="article:published_time" content="2025-08-07T20:53:55+10:00">
+    <meta property="article:modified_time" content="2025-08-07T20:53:55+10:00">
+    <meta property="article:tag" content="Pihole">
+    <meta property="article:tag" content="Install">
+    <meta property="article:tag" content="Fedora">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Podman: Pihole">
+  <meta name="twitter:description" content="What Pi-hole Does Pi-hole is a network-level ad blocker that acts as a DNS sinkhole. Here’s how to run it securely on your Fedora-based homelab using Podman and Traefik, with a clean and idempotent setup.
+Step-by-Step Setup 1. Prepare System # Create working directory mkdir ~/pihole &amp;&amp; cd ~/pihole 2. Allow Binding to Port 53 (as non-root) echo &#39;net.ipv4.ip_unprivileged_port_start=53&#39; | sudo tee -a /etc/sysctl.conf sudo sysctl -p # Reloads kernel parameters from the config /etc/sysctl.conf 3. Create podman-compose.yml tee ~/pihole/podman-compose.yml &gt; /dev/null &lt;&lt;&#39;EOL&#39; version: &#39;3&#39; services: pihole: container_name: pihole image: docker.io/pihole/pihole:latest restart: unless-stopped ports: - &#34;192.168.50.100:53:53/tcp&#34; # &lt;--- Change - &#34;192.168.50.100:53:53/udp&#34; # &lt;--- Change - &#34;192.168.50.100:8099:80/tcp&#34; # &lt;--- Change environment: TZ: &#34;Australia/Sydney&#34; FTLCONF_webserver_api_password: &#34;pihole&#34; # &lt;--- Change volumes: - pihole-etc:/etc/pihole - pihole-dnsmasq:/etc/dnsmasq.d cap_add: - NET_ADMIN dns: - 9.9.9.9 - 45.90.30.0 labels: - &#34;traefik.enable=true&#34; - &#34;traefik.http.routers.pihole.rule=Host(`pihole.node1`)&#34; # &lt;--- Change - &#34;traefik.http.routers.pihole.entrypoints=https&#34; - &#34;traefik.http.routers.pihole.tls=true&#34; - &#34;traefik.http.services.pihole.loadbalancer.server.port=80&#34; volumes: pihole-etc: pihole-dnsmasq: EOL 4. Deploy Pi-hole # Ensure clean state podman compose -f ~/pihole/podman-compose.yml down # Deploy podman compose -f ~/pihole/podman-compose.yml up -d --force-recreate Auto start # Allow the user&#39;s user services (like systemd --user) to run even when not logged in sudo loginctl enable-linger &#34;$USER&#34; # Enable and start the Podman API socket for the current user, required for systemd &#43; Podman integration systemctl --user enable --now podman.socket # Ensure the user systemd service directory exists mkdir -p ~/.config/systemd/user/ # Generate a systemd service unit file for the container containers=(pihole) # &lt;--- Change to your container name for name in &#34;${containers[@]}&#34;; do podman update --restart=no &#34;$name&#34; podman generate systemd --name &#34;$name&#34; --restart-policy=always --container-prefix=container --files mv &#34;container-$name.service&#34; ~/.config/systemd/user/ systemctl --user enable &#34;container-$name.service&#34; # systemctl --user start &#34;container-$name.service&#34; done systemctl --user daemon-reload 5. Post-deploy Actions # Check HTTP response curl -kI http://192.168.50.100:8099/admin/login # Set or reset password sudo podman exec -it pihole pihole setpassword 6. Open Firewall for DNS sudo firewall-cmd --permanent --add-service=dns sudo firewall-cmd --reload 7. Access Service Address Pi-hole UI https://pihole.node1 (via Traefik) Direct IP http://192.168.50.100:8099/admin 8. DNS: Enter your local DNS entries in pihole So you don’t have to add them manually to each devices /etc/hosts file">
+
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/root.css">
+    <link rel="stylesheet" href="/css/bundle.css">
+
+      <script src="/js/copy-button.js"></script>
+      <script src="/js/bundle.js"></script><script defer src="/js/search/flexsearch.compact.64594b125f7b78bdf4fa8316955922bbebb1cd6baef3f16654bfca20309f18f8.js" integrity="sha256-ZFlLEl97eL30&#43;oMWlVkiu&#43;uxzWuu8/FmVL/KIDCfGPg="></script>
+<script defer src="/js/search/search.1d980f84df11f3eb7c8c5f17f541d49a0611608df179dd74fa7f06225eb56ace.js" integrity="sha256-HZgPhN8R8&#43;t8jF8X9UHUmgYRYI3xed10&#43;n8GIl61as4="></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+
+</head>
+<body class="notransition">
+  <div id="container">
+    <header id="main-header"><div role="navigation" aria-label="Main">
+  <div class="nav-left">
+    <a href="//localhost:1313/" style="color: inherit;">AK Blogs</a>
+  </div>
+  <div class="nav-right">
+    <div style="position:absolute;width:0px;height:0px;">
+      <div id="nav-dropdown-menu" class="hidden" href="#">
+    <div class="nav-item">
+      <a href="/posts/"
+      >Posts</a>
+    </div>
+    <div class="nav-item">
+      <a href="/homelab/"
+      >Homelab</a>
+    </div>
+    <div class="nav-item">
+      <a aria-current="true" class="ancestor" href="/hidden/"
+      >Shadow</a>
+    </div>
+    <div class="nav-item">
+      <a href="/about/"
+      >About</a>
+    </div>
+</div>
+    </div>
+    <a id="nav-dropdown-button" href="#"><svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a>
+    <div id="nav-menu">
+    <div class="nav-item">
+      <a href="/posts/"
+      >Posts</a>
+    </div>
+    <div class="nav-item">
+      <a href="/homelab/"
+      >Homelab</a>
+    </div>
+    <div class="nav-item">
+      <a aria-current="true" class="ancestor" href="/hidden/"
+      >Shadow</a>
+    </div>
+    <div class="nav-item">
+      <a href="/about/"
+      >About</a>
+    </div>
+</div>
+    <a id="theme-switcher" href="#">
+<svg class="light-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 3V4M12 20V21M4 12H3M6.31412 6.31412L5.5 5.5M17.6859 6.31412L18.5 5.5M6.31412 17.69L5.5 18.5001M17.6859 17.69L18.5 18.5001M21 12H20M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+<svg class="dark-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.32031 11.6835C3.32031 16.6541 7.34975 20.6835 12.3203 20.6835C16.1075 20.6835 19.3483 18.3443 20.6768 15.032C19.6402 15.4486 18.5059 15.6834 17.3203 15.6834C12.3497 15.6834 8.32031 11.654 8.32031 6.68342C8.32031 5.50338 8.55165 4.36259 8.96453 3.32996C5.65605 4.66028 3.32031 7.89912 3.32031 11.6835Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a>
+  </div>
+</div>
+</header>
+    <div class="flex grow">
+      <div id="main-pane">
+        <main id="main-content"><div class="single-header">
+<ol class="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="//localhost:1313/">
+        <span itemprop="name">Home</span>
+      </a>
+      <meta itemprop="position" content='1' />
+    </li>
+    <span>&nbsp»&nbsp</span>
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="//localhost:1313/hidden/">
+        <span itemprop="name">Hiddens</span>
+      </a>
+      <meta itemprop="position" content='2' />
+    </li>
+    <span>&nbsp»&nbsp</span>
+</ol>
+<h1>Podman: Pihole</h1><time class="dim" datetime="2025-08-07T20:53:55&#43;10:00">August 7, 2025</time><div class="term-container"><div class="tag">
+        <a href="//localhost:1313/tags/pihole/">#pihole</a>
+      </div><div class="tag">
+        <a href="//localhost:1313/tags/install/">#install</a>
+      </div><div class="tag">
+        <a href="//localhost:1313/tags/fedora/">#fedora</a>
+      </div></ol></div>
+  <section class="page-section"><h2 id="what-pi-hole-does">What Pi-hole Does</h2>
+<p>Pi-hole is a network-level ad blocker that acts as a DNS sinkhole. Here&rsquo;s how to run it securely on your Fedora-based homelab using <strong>Podman</strong> and <strong>Traefik</strong>, with a clean and idempotent setup.</p>
+<hr>
+<h2 id="step-by-step-setup">Step-by-Step Setup</h2>
+<h3 id="1-prepare-system">1. Prepare System</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Create working directory</span>
+</span></span><span style="display:flex;"><span>mkdir ~/pihole <span style="color:#f92672">&amp;&amp;</span> cd ~/pihole
+</span></span></code></pre></div><h3 id="2-allow-binding-to-port-53-as-non-root">2. Allow Binding to Port 53 (as non-root)</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#39;net.ipv4.ip_unprivileged_port_start=53&#39;</span> | sudo tee -a /etc/sysctl.conf
+</span></span><span style="display:flex;"><span>sudo sysctl -p <span style="color:#75715e"># Reloads kernel parameters from the config /etc/sysctl.conf</span>
+</span></span></code></pre></div><hr>
+<h2 id="3-create-podman-composeyml">3. Create <code>podman-compose.yml</code></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="display:flex;"><span>tee ~/pihole/podman-compose.yml &gt; /dev/null &lt;&lt;<span style="color:#e6db74">&#39;EOL&#39;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>version: <span style="color:#e6db74">&#39;3&#39;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>services:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  pihole:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    container_name: pihole<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    image: docker.io/pihole/pihole:latest<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    restart: unless-stopped<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    ports:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - <span style="color:#e6db74">&#34;192.168.50.100:53:53/tcp&#34;</span>      <span style="color:#75715e"># &lt;--- Change</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - <span style="color:#e6db74">&#34;192.168.50.100:53:53/udp&#34;</span>      <span style="color:#75715e"># &lt;--- Change</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - <span style="color:#e6db74">&#34;192.168.50.100:8099:80/tcp&#34;</span>    <span style="color:#75715e"># &lt;--- Change</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    environment:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      TZ: <span style="color:#e6db74">&#34;Australia/Sydney&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      FTLCONF_webserver_api_password: <span style="color:#e6db74">&#34;pihole&#34;</span>  <span style="color:#75715e"># &lt;--- Change</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    volumes:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - pihole-etc:/etc/pihole<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - pihole-dnsmasq:/etc/dnsmasq.d<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    cap_add:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - NET_ADMIN<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    dns:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - 9.9.9.9<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - 45.90.30.0<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    labels:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - <span style="color:#e6db74">&#34;traefik.enable=true&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - <span style="color:#e6db74">&#34;traefik.http.routers.pihole.rule=Host(`pihole.node1`)&#34;</span> <span style="color:#75715e"># &lt;--- Change</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - <span style="color:#e6db74">&#34;traefik.http.routers.pihole.entrypoints=https&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - <span style="color:#e6db74">&#34;traefik.http.routers.pihole.tls=true&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>      - <span style="color:#e6db74">&#34;traefik.http.services.pihole.loadbalancer.server.port=80&#34;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>volumes:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  pihole-etc:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>  pihole-dnsmasq:<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>EOL<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><hr>
+<h2 id="4-deploy-pi-hole">4. Deploy Pi-hole</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Ensure clean state</span>
+</span></span><span style="display:flex;"><span>podman compose -f ~/pihole/podman-compose.yml down
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Deploy</span>
+</span></span><span style="display:flex;"><span>podman compose -f ~/pihole/podman-compose.yml up -d --force-recreate
+</span></span></code></pre></div><hr>
+<h4 id="auto-start">Auto start</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Allow the user&#39;s user services (like systemd --user) to run even when not logged in</span>
+</span></span><span style="display:flex;"><span>sudo loginctl enable-linger <span style="color:#e6db74">&#34;</span>$USER<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Enable and start the Podman API socket for the current user, required for systemd + Podman integration</span>
+</span></span><span style="display:flex;"><span>systemctl --user enable --now podman.socket
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Ensure the user systemd service directory exists</span>
+</span></span><span style="display:flex;"><span>mkdir -p ~/.config/systemd/user/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Generate a systemd service unit file for the container</span>
+</span></span><span style="display:flex;"><span>containers<span style="color:#f92672">=(</span>pihole<span style="color:#f92672">)</span> <span style="color:#75715e"># &lt;--- Change to your container name</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> name in <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>containers[@]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  podman update --restart<span style="color:#f92672">=</span>no <span style="color:#e6db74">&#34;</span>$name<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>  podman generate systemd --name <span style="color:#e6db74">&#34;</span>$name<span style="color:#e6db74">&#34;</span> --restart-policy<span style="color:#f92672">=</span>always --container-prefix<span style="color:#f92672">=</span>container --files
+</span></span><span style="display:flex;"><span>  mv <span style="color:#e6db74">&#34;container-</span>$name<span style="color:#e6db74">.service&#34;</span> ~/.config/systemd/user/
+</span></span><span style="display:flex;"><span>  systemctl --user enable <span style="color:#e6db74">&#34;container-</span>$name<span style="color:#e6db74">.service&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># systemctl --user start &#34;container-$name.service&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>systemctl --user daemon-reload
+</span></span></code></pre></div><h2 id="5-post-deploy-actions">5. Post-deploy Actions</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Check HTTP response</span>
+</span></span><span style="display:flex;"><span>curl -kI http://192.168.50.100:8099/admin/login
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Set or reset password</span>
+</span></span><span style="display:flex;"><span>sudo podman exec -it pihole pihole setpassword
+</span></span></code></pre></div><hr>
+<h2 id="6-open-firewall-for-dns">6. Open Firewall for DNS</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo firewall-cmd --permanent --add-service<span style="color:#f92672">=</span>dns
+</span></span><span style="display:flex;"><span>sudo firewall-cmd --reload
+</span></span></code></pre></div><hr>
+<h2 id="7-access">7. Access</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Service</th>
+          <th>Address</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Pi-hole UI</td>
+          <td><code>https://pihole.node1</code> (via Traefik)</td>
+      </tr>
+      <tr>
+          <td>Direct IP</td>
+          <td><code>http://192.168.50.100:8099/admin</code></td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="8-dns-enter-your-local-dns-entries-in-pihole">8. DNS: Enter your local DNS entries in pihole</h2>
+<p>So you don&rsquo;t have to add them manually to each devices <code>/etc/hosts</code> file</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>podman exec pihole sed -i <span style="color:#e6db74">&#39;s/^  etc_dnsmasq_d *= *.*/  etc_dnsmasq_d=true/&#39;</span> /etc/pihole/pihole.toml
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create custom_hosts.conf in /etc/dnsmasq.d/ with specific entries</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Add your hostnames below</span>
+</span></span><span style="display:flex;"><span>DOMAIN_SUFFIX<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;.node1&#34;</span>
+</span></span><span style="display:flex;"><span>IP<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;192.168.50.100&#34;</span>
+</span></span><span style="display:flex;"><span>HOSTS<span style="color:#f92672">=(</span>
+</span></span><span style="display:flex;"><span>  node1 homeassistant cockpit traefik pihole 
+</span></span><span style="display:flex;"><span>  jellyfin jellyseerr prowlarr sonarr radarr transmission flare-bypasser readarr
+</span></span><span style="display:flex;"><span>  calibre-web calibre wazuh homepage kavita nextcloud
+</span></span><span style="display:flex;"><span>  hello test test1 test2
+</span></span><span style="display:flex;"><span>  argocd k3s
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># address=/node1.localhost/192.168.50.100</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> host in <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>HOSTS[@]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  echo <span style="color:#e6db74">&#34;address=/</span><span style="color:#e6db74">${</span>host<span style="color:#e6db74">}${</span>DOMAIN_SUFFIX<span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">${</span>IP<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span> | podman exec -i pihole tee /etc/dnsmasq.d/custom_hosts.conf &gt; /dev/null
+</span></span></code></pre></div><p>Restart pihole pod</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Verify the contents of custom_hosts.conf</span>
+</span></span><span style="display:flex;"><span>podman exec -it pihole cat /etc/dnsmasq.d/custom_hosts.conf
+</span></span><span style="display:flex;"><span>podman exec -it pihole cat /etc/pihole/pihole.toml | grep etc_dnsmasq_d
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Restart the pihole container to apply changes</span>
+</span></span><span style="display:flex;"><span>podman restart pihole
+</span></span></code></pre></div><p>Undo All</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># undo</span>
+</span></span><span style="display:flex;"><span>podman exec -it pihole rm /etc/dnsmasq.d/custom_hosts.conf
+</span></span><span style="display:flex;"><span>podman exec pihole sed -i <span style="color:#e6db74">&#39;s/^  etc_dnsmasq_d *= *.*/  etc_dnsmasq_d=false/&#39;</span> /etc/pihole/pihole.toml
+</span></span></code></pre></div><h2 id="9-router">9. Router</h2>
+<p>Change Primary DNS in router to 192.168.50.100</p>
+<h2 id="10-summary">10. Summary</h2>
+<p>You now have a self-hosted, containerized Pi-hole setup running under Podman, fronted by Traefik, and configured for secure DNS resolution across your homelab.</p>
+<h2 id="11-delete">11. Delete</h2>
+<pre tabindex="0"><code>podman stop pihole
+podman rm pihole
+
+podman volume rm pihole-etc pihole-dnsmasq 
+rm -rf ~/pihole 
+
+podman rmi docker.io/pihole/pihole 
+
+sudo sed -i &#39;/net.ipv4.ip_unprivileged_port_start=53/d&#39; /etc/sysctl.conf 
+sudo sysctl -p 
+
+sudo firewall-cmd --permanent --remove-service=dns 
+sudo firewall-cmd --reload
+</code></pre><p><img src="https://images.unsplash.com/photo-1499744937866-d7e566a20a61?q=80&amp;w=2070&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="thank you"></p>
+</section></main>
+        <footer id="main-footer">
+<script src="/js/copy-button.min.4876b98121977026b3ce53c9cb225d818299becf2f6ba9c345fdfbc99911d6dd.js" integrity="sha256-SHa5gSGXcCazzlPJyyJdgYKZvs8va6nDRf37yZkR1t0="></script>
+</footer>
+      </div><aside id="side-pane" class="side-sticky"><div class="side-content">
+      <h3>Please note</h3><p>Code blocks can be EDITED before you copy</p>
+    </div><div class="side-details">
+    <span>540 words</span>
+    <span>4 - 5 minutes read</span><div class="side-details-taxonomy">
+        <small>series: 
+          <span class="details-taxonomy"><a href="//localhost:1313/series/podman">podman</a></span></small>
+      </div><div class="side-details-taxonomy">
+        <small>topics: 
+          <span class="details-taxonomy"><a href="//localhost:1313/topics/"></a></span></small>
+      </div></div><h3>Table Of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#what-pi-hole-does">What Pi-hole Does</a></li>
+    <li><a href="#step-by-step-setup">Step-by-Step Setup</a>
+      <ul>
+        <li><a href="#1-prepare-system">1. Prepare System</a></li>
+        <li><a href="#2-allow-binding-to-port-53-as-non-root">2. Allow Binding to Port 53 (as non-root)</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-create-podman-composeyml">3. Create <code>podman-compose.yml</code></a></li>
+    <li><a href="#4-deploy-pi-hole">4. Deploy Pi-hole</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#5-post-deploy-actions">5. Post-deploy Actions</a></li>
+    <li><a href="#6-open-firewall-for-dns">6. Open Firewall for DNS</a></li>
+    <li><a href="#7-access">7. Access</a></li>
+    <li><a href="#8-dns-enter-your-local-dns-entries-in-pihole">8. DNS: Enter your local DNS entries in pihole</a></li>
+    <li><a href="#9-router">9. Router</a></li>
+    <li><a href="#10-summary">10. Summary</a></li>
+    <li><a href="#11-delete">11. Delete</a></li>
+  </ul>
+</nav><h3>Related</h3>
+    <ul><li><a href="/homelab/haos-setup/">HomeLab: Home Assistant VM - Non-root deployment on Fedora</a></li><li><a href="/homelab/ansible-fedora/">Homelab: Initial setup for a Fedora VM</a></li><li><a href="/posts/kubernetes/k3s-install/">Kubernetes: Install K3s on Fedora</a></li></ul></aside></div>
+  </div>
+</body>
+</html>

@@ -2,22 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>//localhost:1313/hidden/podman-pihole/</loc>
+    <lastmod>2025-08-07T20:53:55+10:00</lastmod>
+  </url><url>
     <loc>//localhost:1313/posts/featured/argocd-app-of-apps/</loc>
     <lastmod>2025-08-06T18:00:00+10:00</lastmod>
   </url><url>
     <loc>//localhost:1313/posts/ansible/ansible-quickstart-1/</loc>
     <lastmod>2025-08-04T22:50:00+10:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/posts/homelab/ansible-fedora/</loc>
+    <loc>//localhost:1313/homelab/ansible-fedora/</loc>
     <lastmod>2025-08-04T22:50:00+10:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/posts/homelab/terminal-zsh/</loc>
+    <loc>//localhost:1313/homelab/terminal-zsh/</loc>
     <lastmod>2025-08-04T22:00:00+10:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/posts/random/squid-rh-lab/</loc>
+    <loc>//localhost:1313/posts/networks/squid-rh-lab/</loc>
     <lastmod>2025-08-04T22:00:00+10:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/posts/random/haproxy-ceph-story/</loc>
+    <loc>//localhost:1313/posts/networks/haproxy-ceph-story/</loc>
     <lastmod>2025-08-04T21:45:00+10:00</lastmod>
   </url><url>
     <loc>//localhost:1313/posts/kubernetes/k3s-dashboard/</loc>
@@ -29,17 +32,38 @@
     <loc>//localhost:1313/posts/kubernetes/argocd-install/</loc>
     <lastmod>2025-08-04T14:31:23+10:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/posts/homelab/haos-setup/</loc>
+    <loc>//localhost:1313/homelab/haos-setup/</loc>
     <lastmod>2025-08-04T23:55:00+10:00</lastmod>
   </url><url>
     <loc>//localhost:1313/posts/ansible/ansible-quickstart-2/</loc>
     <lastmod>2025-08-04T22:45:00+10:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/posts/homelab/homelab-kubernetes/</loc>
+    <loc>//localhost:1313/homelab/homelab-kubernetes/</loc>
     <lastmod>2025-08-07T15:12:10+10:00</lastmod>
   </url><url>
     <loc>//localhost:1313/</loc>
-    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
+    <lastmod>2025-08-07T20:53:55+10:00</lastmod>
+  </url><url>
+    <loc>//localhost:1313/tags/fedora/</loc>
+    <lastmod>2025-08-07T20:53:55+10:00</lastmod>
+  </url><url>
+    <loc>//localhost:1313/hidden/</loc>
+    <lastmod>2025-08-07T20:53:55+10:00</lastmod>
+  </url><url>
+    <loc>//localhost:1313/tags/install/</loc>
+    <lastmod>2025-08-07T20:53:55+10:00</lastmod>
+  </url><url>
+    <loc>//localhost:1313/tags/pihole/</loc>
+    <lastmod>2025-08-07T20:53:55+10:00</lastmod>
+  </url><url>
+    <loc>//localhost:1313/series/podman/</loc>
+    <lastmod>2025-08-07T20:53:55+10:00</lastmod>
+  </url><url>
+    <loc>//localhost:1313/series/</loc>
+    <lastmod>2025-08-07T20:53:55+10:00</lastmod>
+  </url><url>
+    <loc>//localhost:1313/tags/</loc>
+    <lastmod>2025-08-07T20:53:55+10:00</lastmod>
   </url><url>
     <loc>//localhost:1313/topics/deployment/</loc>
     <lastmod>2025-08-07T15:12:10+10:00</lastmod>
@@ -50,16 +74,10 @@
     <loc>//localhost:1313/series/homelab/</loc>
     <lastmod>2025-08-07T15:12:10+10:00</lastmod>
   </url><url>
+    <loc>//localhost:1313/homelab/</loc>
+    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
+  </url><url>
     <loc>//localhost:1313/tags/kubernetes/</loc>
-    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/posts/</loc>
-    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/series/</loc>
-    <lastmod>2025-08-07T15:12:10+10:00</lastmod>
-  </url><url>
-    <loc>//localhost:1313/tags/</loc>
     <lastmod>2025-08-07T15:12:10+10:00</lastmod>
   </url><url>
     <loc>//localhost:1313/topics/</loc>
@@ -71,8 +89,8 @@
     <loc>//localhost:1313/series/pattern/</loc>
     <lastmod>2025-08-06T18:00:00+10:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/fedora/</loc>
-    <lastmod>2025-08-04T23:55:00+10:00</lastmod>
+    <loc>//localhost:1313/posts/</loc>
+    <lastmod>2025-08-06T18:00:00+10:00</lastmod>
   </url><url>
     <loc>//localhost:1313/tags/homeassistant/</loc>
     <lastmod>2025-08-04T23:55:00+10:00</lastmod>
@@ -124,5 +142,9 @@
   </url><url>
     <loc>//localhost:1313/search/</loc>
     <lastmod>2025-08-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>//localhost:1313/hidden/random/</loc>
+  </url><url>
+    <loc>//localhost:1313/tags/podman/</loc>
   </url>
 </urlset>
