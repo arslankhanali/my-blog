@@ -103,26 +103,8 @@ This points to k3s right now
 ```bash
 kubectl apply -f root-app.yaml
 ```
-1. 
-![oprah](/my-blog/static/argocd-app-of-apps/oprah.png)
-
-
-2. 
-![oprah](/static/argocd-app-of-apps/oprah.png)
-
-
-3. 
-![oprah](/argocd-app-of-apps/oprah.png)
-
-4.   
-{{< figure src="/argocd-app-of-apps/oprah.png" alt="oprah meme" caption="ArgoCD deploying everything" >}}
-
-5.  
-![oprah]({{ "/argocd-app-of-apps/oprah.png" | relURL }})
-
-6.   
-![oprah]({{ "argocd-app-of-apps/oprah.png" | relURL }})
-
+   
+![oprah](https://raw.githubusercontent.com/arslankhanali/my-blog/refs/heads/main/static/argocd-app-of-apps/oprah.png)
 
 #### Access apps
 - Kubernetes Dashboard [k3s.node1](https://k3s.node1)
@@ -244,7 +226,7 @@ The ArgoCD App of Apps pattern offers a scalable, Git-driven blueprint for manag
 ├── root-app.yaml     # Root ARGOCD application
 └── values.yaml       # Deploy Argo with insecure access (needed for Ingress) & enable Helm for kustomize
 ```
-![as](/argocd-app-of-apps/flow1.png)
+![flow](https://github.com/arslankhanali/my-blog/blob/main/static/argocd-app-of-apps/flow1.png?raw=true)
 ### 1. `apps/` – Add your Apps in a folder here
 
 I have 3 apps here as an example : 

@@ -34,6 +34,7 @@ Follow instructions [here](https://gohugo.io/host-and-deploy/host-on-github-page
 ```sh
 hugo new content ~/Codes/my-blog/content/posts/the-title-you-want.md
 
+hugo --cleanDestinationDir
 git add -A
 git commit -m "Updated Site $time"
 git push

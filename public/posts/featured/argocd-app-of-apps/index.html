@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Mastering Kubernetes Deployments with the GitOps based App of Apps Pattern | AK Blogs</title>
-<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" /><meta property="og:url" content="https://arslankhanali.github.io/my-blog/posts/featured/argocd-app-of-apps/">
+<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" /><meta property="og:url" content="//localhost:1313/posts/featured/argocd-app-of-apps/">
   <meta property="og:site_name" content="AK Blogs">
   <meta property="og:title" content="Mastering Kubernetes Deployments with the GitOps based App of Apps Pattern">
   <meta property="og:description" content="Mastering Kubernetes Deployments with GitOps Managing multiple Kubernetes clusters and applications can get complex fast. GitOps helps tame this complexity—and the App of Apps pattern takes it to the next level with declarative, scalable, and automated infrastructure management.
@@ -24,13 +24,13 @@ Why Read this blog? To live like this What is GitOps? GitOps is a DevOps operati
   <meta name="twitter:description" content="Mastering Kubernetes Deployments with GitOps Managing multiple Kubernetes clusters and applications can get complex fast. GitOps helps tame this complexity—and the App of Apps pattern takes it to the next level with declarative, scalable, and automated infrastructure management.
 Why Read this blog? To live like this What is GitOps? GitOps is a DevOps operating model where Git is the single source of truth for declarative infrastructure and applications. Tools like Argo CD sync the state of your Kubernetes clusters to match Git, automatically and continuously.">
 
-      <link rel="stylesheet" href="/my-blog/css/custom.min.f8f2f08282e8bf978b5c9b814f9ad258f3fc1c680bdc1eebb34776494403b8dd.css" integrity="sha256-&#43;PLwgoLov5eLXJuBT5rSWPP8HGgL3B7rs0d2SUQDuN0=" crossorigin="anonymous">
-      <link rel="stylesheet" href="/my-blog/css/root.min.0e732b812b9751962e01a7c4798a1211cd5f8ac8abec7f99793fe306989e459f.css" integrity="sha256-DnMrgSuXUZYuAafEeYoSEc1fisir7H&#43;ZeT/jBpieRZ8=" crossorigin="anonymous">
-      <link rel="stylesheet" href="/my-blog/css/bundle.min.f27a56e991be000b70f16c1055f85c5c8a52543dd12df8dc254055463a69e878.css" integrity="sha256-8npW6ZG&#43;AAtw8WwQVfhcXIpSVD3RLfjcJUBVRjpp6Hg=" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/root.css">
+    <link rel="stylesheet" href="/css/bundle.css">
 
-      <script src="/my-blog/js/copy-button.caccbdbf274e161a59efd9bfb70b8f6837f907e125c891aed88b44ebad7533db.js" integrity="sha256-ysy9vydOFhpZ79m/twuPaDf5B&#43;ElyJGu2ItE6611M9s=" crossorigin="anonymous"></script>
-      <script src="/my-blog/js/bundle.934f9353a4755949390daf11509785f7f1211f8710e2ac20b3052873a637211c.js" integrity="sha256-k0&#43;TU6R1WUk5Da8RUJeF9/EhH4cQ4qwgswUoc6Y3IRw=" crossorigin="anonymous"></script><script defer src="/my-blog/js/search/flexsearch.compact.64594b125f7b78bdf4fa8316955922bbebb1cd6baef3f16654bfca20309f18f8.js" integrity="sha256-ZFlLEl97eL30&#43;oMWlVkiu&#43;uxzWuu8/FmVL/KIDCfGPg="></script>
-<script defer src="/my-blog/js/search/search.9730b626c5ab6ac8769c6f6b6c61a2fc8fb5ca58d17402093a74330ed7bf1494.js" integrity="sha256-lzC2JsWrash2nG9rbGGi/I&#43;1yljRdAIJOnQzDte/FJQ="></script>
+      <script src="/js/copy-button.js"></script>
+      <script src="/js/bundle.js"></script><script defer src="/js/search/flexsearch.compact.64594b125f7b78bdf4fa8316955922bbebb1cd6baef3f16654bfca20309f18f8.js" integrity="sha256-ZFlLEl97eL30&#43;oMWlVkiu&#43;uxzWuu8/FmVL/KIDCfGPg="></script>
+<script defer src="/js/search/search.1d980f84df11f3eb7c8c5f17f541d49a0611608df179dd74fa7f06225eb56ace.js" integrity="sha256-HZgPhN8R8&#43;t8jF8X9UHUmgYRYI3xed10&#43;n8GIl61as4="></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,13 +42,13 @@ Why Read this blog? To live like this What is GitOps? GitOps is a DevOps operati
   <div id="container">
     <header id="main-header"><div role="navigation" aria-label="Main">
   <div class="nav-left">
-    <a href="https://arslankhanali.github.io/my-blog/" style="color: inherit;">AK Blogs</a>
+    <a href="//localhost:1313/" style="color: inherit;">AK Blogs</a>
   </div>
   <div class="nav-right">
     <div style="position:absolute;width:0px;height:0px;">
       <div id="nav-dropdown-menu" class="hidden" href="#">
     <div class="nav-item">
-      <a aria-current="true" class="ancestor" href="/my-blog/posts/"
+      <a aria-current="true" class="ancestor" href="/posts/"
       >Posts</a>
     </div>
     <div class="nav-item">
@@ -56,7 +56,7 @@ Why Read this blog? To live like this What is GitOps? GitOps is a DevOps operati
       >Gallery</a>
     </div>
     <div class="nav-item">
-      <a href="/my-blog/about/"
+      <a href="/about/"
       >About</a>
     </div>
 </div>
@@ -67,7 +67,7 @@ Why Read this blog? To live like this What is GitOps? GitOps is a DevOps operati
 </a>
     <div id="nav-menu">
     <div class="nav-item">
-      <a aria-current="true" class="ancestor" href="/my-blog/posts/"
+      <a aria-current="true" class="ancestor" href="/posts/"
       >Posts</a>
     </div>
     <div class="nav-item">
@@ -75,7 +75,7 @@ Why Read this blog? To live like this What is GitOps? GitOps is a DevOps operati
       >Gallery</a>
     </div>
     <div class="nav-item">
-      <a href="/my-blog/about/"
+      <a href="/about/"
       >About</a>
     </div>
 </div>
@@ -96,14 +96,14 @@ Why Read this blog? To live like this What is GitOps? GitOps is a DevOps operati
         <main id="main-content"><div class="single-header">
 <ol class="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
     <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-      <a itemprop="item" href="https://arslankhanali.github.io/my-blog/">
+      <a itemprop="item" href="//localhost:1313/">
         <span itemprop="name">Home</span>
       </a>
       <meta itemprop="position" content='1' />
     </li>
     <span>&nbsp»&nbsp</span>
     <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-      <a itemprop="item" href="https://arslankhanali.github.io/my-blog/posts/">
+      <a itemprop="item" href="//localhost:1313/posts/">
         <span itemprop="name">Posts</span>
       </a>
       <meta itemprop="position" content='2' />
@@ -111,11 +111,11 @@ Why Read this blog? To live like this What is GitOps? GitOps is a DevOps operati
     <span>&nbsp»&nbsp</span>
 </ol>
 <h1>Mastering Kubernetes Deployments with the GitOps based App of Apps Pattern</h1><time class="dim" datetime="2025-08-06T18:00:00&#43;10:00">August 6, 2025</time><div class="term-container"><div class="tag">
-        <a href="https://arslankhanali.github.io/my-blog/tags/gitops/">#gitops</a>
+        <a href="//localhost:1313/tags/gitops/">#gitops</a>
       </div><div class="tag">
-        <a href="https://arslankhanali.github.io/my-blog/tags/kubernetes/">#kubernetes</a>
+        <a href="//localhost:1313/tags/kubernetes/">#kubernetes</a>
       </div><div class="tag">
-        <a href="https://arslankhanali.github.io/my-blog/tags/devops/">#devops</a>
+        <a href="//localhost:1313/tags/devops/">#devops</a>
       </div></ol></div>
   <section class="page-section"><h1 id="mastering-kubernetes-deployments-with-gitops">Mastering Kubernetes Deployments with GitOps</h1>
 <p>Managing multiple Kubernetes clusters and applications can get complex fast. <strong>GitOps</strong> helps tame this complexity—and the <strong>App of Apps pattern</strong> takes it to the next level with declarative, scalable, and automated infrastructure management.</p>
@@ -187,35 +187,7 @@ Why Read this blog? To live like this What is GitOps? GitOps is a DevOps operati
 </span></span></code></pre></div><h2 id="4-unleash-everything">4. Unleash everything</h2>
 <p>This points to k3s right now</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kubectl apply -f root-app.yaml
-</span></span></code></pre></div><ol>
-<li></li>
-</ol>
-<p><img src="/my-blog/static/argocd-app-of-apps/oprah.png" alt="oprah"></p>
-<ol start="2">
-<li></li>
-</ol>
-<p><img src="/static/argocd-app-of-apps/oprah.png" alt="oprah"></p>
-<ol start="3">
-<li></li>
-</ol>
-<p><img src="/argocd-app-of-apps/oprah.png" alt="oprah"></p>
-<ol start="4">
-<li></li>
-</ol>
-<figure><img src="/argocd-app-of-apps/oprah.png"
-    alt="oprah meme"><figcaption>
-      <p>ArgoCD deploying everything</p>
-    </figcaption>
-</figure>
-
-<ol start="5">
-<li></li>
-</ol>
-<p>![oprah]({{ &ldquo;/argocd-app-of-apps/oprah.png&rdquo; | relURL }})</p>
-<ol start="6">
-<li></li>
-</ol>
-<p>![oprah]({{ &ldquo;argocd-app-of-apps/oprah.png&rdquo; | relURL }})</p>
+</span></span></code></pre></div><p><img src="https://raw.githubusercontent.com/arslankhanali/my-blog/refs/heads/main/static/argocd-app-of-apps/oprah.png" alt="oprah"></p>
 <h4 id="access-apps">Access apps</h4>
 <ul>
 <li>Kubernetes Dashboard <a href="https://k3s.node1">k3s.node1</a></li>
@@ -325,7 +297,7 @@ kubectl get secret admin-user -n kubernetes-dashboard -o jsonpath=&#34;{.data.to
 </span></span><span style="display:flex;"><span>├── README.md
 </span></span><span style="display:flex;"><span>├── root-app.yaml     <span style="color:#75715e"># Root ARGOCD application</span>
 </span></span><span style="display:flex;"><span>└── values.yaml       <span style="color:#75715e"># Deploy Argo with insecure access (needed for Ingress) &amp; enable Helm for kustomize</span>
-</span></span></code></pre></div><p><img src="/argocd-app-of-apps/flow1.png" alt="as"></p>
+</span></span></code></pre></div><p><img src="https://github.com/arslankhanali/my-blog/blob/main/static/argocd-app-of-apps/flow1.png?raw=true" alt="flow"></p>
 <h3 id="1-apps--add-your-apps-in-a-folder-here">1. <code>apps/</code> – Add your Apps in a folder here</h3>
 <p>I have 3 apps here as an example :</p>
 <ul>
@@ -363,18 +335,18 @@ kubectl get secret admin-user -n kubernetes-dashboard -o jsonpath=&#34;{.data.to
 <p>This <code>top-level ArgoCD Application</code> points to env/{k3s} and deploys all children <code>ArgoCD Application</code> in it.</p>
 </section></main>
         <footer id="main-footer">
-<script src="/my-blog/js/copy-button.min.4876b98121977026b3ce53c9cb225d818299becf2f6ba9c345fdfbc99911d6dd.js" integrity="sha256-SHa5gSGXcCazzlPJyyJdgYKZvs8va6nDRf37yZkR1t0="></script>
+<script src="/js/copy-button.min.4876b98121977026b3ce53c9cb225d818299becf2f6ba9c345fdfbc99911d6dd.js" integrity="sha256-SHa5gSGXcCazzlPJyyJdgYKZvs8va6nDRf37yZkR1t0="></script>
 </footer>
       </div><aside id="side-pane" class="side-sticky"><div class="side-content">
       <h3>Please note</h3><p>Code blocks can be EDITED before you copy</p>
     </div><div class="side-details">
-    <span>1077 words</span>
+    <span>1064 words</span>
     <span>8 - 10 minutes read</span><div class="side-details-taxonomy">
         <small>series: 
-          <span class="details-taxonomy"><a href="https://arslankhanali.github.io/my-blog/series/pattern">pattern</a></span></small>
+          <span class="details-taxonomy"><a href="//localhost:1313/series/pattern">pattern</a></span></small>
       </div><div class="side-details-taxonomy">
         <small>topics: 
-          <span class="details-taxonomy"><a href="https://arslankhanali.github.io/my-blog/topics/"></a></span></small>
+          <span class="details-taxonomy"><a href="//localhost:1313/topics/"></a></span></small>
       </div></div><h3>Table Of Contents</h3><nav id="TableOfContents">
   <ul>
     <li><a href="#why-read-this-blog">Why Read this blog?</a></li>

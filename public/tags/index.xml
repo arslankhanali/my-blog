@@ -2,87 +2,122 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on AK Blogs</title>
-    <link>https://arslankhanali.github.io/my-blog/tags/</link>
+    <link>//localhost:1313/tags/</link>
     <description>Recent content in Tags on AK Blogs</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 06 Aug 2025 18:00:00 +1000</lastBuildDate>
-    <atom:link href="https://arslankhanali.github.io/my-blog/tags/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Devops</title>
-      <link>https://arslankhanali.github.io/my-blog/tags/devops/</link>
-      <pubDate>Wed, 06 Aug 2025 18:00:00 +1000</pubDate>
-      <guid>https://arslankhanali.github.io/my-blog/tags/devops/</guid>
-      <description></description>
-    </item>
+    <lastBuildDate>Thu, 07 Aug 2025 15:12:10 +1000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Gitops</title>
-      <link>https://arslankhanali.github.io/my-blog/tags/gitops/</link>
-      <pubDate>Wed, 06 Aug 2025 18:00:00 +1000</pubDate>
-      <guid>https://arslankhanali.github.io/my-blog/tags/gitops/</guid>
+      <link>//localhost:1313/tags/gitops/</link>
+      <pubDate>Thu, 07 Aug 2025 15:12:10 +1000</pubDate>
+      <guid>//localhost:1313/tags/gitops/</guid>
       <description></description>
     </item>
     <item>
       <title>Kubernetes</title>
-      <link>https://arslankhanali.github.io/my-blog/tags/kubernetes/</link>
+      <link>//localhost:1313/tags/kubernetes/</link>
+      <pubDate>Thu, 07 Aug 2025 15:12:10 +1000</pubDate>
+      <guid>//localhost:1313/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Devops</title>
+      <link>//localhost:1313/tags/devops/</link>
       <pubDate>Wed, 06 Aug 2025 18:00:00 +1000</pubDate>
-      <guid>https://arslankhanali.github.io/my-blog/tags/kubernetes/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Ansible</title>
-      <link>https://arslankhanali.github.io/my-blog/tags/ansible/</link>
-      <pubDate>Mon, 04 Aug 2025 22:50:00 +1000</pubDate>
-      <guid>https://arslankhanali.github.io/my-blog/tags/ansible/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Redhat</title>
-      <link>https://arslankhanali.github.io/my-blog/tags/redhat/</link>
-      <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
-      <guid>https://arslankhanali.github.io/my-blog/tags/redhat/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Squid-Proxy</title>
-      <link>https://arslankhanali.github.io/my-blog/tags/squid-proxy/</link>
-      <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
-      <guid>https://arslankhanali.github.io/my-blog/tags/squid-proxy/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Ceph</title>
-      <link>https://arslankhanali.github.io/my-blog/tags/ceph/</link>
-      <pubDate>Mon, 04 Aug 2025 21:45:00 +1000</pubDate>
-      <guid>https://arslankhanali.github.io/my-blog/tags/ceph/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Haproxy</title>
-      <link>https://arslankhanali.github.io/my-blog/tags/haproxy/</link>
-      <pubDate>Mon, 04 Aug 2025 21:45:00 +1000</pubDate>
-      <guid>https://arslankhanali.github.io/my-blog/tags/haproxy/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>K3s</title>
-      <link>https://arslankhanali.github.io/my-blog/tags/k3s/</link>
-      <pubDate>Mon, 04 Aug 2025 20:00:00 +1000</pubDate>
-      <guid>https://arslankhanali.github.io/my-blog/tags/k3s/</guid>
+      <guid>//localhost:1313/tags/devops/</guid>
       <description></description>
     </item>
     <item>
       <title>Fedora</title>
-      <link>https://arslankhanali.github.io/my-blog/tags/fedora/</link>
-      <pubDate>Mon, 04 Aug 2025 19:00:00 +1000</pubDate>
-      <guid>https://arslankhanali.github.io/my-blog/tags/fedora/</guid>
+      <link>//localhost:1313/tags/fedora/</link>
+      <pubDate>Mon, 04 Aug 2025 23:55:00 +1000</pubDate>
+      <guid>//localhost:1313/tags/fedora/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Homeassistant</title>
+      <link>//localhost:1313/tags/homeassistant/</link>
+      <pubDate>Mon, 04 Aug 2025 23:55:00 +1000</pubDate>
+      <guid>//localhost:1313/tags/homeassistant/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Libvirt</title>
+      <link>//localhost:1313/tags/libvirt/</link>
+      <pubDate>Mon, 04 Aug 2025 23:55:00 +1000</pubDate>
+      <guid>//localhost:1313/tags/libvirt/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ansible</title>
+      <link>//localhost:1313/tags/ansible/</link>
+      <pubDate>Mon, 04 Aug 2025 22:50:00 +1000</pubDate>
+      <guid>//localhost:1313/tags/ansible/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Macos</title>
+      <link>//localhost:1313/tags/macos/</link>
+      <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
+      <guid>//localhost:1313/tags/macos/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Powerlevel10k</title>
+      <link>//localhost:1313/tags/powerlevel10k/</link>
+      <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
+      <guid>//localhost:1313/tags/powerlevel10k/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Redhat</title>
+      <link>//localhost:1313/tags/redhat/</link>
+      <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
+      <guid>//localhost:1313/tags/redhat/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Squid-Proxy</title>
+      <link>//localhost:1313/tags/squid-proxy/</link>
+      <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
+      <guid>//localhost:1313/tags/squid-proxy/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Zsh</title>
+      <link>//localhost:1313/tags/zsh/</link>
+      <pubDate>Mon, 04 Aug 2025 22:00:00 +1000</pubDate>
+      <guid>//localhost:1313/tags/zsh/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ceph</title>
+      <link>//localhost:1313/tags/ceph/</link>
+      <pubDate>Mon, 04 Aug 2025 21:45:00 +1000</pubDate>
+      <guid>//localhost:1313/tags/ceph/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Haproxy</title>
+      <link>//localhost:1313/tags/haproxy/</link>
+      <pubDate>Mon, 04 Aug 2025 21:45:00 +1000</pubDate>
+      <guid>//localhost:1313/tags/haproxy/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>K3s</title>
+      <link>//localhost:1313/tags/k3s/</link>
+      <pubDate>Mon, 04 Aug 2025 20:00:00 +1000</pubDate>
+      <guid>//localhost:1313/tags/k3s/</guid>
       <description></description>
     </item>
     <item>
       <title>Argocd</title>
-      <link>https://arslankhanali.github.io/my-blog/tags/argocd/</link>
+      <link>//localhost:1313/tags/argocd/</link>
       <pubDate>Mon, 04 Aug 2025 14:31:23 +1000</pubDate>
-      <guid>https://arslankhanali.github.io/my-blog/tags/argocd/</guid>
+      <guid>//localhost:1313/tags/argocd/</guid>
       <description></description>
     </item>
   </channel>
