@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Arr Stack - Configuration | AK Blogs</title>
+<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" /><meta property="og:url" content="//localhost:1313/hidden/podman-arr-stack-configuration/">
+  <meta property="og:site_name" content="AK Blogs">
+  <meta property="og:title" content="Arr Stack - Configuration">
+  <meta property="og:description" content="Introduction The “Arr stack” is a popular set of applications for automating your media library. This blog post will walk you through configuring a basic Arr stack using Podman on your homelab. We’ll cover Jellyfin for media streaming, Jellyserr for integrating services, Prowlarr for managing indexers, and Sonarr and Radarr for automating TV and movie downloads. This setup provides a simple yet powerful way to manage your media. 🚀
+Configuring the Arr Stack Basic flow about how each service talks to each other">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="hidden">
+    <meta property="article:published_time" content="2025-08-08T17:18:26+10:00">
+    <meta property="article:modified_time" content="2025-08-08T17:18:26+10:00">
+    <meta property="article:tag" content="Arr-Stack">
+    <meta property="article:tag" content="Podman">
+    <meta property="article:tag" content="Homelab">
+      <meta property="og:see_also" content="//localhost:1313/hidden/podman-arr-stack/">
+      <meta property="og:see_also" content="//localhost:1313/hidden/podman-101/">
+      <meta property="og:see_also" content="//localhost:1313/hidden/podman-traefik/">
+      <meta property="og:see_also" content="//localhost:1313/homelab/ansible-fedora/">
+      <meta property="og:see_also" content="//localhost:1313/homelab/terminal-zsh/">
+      <meta property="og:see_also" content="//localhost:1313/homelab/homeassistant-setup/">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Arr Stack - Configuration">
+  <meta name="twitter:description" content="Introduction The “Arr stack” is a popular set of applications for automating your media library. This blog post will walk you through configuring a basic Arr stack using Podman on your homelab. We’ll cover Jellyfin for media streaming, Jellyserr for integrating services, Prowlarr for managing indexers, and Sonarr and Radarr for automating TV and movie downloads. This setup provides a simple yet powerful way to manage your media. 🚀
+Configuring the Arr Stack Basic flow about how each service talks to each other">
+
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/root.css">
+    <link rel="stylesheet" href="/css/bundle.css">
+
+      <script src="/js/copy-button.js"></script>
+      <script src="/js/bundle.js"></script><script defer src="/js/search/flexsearch.compact.64594b125f7b78bdf4fa8316955922bbebb1cd6baef3f16654bfca20309f18f8.js" integrity="sha256-ZFlLEl97eL30&#43;oMWlVkiu&#43;uxzWuu8/FmVL/KIDCfGPg="></script>
+<script defer src="/js/search/search.1d980f84df11f3eb7c8c5f17f541d49a0611608df179dd74fa7f06225eb56ace.js" integrity="sha256-HZgPhN8R8&#43;t8jF8X9UHUmgYRYI3xed10&#43;n8GIl61as4="></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+
+</head>
+<body class="notransition">
+  <div id="container">
+    <header id="main-header"><div role="navigation" aria-label="Main">
+  <div class="nav-left">
+    <a href="//localhost:1313/" style="color: inherit;">AK Blogs</a>
+  </div>
+  <div class="nav-right">
+    <div style="position:absolute;width:0px;height:0px;">
+      <div id="nav-dropdown-menu" class="hidden" href="#">
+    <div class="nav-item">
+      <a href="/posts/"
+      >Posts</a>
+    </div>
+    <div class="nav-item">
+      <a href="/homelab/"
+      >Homelab</a>
+    </div>
+    <div class="nav-item">
+      <a aria-current="true" class="ancestor" href="/hidden/"
+      >Shadow</a>
+    </div>
+    <div class="nav-item">
+      <a href="/about/"
+      >About</a>
+    </div>
+</div>
+    </div>
+    <a id="nav-dropdown-button" href="#"><svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a>
+    <div id="nav-menu">
+    <div class="nav-item">
+      <a href="/posts/"
+      >Posts</a>
+    </div>
+    <div class="nav-item">
+      <a href="/homelab/"
+      >Homelab</a>
+    </div>
+    <div class="nav-item">
+      <a aria-current="true" class="ancestor" href="/hidden/"
+      >Shadow</a>
+    </div>
+    <div class="nav-item">
+      <a href="/about/"
+      >About</a>
+    </div>
+</div>
+    <a id="theme-switcher" href="#">
+<svg class="light-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 3V4M12 20V21M4 12H3M6.31412 6.31412L5.5 5.5M17.6859 6.31412L18.5 5.5M6.31412 17.69L5.5 18.5001M17.6859 17.69L18.5 18.5001M21 12H20M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+<svg class="dark-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.32031 11.6835C3.32031 16.6541 7.34975 20.6835 12.3203 20.6835C16.1075 20.6835 19.3483 18.3443 20.6768 15.032C19.6402 15.4486 18.5059 15.6834 17.3203 15.6834C12.3497 15.6834 8.32031 11.654 8.32031 6.68342C8.32031 5.50338 8.55165 4.36259 8.96453 3.32996C5.65605 4.66028 3.32031 7.89912 3.32031 11.6835Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a>
+  </div>
+</div>
+</header>
+    <div class="flex grow">
+      <div id="main-pane">
+        <main id="main-content"><div class="single-header">
+<ol class="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="//localhost:1313/">
+        <span itemprop="name">Home</span>
+      </a>
+      <meta itemprop="position" content='1' />
+    </li>
+    <span>&nbsp»&nbsp</span>
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="//localhost:1313/hidden/">
+        <span itemprop="name">Hiddens</span>
+      </a>
+      <meta itemprop="position" content='2' />
+    </li>
+    <span>&nbsp»&nbsp</span>
+</ol>
+<h1>Arr Stack - Configuration</h1><time class="dim" datetime="2025-08-08T17:18:26&#43;10:00">August 8, 2025</time><div class="term-container"><div class="tag">
+        <a href="//localhost:1313/tags/arr-stack/">#arr-stack</a>
+      </div><div class="tag">
+        <a href="//localhost:1313/tags/podman/">#podman</a>
+      </div><div class="tag">
+        <a href="//localhost:1313/tags/homelab/">#homelab</a>
+      </div></ol></div>
+  <section class="page-section"><h2 id="introduction">Introduction</h2>
+<p>The &ldquo;Arr stack&rdquo; is a popular set of applications for automating your media library. This blog post will walk you through configuring a basic Arr stack using <strong>Podman</strong> on your homelab. We&rsquo;ll cover <strong>Jellyfin</strong> for media streaming, <strong>Jellyserr</strong> for integrating services, <strong>Prowlarr</strong> for managing indexers, and <strong>Sonarr</strong> and <strong>Radarr</strong> for automating TV and movie downloads. This setup provides a simple yet powerful way to manage your media. 🚀</p>
+<hr>
+<h2 id="configuring-the-arr-stack">Configuring the Arr Stack</h2>
+<p>Basic flow about how each service talks to each other</p>
+<figure><a href="/arr-stack/arr-stack1.png"><img src="/arr-stack/arr-stack1.png"
+    alt="A detailed diagram showing the configuration flow of the Podman Arr Stack"></a>
+</figure>
+
+<ol>
+<li>Jellyfin
+<ol>
+<li>Add media and scan
+<ol>
+<li>Enable trickplay image extraction</li>
+<li>Save trickplay images next to media</li>
+</ol>
+</li>
+<li>Trickplay Image Interval = 300000
+<ol>
+<li>Only generate images from key frames</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>Jellyserr
+<ol>
+<li>Settings -&gt; Jellyfin. Get API from Jellyfin (Advanced -&gt; API Keys) - See pic js1</li>
+<li>Settings -&gt; Services -&gt; Radarr. Get API from Radarr (Settings -&gt; General)</li>
+<li>Settings -&gt; Services -&gt; Sonarr. Get API from Sonarr (Settings -&gt; General)</li>
+</ol>
+</li>
+<li>Make sure flare-bypasser container is up</li>
+<li>Prowler
+<ol>
+<li>Add indexers -&gt; YTS etc</li>
+<li>Settings -&gt; Indexer -&gt; FlareSolverr -&gt; Setup <code>flare-bypasser</code></li>
+<li>Settings -&gt; Apps -&gt; Applications -&gt; Radarr</li>
+<li>Settings -&gt; Apps -&gt; Applications -&gt; Sonarr</li>
+</ol>
+</li>
+<li>Sonarr
+<ol>
+<li>Select location for TvShows</li>
+<li>Settings -&gt; Indexer -&gt; Verify indexers (from Prowler)</li>
+<li>Settings -&gt; Download Clients -&gt; Transmission</li>
+</ol>
+</li>
+<li>Radarr
+<ol>
+<li>Select location for Movies</li>
+<li>Settings -&gt; Indexer -&gt; Verify indexers (from Prowler)</li>
+<li>Settings -&gt; Download Clients -&gt; Transmission</li>
+</ol>
+</li>
+</ol>
+<hr>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Service</th>
+          <th style="text-align: left">Address</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>Jellyfin</strong></td>
+          <td style="text-align: left"><a href="http://192.168.50.200:8096">http://192.168.50.200:8096</a></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Jellyserr</strong></td>
+          <td style="text-align: left"><a href="http://192.168.50.200:5055">http://192.168.50.200:5055</a></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Prowlarr</strong></td>
+          <td style="text-align: left"><a href="http://192.168.50.200:9696">http://192.168.50.200:9696</a></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Sonarr</strong></td>
+          <td style="text-align: left"><a href="http://192.168.50.200:8989">http://192.168.50.200:8989</a></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Radarr</strong></td>
+          <td style="text-align: left"><a href="http://192.168.50.200:7878">http://192.168.50.200:7878</a></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Transmission</strong></td>
+          <td style="text-align: left"><a href="http://192.168.50.200:9091">http://192.168.50.200:9091</a></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>flare-bypasser</strong></td>
+          <td style="text-align: left"><a href="http://192.168.50.200:8191">http://192.168.50.200:8191</a></td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<ul>
+<li>
+<p>Jellyfin libraries - Add Movies
+<figure><a href="/arr-stack/1.1jf.png"><img src="/arr-stack/1.1jf.png"
+    alt="Jellyfin Trickplay settings"></a>
+</figure>
+</p>
+</li>
+<li>
+<p>Jellyfin libraries - Add Shows
+<figure><a href="/arr-stack/1.2jf.png"><img src="/arr-stack/1.2jf.png"
+    alt="Jellyfin Trickplay settings"></a>
+</figure>
+</p>
+</li>
+<li>
+<p>jellyseerr - Give Jellyfin URL
+<figure><a href="/arr-stack/3js.jpg"><img src="/arr-stack/3js.jpg"
+    alt="Jellyfin API Key Generation"></a>
+</figure>
+</p>
+</li>
+<li>
+<p>jellyseerr - Sync libraries
+<figure><a href="/arr-stack/4js.jpg"><img src="/arr-stack/4js.jpg"
+    alt="Jellyserr Jellyfin Settings"></a>
+</figure>
+</p>
+</li>
+<li>
+<p>jellyseerr - Sync with radarr</p>
+<ul>
+<li>Get key from radarr
+<figure><a href="/arr-stack/5r.jpg"><img src="/arr-stack/5r.jpg"
+    alt="Radarr General Settings API Key"></a>
+</figure>
+</li>
+<li>configure radarr in jellyseerr
+<figure><a href="/arr-stack/6js.jpg"><img src="/arr-stack/6js.jpg"
+    alt="Jellyserr Radarr Settings"></a>
+</figure>
+</li>
+</ul>
+</li>
+<li>
+<p>jellyseerr - Sync with sonarr</p>
+<ul>
+<li>Get key from sonarr
+<figure><a href="/arr-stack/7s.jpg"><img src="/arr-stack/7s.jpg"
+    alt="Sonarr General Settings API Key"></a>
+</figure>
+</li>
+<li>configure sonarr in jellyseerr
+<figure><a href="/arr-stack/8js.jpg"><img src="/arr-stack/8js.jpg"
+    alt="Jellyserr Sonarr Settings"></a>
+</figure>
+</li>
+</ul>
+</li>
+<li>
+<p>jellyseerr - Import users from jellyfin
+<figure><a href="/arr-stack/8js1.jpg"><img src="/arr-stack/8js1.jpg"
+    alt="Jellyserr Sonarr Settings"></a>
+</figure>
+</p>
+</li>
+<li>
+<p>Prowlarr - configure flaresolverr
+<figure><a href="/arr-stack/9p.jpg"><img src="/arr-stack/9p.jpg"
+    alt="Prowlarr Indexer Setup"></a>
+</figure>
+</p>
+</li>
+<li>
+<p>Prowlarr - add radarr
+<figure><a href="/arr-stack/10p.jpg"><img src="/arr-stack/10p.jpg"
+    alt="Prowlarr FlareSolverr Settings"></a>
+</figure>
+</p>
+</li>
+<li>
+<p>Prowlarr - add sonarr
+<figure><a href="/arr-stack/11p.jpg"><img src="/arr-stack/11p.jpg"
+    alt="Prowlarr Radarr Application Setup"></a>
+</figure>
+</p>
+</li>
+<li>
+<p>Prowlarr - tags
+<figure><a href="/arr-stack/12p.jpg"><img src="/arr-stack/12p.jpg"
+    alt="Prowlarr Sonarr Application Setup"></a>
+</figure>
+
+<figure><a href="/arr-stack/13p.jpg"><img src="/arr-stack/13p.jpg"
+    alt="Prowlarr Radarr Application Setup"></a>
+</figure>
+</p>
+</li>
+<li>
+<p>sonarr - just get HEVC
+<figure><a href="/arr-stack/14s.jpg"><img src="/arr-stack/14s.jpg"
+    alt="Sonarr Indexer Verification"></a>
+</figure>
+
+<figure><a href="/arr-stack/15s.jpg"><img src="/arr-stack/15s.jpg"
+    alt="Sonarr Download Client Setup"></a>
+</figure>
+</p>
+</li>
+</ul>
+<h2 id="summary">Summary</h2>
+<p>Congratulations! 🎉 You&rsquo;ve now configured a powerful and automated media stack. With this setup, you can add movies and TV shows from your phone or desktop, and the Arr stack will automatically find and download them, ready for you to watch on Jellyfin. This is a great way to streamline your homelab and take control of your media.</p>
+<p><img src="https://images.unsplash.com/photo-1499744937866-d7e566a20a61?q=80&amp;w=2070&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="thank you"></p>
+</section></main>
+        <footer id="main-footer">
+<script src="/js/copy-button.min.4876b98121977026b3ce53c9cb225d818299becf2f6ba9c345fdfbc99911d6dd.js" integrity="sha256-SHa5gSGXcCazzlPJyyJdgYKZvs8va6nDRf37yZkR1t0="></script>
+</footer>
+      </div><aside id="side-pane" class="side-sticky"><div class="side-content">
+      <h3>Disclaimer</h3><p><ul>
+<li>This content is for educational and experimental purposes only, provided “as is” without warranties. You are solely responsible for how you use it</li>
+</ul>
+</p>
+    </div><div class="side-details">
+    <span>367 words</span>
+    <span>4 - 5 minutes read</span><div class="side-details-taxonomy">
+        <small>series: 
+          <span class="details-taxonomy"><a href="//localhost:1313/series/homelab">homelab</a></span></small>
+      </div><div class="side-details-taxonomy">
+        <small>topics: 
+          <span class="details-taxonomy"><a href="//localhost:1313/topics/arr-stack">arr-stack</a></span></small>
+      </div></div><h3>Table Of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#configuring-the-arr-stack">Configuring the Arr Stack</a></li>
+    <li><a href="#summary">Summary</a></li>
+  </ul>
+</nav><h3>Related</h3>
+    <ul><li><a href="/hidden/podman-arr-stack/">Arr stack - Installation</a></li><li><a href="/hidden/podman-101/">Podman 101 - Always Run Rootless!</a></li><li><a href="/hidden/podman-traefik/">Traefik on Podman with Local Certificates</a></li></ul></aside></div>
+  </div>
+</body>
+</html>

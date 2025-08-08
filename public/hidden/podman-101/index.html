@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Podman 101 - Always Run Rootless! | AK Blogs</title>
+<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" /><meta property="og:url" content="//localhost:1313/hidden/podman-101/">
+  <meta property="og:site_name" content="AK Blogs">
+  <meta property="og:title" content="Podman 101 - Always Run Rootless!">
+  <meta property="og:description" content="1. Introduction Podman is a daemonless container engine for running OCI containers.
+It can run as root (rootful) or as a non-root user (rootless), each with different privileges and security implications.
+Feature Rootful Podman (Run as root) Rootless Podman (Run as non-root) Privileges Full root privileges on host system (sudo podman ...). Limited to user’s privileges (podman ...). Security Compromised container could gain root on host. Limited damage — container root maps to non-root UID on host. Networking Can bind to privileged ports (&lt;1024) directly. Uses slirp4netns, cannot bind &lt;1024 without extra config. User ID Mapping Container root = Host root. Container root maps to non-root UID. 2. Running Rootless Do not use sudo to start containers.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="hidden">
+    <meta property="article:published_time" content="2025-08-08T14:45:07+10:00">
+    <meta property="article:modified_time" content="2025-08-08T14:45:07+10:00">
+    <meta property="article:tag" content="Podman">
+      <meta property="og:see_also" content="//localhost:1313/hidden/podman-arr-stack/">
+      <meta property="og:see_also" content="//localhost:1313/hidden/podman-traefik/">
+      <meta property="og:see_also" content="//localhost:1313/homelab/ansible-fedora/">
+      <meta property="og:see_also" content="//localhost:1313/homelab/terminal-zsh/">
+      <meta property="og:see_also" content="//localhost:1313/hidden/podman-arr-stack-configuration/">
+      <meta property="og:see_also" content="//localhost:1313/homelab/homeassistant-setup/">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Podman 101 - Always Run Rootless!">
+  <meta name="twitter:description" content="1. Introduction Podman is a daemonless container engine for running OCI containers.
+It can run as root (rootful) or as a non-root user (rootless), each with different privileges and security implications.
+Feature Rootful Podman (Run as root) Rootless Podman (Run as non-root) Privileges Full root privileges on host system (sudo podman ...). Limited to user’s privileges (podman ...). Security Compromised container could gain root on host. Limited damage — container root maps to non-root UID on host. Networking Can bind to privileged ports (&lt;1024) directly. Uses slirp4netns, cannot bind &lt;1024 without extra config. User ID Mapping Container root = Host root. Container root maps to non-root UID. 2. Running Rootless Do not use sudo to start containers.">
+
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/root.css">
+    <link rel="stylesheet" href="/css/bundle.css">
+
+      <script src="/js/copy-button.js"></script>
+      <script src="/js/bundle.js"></script><script defer src="/js/search/flexsearch.compact.64594b125f7b78bdf4fa8316955922bbebb1cd6baef3f16654bfca20309f18f8.js" integrity="sha256-ZFlLEl97eL30&#43;oMWlVkiu&#43;uxzWuu8/FmVL/KIDCfGPg="></script>
+<script defer src="/js/search/search.1d980f84df11f3eb7c8c5f17f541d49a0611608df179dd74fa7f06225eb56ace.js" integrity="sha256-HZgPhN8R8&#43;t8jF8X9UHUmgYRYI3xed10&#43;n8GIl61as4="></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+
+</head>
+<body class="notransition">
+  <div id="container">
+    <header id="main-header"><div role="navigation" aria-label="Main">
+  <div class="nav-left">
+    <a href="//localhost:1313/" style="color: inherit;">AK Blogs</a>
+  </div>
+  <div class="nav-right">
+    <div style="position:absolute;width:0px;height:0px;">
+      <div id="nav-dropdown-menu" class="hidden" href="#">
+    <div class="nav-item">
+      <a href="/posts/"
+      >Posts</a>
+    </div>
+    <div class="nav-item">
+      <a href="/homelab/"
+      >Homelab</a>
+    </div>
+    <div class="nav-item">
+      <a aria-current="true" class="ancestor" href="/hidden/"
+      >Shadow</a>
+    </div>
+    <div class="nav-item">
+      <a href="/about/"
+      >About</a>
+    </div>
+</div>
+    </div>
+    <a id="nav-dropdown-button" href="#"><svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a>
+    <div id="nav-menu">
+    <div class="nav-item">
+      <a href="/posts/"
+      >Posts</a>
+    </div>
+    <div class="nav-item">
+      <a href="/homelab/"
+      >Homelab</a>
+    </div>
+    <div class="nav-item">
+      <a aria-current="true" class="ancestor" href="/hidden/"
+      >Shadow</a>
+    </div>
+    <div class="nav-item">
+      <a href="/about/"
+      >About</a>
+    </div>
+</div>
+    <a id="theme-switcher" href="#">
+<svg class="light-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 3V4M12 20V21M4 12H3M6.31412 6.31412L5.5 5.5M17.6859 6.31412L18.5 5.5M6.31412 17.69L5.5 18.5001M17.6859 17.69L18.5 18.5001M21 12H20M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+<svg class="dark-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.32031 11.6835C3.32031 16.6541 7.34975 20.6835 12.3203 20.6835C16.1075 20.6835 19.3483 18.3443 20.6768 15.032C19.6402 15.4486 18.5059 15.6834 17.3203 15.6834C12.3497 15.6834 8.32031 11.654 8.32031 6.68342C8.32031 5.50338 8.55165 4.36259 8.96453 3.32996C5.65605 4.66028 3.32031 7.89912 3.32031 11.6835Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a>
+  </div>
+</div>
+</header>
+    <div class="flex grow">
+      <div id="main-pane">
+        <main id="main-content"><div class="single-header">
+<ol class="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="//localhost:1313/">
+        <span itemprop="name">Home</span>
+      </a>
+      <meta itemprop="position" content='1' />
+    </li>
+    <span>&nbsp»&nbsp</span>
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="//localhost:1313/hidden/">
+        <span itemprop="name">Hiddens</span>
+      </a>
+      <meta itemprop="position" content='2' />
+    </li>
+    <span>&nbsp»&nbsp</span>
+</ol>
+<h1>Podman 101 - Always Run Rootless!</h1><time class="dim" datetime="2025-08-08T14:45:07&#43;10:00">August 8, 2025</time><div class="term-container"><div class="tag">
+        <a href="//localhost:1313/tags/podman/">#podman</a>
+      </div></ol></div>
+  <section class="page-section"><h2 id="1-introduction">1. Introduction</h2>
+<p>Podman is a daemonless container engine for running OCI containers.<br>
+It can run as <strong>root</strong> (rootful) or as a <strong>non-root user</strong> (rootless), each with different privileges and security implications.</p>
+<p><img src="https://images.unsplash.com/photo-1590497008432-598f04441de8?q=80&amp;w=2891&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="container"></p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Feature</th>
+          <th style="text-align: left">Rootful Podman (Run as root)</th>
+          <th style="text-align: left">Rootless Podman (Run as non-root)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>Privileges</strong></td>
+          <td style="text-align: left">Full root privileges on host system (<code>sudo podman ...</code>).</td>
+          <td style="text-align: left">Limited to user’s privileges (<code>podman ...</code>).</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Security</strong></td>
+          <td style="text-align: left">Compromised container could gain root on host.</td>
+          <td style="text-align: left">Limited damage — container root maps to non-root UID on host.</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Networking</strong></td>
+          <td style="text-align: left">Can bind to privileged ports (&lt;1024) directly.</td>
+          <td style="text-align: left">Uses <code>slirp4netns</code>, cannot bind &lt;1024 without extra config.</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>User ID Mapping</strong></td>
+          <td style="text-align: left">Container root = Host root.</td>
+          <td style="text-align: left">Container root maps to non-root UID.</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="2-running-rootless">2. Running Rootless</h2>
+<p>Do <strong>not</strong> use <code>sudo</code> to start containers.</p>
+<p>Enable lingering for your user:</p>
+<blockquote>
+<p>For a rootless container to keep running after you&rsquo;ve logged out, the Podman process itself needs to be managed by a system that persists. By enabling lingering, you allow the user&rsquo;s systemd instance to continue running, which in turn can manage and keep Podman-related services alive.</p></blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo loginctl enable-linger <span style="color:#e6db74">&#34;</span>$USER<span style="color:#e6db74">&#34;</span>
+</span></span></code></pre></div><p>Enable Podman socket for your user:</p>
+<blockquote>
+<p>This command sets up and starts the Podman API socket for the current user.</p></blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>systemctl --user enable --now podman.socket
+</span></span></code></pre></div><p>This creates a Podman socket at:<br>
+<code>/run/user/&lt;UID&gt;/podman/podman.sock</code> (e.g., <code>/run/user/1000/podman/podman.sock</code>)</p>
+<hr>
+<h2 id="3-volume-mounting">3. Volume Mounting</h2>
+<p><strong>Default volume paths</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Rootful</span>
+</span></span><span style="display:flex;"><span>/var/lib/containers/storage/volumes/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Rootless</span>
+</span></span><span style="display:flex;"><span>$HOME/.local/share/containers/storage/volumes/
+</span></span></code></pre></div><hr>
+<h2 id="4-user-mapping-details">4. User Mapping Details</h2>
+<p>Keeep <code>- PUID=0</code> &amp; <code>- PGID=0</code> for containers in compose file. They will run as 0 inside container but 1000 on the host. i.e. <code>rootless</code> on host.</p>
+<div style="background-color: #255021ff; padding: 2px; border-left: 10px solid red;">
+<h4 id="-make-sure-to-run-podman-without-sudo">🟢 Make sure to run PODMAN without sudo</h4>
+</div>
+<p>Check UID mapping:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cat /proc/<span style="color:#66d9ef">$(</span>pgrep -u <span style="color:#e6db74">&#34;</span>$USER<span style="color:#e6db74">&#34;</span> podman | head -n 1<span style="color:#66d9ef">)</span>/uid_map
+</span></span></code></pre></div><p><strong>Example output:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: right">Container UID</th>
+          <th style="text-align: right">Host UID</th>
+          <th style="text-align: right">Range</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: right">0</td>
+          <td style="text-align: right">1000</td>
+          <td style="text-align: right">1</td>
+          <td>Container UID 0 is mapped to UID 1000 on host</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">524288</td>
+          <td style="text-align: right">65536</td>
+          <td>Container UID 1 is mapped to UID 524288 on host</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1000</td>
+          <td style="text-align: right">525287</td>
+          <td style="text-align: right">65536</td>
+          <td>Container UID 1000 is mapped to UID 525287 on host (524,288 + 999 = 525,287)</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="5-auto-restart-systemd-integration-rootless">5. Auto restart: Systemd Integration (Rootless)</h2>
+<p>Rootless service files live in:<br>
+<code>$HOME/.config/systemd/user</code></p>
+<p>Generate and enable container services:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>mkdir -p ~/.config/systemd/user/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>containers<span style="color:#f92672">=(</span><span style="color:#66d9ef">$(</span>podman ps --format <span style="color:#e6db74">&#39;{{.Names}}&#39;</span><span style="color:#66d9ef">)</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> name in <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>containers[@]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  podman update --restart<span style="color:#f92672">=</span>no <span style="color:#e6db74">&#34;</span>$name<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>  podman generate systemd --name <span style="color:#e6db74">&#34;</span>$name<span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --restart-policy<span style="color:#f92672">=</span>always --container-prefix<span style="color:#f92672">=</span>container --files
+</span></span><span style="display:flex;"><span>  mv <span style="color:#e6db74">&#34;container-</span>$name<span style="color:#e6db74">.service&#34;</span> ~/.config/systemd/user/
+</span></span><span style="display:flex;"><span>  systemctl --user enable <span style="color:#e6db74">&#34;container-</span>$name<span style="color:#e6db74">.service&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>systemctl --user daemon-reload
+</span></span></code></pre></div><hr>
+<h2 id="6-update-all-containers">6. Update All Containers</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> name in <span style="color:#66d9ef">$(</span>podman ps --format <span style="color:#e6db74">&#39;{{.Names}}&#39;</span><span style="color:#66d9ef">)</span>; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  image<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>podman inspect --format <span style="color:#e6db74">&#39;{{.ImageName}}&#39;</span> <span style="color:#e6db74">&#34;</span>$name<span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>  podman pull <span style="color:#e6db74">&#34;</span>$image<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>  systemctl --user restart <span style="color:#e6db74">&#34;container-</span>$name<span style="color:#e6db74">.service&#34;</span>
+</span></span><span style="display:flex;"><span>  echo <span style="color:#e6db74">&#34;</span>$name<span style="color:#e6db74"> updated and restarted.&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span></code></pre></div><hr>
+<h2 id="7-stop-all-containers">7. Stop All Containers</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> name in <span style="color:#66d9ef">$(</span>podman ps --format <span style="color:#e6db74">&#39;{{.Names}}&#39;</span><span style="color:#66d9ef">)</span>; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  echo <span style="color:#e6db74">&#34;Stopping </span>$name<span style="color:#e6db74">...&#34;</span>
+</span></span><span style="display:flex;"><span>  podman stop <span style="color:#e6db74">&#34;</span>$name<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span></code></pre></div><hr>
+<h2 id="8-list-container-ips">8. List Container IPs</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> net in <span style="color:#66d9ef">$(</span>podman network ls --format <span style="color:#e6db74">&#39;{{.Name}}&#39;</span><span style="color:#66d9ef">)</span>; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  echo <span style="color:#e6db74">&#34;Network: </span>$net<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>  podman network inspect $net | jq -r <span style="color:#e6db74">&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    .[0].containers | to_entries[] |
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;\(.value.name) \(.value.interfaces.eth0.subnets[0].ipnet // &#34;&#34;)&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#39;</span> | <span style="color:#66d9ef">while</span> read -r name ipcidr; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    ip<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>ipcidr%%/*<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">[</span> -z <span style="color:#e6db74">&#34;</span>$ip<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> ip<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;(none)&#34;</span>
+</span></span><span style="display:flex;"><span>    echo -e <span style="color:#e6db74">&#34;</span>$name<span style="color:#e6db74">\t</span>$ip<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span>  echo <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span></code></pre></div><hr>
+<h2 id="9-closing-note">9. Closing Note</h2>
+<p>Rootless Podman is more secure and works seamlessly with systemd for automated container management.</p>
+<p><img src="https://images.unsplash.com/photo-1499744937866-d7e566a20a61?q=80&amp;w=2070&amp;auto=format&amp;fit=crop" alt="thank you"></p>
+</section></main>
+        <footer id="main-footer">
+<script src="/js/copy-button.min.4876b98121977026b3ce53c9cb225d818299becf2f6ba9c345fdfbc99911d6dd.js" integrity="sha256-SHa5gSGXcCazzlPJyyJdgYKZvs8va6nDRf37yZkR1t0="></script>
+</footer>
+      </div><aside id="side-pane" class="side-sticky"><div class="side-content">
+      <h3>Disclaimer</h3><p><ul>
+<li>This content is for educational and experimental purposes only, provided “as is” without warranties. You are solely responsible for how you use it</li>
+</ul>
+</p>
+    </div><div class="side-details">
+    <span>494 words</span>
+    <span>4 - 5 minutes read</span><div class="side-details-taxonomy">
+        <small>series: 
+          <span class="details-taxonomy"><a href="//localhost:1313/series/homelab">homelab</a></span></small>
+      </div><div class="side-details-taxonomy">
+        <small>topics: 
+          <span class="details-taxonomy"><a href="//localhost:1313/topics/"></a></span></small>
+      </div></div><h3>Table Of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-introduction">1. Introduction</a></li>
+    <li><a href="#2-running-rootless">2. Running Rootless</a></li>
+    <li><a href="#3-volume-mounting">3. Volume Mounting</a></li>
+    <li><a href="#4-user-mapping-details">4. User Mapping Details</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#5-auto-restart-systemd-integration-rootless">5. Auto restart: Systemd Integration (Rootless)</a></li>
+    <li><a href="#6-update-all-containers">6. Update All Containers</a></li>
+    <li><a href="#7-stop-all-containers">7. Stop All Containers</a></li>
+    <li><a href="#8-list-container-ips">8. List Container IPs</a></li>
+    <li><a href="#9-closing-note">9. Closing Note</a></li>
+  </ul>
+</nav><h3>Related</h3>
+    <ul><li><a href="/hidden/podman-traefik/">Traefik on Podman with Local Certificates</a></li></ul></aside></div>
+  </div>
+</body>
+</html>

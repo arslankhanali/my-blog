@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Reverse-Proxy on AK Blogs</title>
+    <link>//localhost:1313/topics/reverse-proxy/</link>
+    <description>Recent content in Reverse-Proxy on AK Blogs</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 07 Aug 2025 20:53:55 +1000</lastBuildDate>
+    <atom:link href="//localhost:1313/topics/reverse-proxy/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Traefik on Podman with Local Certificates</title>
+      <link>//localhost:1313/hidden/podman-traefik/</link>
+      <pubDate>Thu, 07 Aug 2025 20:53:55 +1000</pubDate>
+      <guid>//localhost:1313/hidden/podman-traefik/</guid>
+      <description>&lt;p&gt;+++&lt;/p&gt;&#xA;&lt;p&gt;title = &amp;lsquo;Pihole - Installation on Podman&amp;rsquo;&#xA;series = [&amp;lsquo;podman&amp;rsquo;]&#xA;tags = [&amp;lsquo;pihole&amp;rsquo;,&amp;lsquo;install&amp;rsquo;,&amp;lsquo;fedora&amp;rsquo;]&#xA;topics = [&amp;rsquo;&amp;rsquo;]&#xA;weight = 1&#xA;indexable = true&#xA;featured = false&#xA;draft = true&#xA;+++&lt;/p&gt;&#xA;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;Setting up a reverse proxy is a crucial step in managing a homelab. It allows you to expose multiple services on your network, all under a single domain, with proper SSL/TLS encryption. &lt;strong&gt;Traefik&lt;/strong&gt; is an excellent, modern, and easy-to-configure reverse proxy that integrates seamlessly with container orchestrators like Podman.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

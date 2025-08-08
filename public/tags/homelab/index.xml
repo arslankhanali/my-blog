@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Homelab on AK Blogs</title>
+    <link>//localhost:1313/tags/homelab/</link>
+    <description>Recent content in Homelab on AK Blogs</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 08 Aug 2025 17:18:26 +1000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/homelab/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Arr stack - Installation</title>
+      <link>//localhost:1313/hidden/podman-arr-stack/</link>
+      <pubDate>Fri, 08 Aug 2025 14:45:38 +1000</pubDate>
+      <guid>//localhost:1313/hidden/podman-arr-stack/</guid>
+      <description>&lt;p&gt;Part of series on Arr-stack:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;a href=&#34;//localhost:1313/hidden/podman-arr-stack/&#34;&gt;Arr-Stack Installation&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;//localhost:1313/hidden/podman-arr-stack-configuration/&#34;&gt;Arr-Stack Configuration&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;The &amp;ldquo;arr stack&amp;rdquo; is a popular collection of applications used for managing media libraries. By running these applications as &lt;strong&gt;rootless containers&lt;/strong&gt; with Podman, you can enhance security by preventing the containers from having root privileges on the host machine.&lt;/p&gt;&#xA;&lt;p&gt;This guide will walk you through setting up the arr stack, including &lt;strong&gt;Jellyfin&lt;/strong&gt;, &lt;strong&gt;Jellyseerr&lt;/strong&gt;, &lt;strong&gt;Prowlarr&lt;/strong&gt;, &lt;strong&gt;Sonarr&lt;/strong&gt;, &lt;strong&gt;Radarr&lt;/strong&gt;, and &lt;strong&gt;Transmission&lt;/strong&gt; as rootless containers. We will cover directory preparation, mounting an external hard drive, and configuring the services using a &lt;code&gt;podman-compose.yaml&lt;/code&gt; file.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Arr Stack - Configuration</title>
+      <link>//localhost:1313/hidden/podman-arr-stack-configuration/</link>
+      <pubDate>Fri, 08 Aug 2025 17:18:26 +1000</pubDate>
+      <guid>//localhost:1313/hidden/podman-arr-stack-configuration/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;The &amp;ldquo;Arr stack&amp;rdquo; is a popular set of applications for automating your media library. This blog post will walk you through configuring a basic Arr stack using &lt;strong&gt;Podman&lt;/strong&gt; on your homelab. We&amp;rsquo;ll cover &lt;strong&gt;Jellyfin&lt;/strong&gt; for media streaming, &lt;strong&gt;Jellyserr&lt;/strong&gt; for integrating services, &lt;strong&gt;Prowlarr&lt;/strong&gt; for managing indexers, and &lt;strong&gt;Sonarr&lt;/strong&gt; and &lt;strong&gt;Radarr&lt;/strong&gt; for automating TV and movie downloads. This setup provides a simple yet powerful way to manage your media. 🚀&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;configuring-the-arr-stack&#34;&gt;Configuring the Arr Stack&lt;/h2&gt;&#xA;&lt;p&gt;Basic flow about how each service talks to each other&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

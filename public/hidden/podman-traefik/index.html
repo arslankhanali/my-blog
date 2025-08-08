@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Traefik on Podman with Local Certificates | AK Blogs</title>
+<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" /><meta property="og:url" content="//localhost:1313/hidden/podman-traefik/">
+  <meta property="og:site_name" content="AK Blogs">
+  <meta property="og:title" content="Traefik on Podman with Local Certificates">
+  <meta property="og:description" content="Introduction Setting up a reverse proxy is a crucial step in managing a homelab. It allows you to expose multiple services on your network, all under a single domain, with proper SSL/TLS encryption. Traefik is an excellent, modern, and easy-to-configure reverse proxy that integrates seamlessly with container orchestrators like Podman.
+This guide walks you through setting up Traefik on Podman, complete with a self-signed wildcard certificate for local development. This setup is perfect for homelab environments where you need secure, accessible services without the hassle of public DNS records and paid certificates.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="hidden">
+    <meta property="article:published_time" content="2025-08-08T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-08-08T00:00:00+00:00">
+    <meta property="article:tag" content="Kubernetes">
+    <meta property="article:tag" content="Podman">
+    <meta property="article:tag" content="Traefik">
+      <meta property="og:see_also" content="//localhost:1313/hidden/podman-arr-stack/">
+      <meta property="og:see_also" content="//localhost:1313/hidden/podman-101/">
+      <meta property="og:see_also" content="//localhost:1313/homelab/ansible-fedora/">
+      <meta property="og:see_also" content="//localhost:1313/homelab/terminal-zsh/">
+      <meta property="og:see_also" content="//localhost:1313/hidden/podman-arr-stack-configuration/">
+      <meta property="og:see_also" content="//localhost:1313/homelab/homeassistant-setup/">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Traefik on Podman with Local Certificates">
+  <meta name="twitter:description" content="Introduction Setting up a reverse proxy is a crucial step in managing a homelab. It allows you to expose multiple services on your network, all under a single domain, with proper SSL/TLS encryption. Traefik is an excellent, modern, and easy-to-configure reverse proxy that integrates seamlessly with container orchestrators like Podman.
+This guide walks you through setting up Traefik on Podman, complete with a self-signed wildcard certificate for local development. This setup is perfect for homelab environments where you need secure, accessible services without the hassle of public DNS records and paid certificates.">
+
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/root.css">
+    <link rel="stylesheet" href="/css/bundle.css">
+
+      <script src="/js/copy-button.js"></script>
+      <script src="/js/bundle.js"></script><script defer src="/js/search/flexsearch.compact.64594b125f7b78bdf4fa8316955922bbebb1cd6baef3f16654bfca20309f18f8.js" integrity="sha256-ZFlLEl97eL30&#43;oMWlVkiu&#43;uxzWuu8/FmVL/KIDCfGPg="></script>
+<script defer src="/js/search/search.1d980f84df11f3eb7c8c5f17f541d49a0611608df179dd74fa7f06225eb56ace.js" integrity="sha256-HZgPhN8R8&#43;t8jF8X9UHUmgYRYI3xed10&#43;n8GIl61as4="></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+
+</head>
+<body class="notransition">
+  <div id="container">
+    <header id="main-header"><div role="navigation" aria-label="Main">
+  <div class="nav-left">
+    <a href="//localhost:1313/" style="color: inherit;">AK Blogs</a>
+  </div>
+  <div class="nav-right">
+    <div style="position:absolute;width:0px;height:0px;">
+      <div id="nav-dropdown-menu" class="hidden" href="#">
+    <div class="nav-item">
+      <a href="/posts/"
+      >Posts</a>
+    </div>
+    <div class="nav-item">
+      <a href="/homelab/"
+      >Homelab</a>
+    </div>
+    <div class="nav-item">
+      <a aria-current="true" class="ancestor" href="/hidden/"
+      >Shadow</a>
+    </div>
+    <div class="nav-item">
+      <a href="/about/"
+      >About</a>
+    </div>
+</div>
+    </div>
+    <a id="nav-dropdown-button" href="#"><svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a>
+    <div id="nav-menu">
+    <div class="nav-item">
+      <a href="/posts/"
+      >Posts</a>
+    </div>
+    <div class="nav-item">
+      <a href="/homelab/"
+      >Homelab</a>
+    </div>
+    <div class="nav-item">
+      <a aria-current="true" class="ancestor" href="/hidden/"
+      >Shadow</a>
+    </div>
+    <div class="nav-item">
+      <a href="/about/"
+      >About</a>
+    </div>
+</div>
+    <a id="theme-switcher" href="#">
+<svg class="light-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 3V4M12 20V21M4 12H3M6.31412 6.31412L5.5 5.5M17.6859 6.31412L18.5 5.5M6.31412 17.69L5.5 18.5001M17.6859 17.69L18.5 18.5001M21 12H20M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+<svg class="dark-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.32031 11.6835C3.32031 16.6541 7.34975 20.6835 12.3203 20.6835C16.1075 20.6835 19.3483 18.3443 20.6768 15.032C19.6402 15.4486 18.5059 15.6834 17.3203 15.6834C12.3497 15.6834 8.32031 11.654 8.32031 6.68342C8.32031 5.50338 8.55165 4.36259 8.96453 3.32996C5.65605 4.66028 3.32031 7.89912 3.32031 11.6835Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a>
+  </div>
+</div>
+</header>
+    <div class="flex grow">
+      <div id="main-pane">
+        <main id="main-content"><div class="single-header">
+<ol class="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="//localhost:1313/">
+        <span itemprop="name">Home</span>
+      </a>
+      <meta itemprop="position" content='1' />
+    </li>
+    <span>&nbsp»&nbsp</span>
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="//localhost:1313/hidden/">
+        <span itemprop="name">Hiddens</span>
+      </a>
+      <meta itemprop="position" content='2' />
+    </li>
+    <span>&nbsp»&nbsp</span>
+</ol>
+<h1>Traefik on Podman with Local Certificates</h1><time class="dim" datetime="2025-08-08T00:00:00&#43;00:00">August 8, 2025</time><div class="term-container"><div class="tag">
+        <a href="//localhost:1313/tags/kubernetes/">#kubernetes</a>
+      </div><div class="tag">
+        <a href="//localhost:1313/tags/podman/">#podman</a>
+      </div><div class="tag">
+        <a href="//localhost:1313/tags/traefik/">#traefik</a>
+      </div></ol></div>
+  <section class="page-section"><h2 id="introduction">Introduction</h2>
+<p>Setting up a reverse proxy is a crucial step in managing a homelab. It allows you to expose multiple services on your network, all under a single domain, with proper SSL/TLS encryption. <strong>Traefik</strong> is an excellent, modern, and easy-to-configure reverse proxy that integrates seamlessly with container orchestrators like Podman.</p>
+<p>This guide walks you through setting up Traefik on Podman, complete with a self-signed wildcard certificate for local development. This setup is perfect for homelab environments where you need secure, accessible services without the hassle of public DNS records and paid certificates.</p>
+<hr>
+<h2 id="1-prerequisites-and-system-configuration">1. Prerequisites and System Configuration</h2>
+<p>Before we deploy Traefik, we need to configure our system to allow it to run properly. We&rsquo;ll enable access to privileged ports and configure the Podman socket.</p>
+<h3 id="system-setup">System Setup</h3>
+<p>First, let&rsquo;s allow <strong>non-root users</strong> to bind to privileged ports (like 80 and 443).</p>
+<div style="background-color: #904f4fff; padding: 2px; border-left: 10px solid red;">
+<h5 id="-danger-if-you-are-running-pi-hole-as-well-then-you-already-have-minimum-port-set-as-53-in-that-case-do-not-run-below-cmd-it-will-break-pi-hole">🚨 DANGER: If you are running Pi-Hole as well then you already have minimum port set as 53. In that case do not run below cmd. It will break Pi-hole</h5>
+</div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Check lowest port. If port &lt; 80 set then no need to run below cmds</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># cat /etc/sysctl.conf</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#39;net.ipv4.ip_unprivileged_port_start=80&#39;</span> | sudo tee -a /etc/sysctl.conf
+</span></span><span style="display:flex;"><span>sudo sysctl -p
+</span></span></code></pre></div><p>Next, we&rsquo;ll enable the Podman socket for our user. This is essential for Traefik to be able to detect and configure services running in other containers.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemctl --user enable --now podman.socket
+</span></span></code></pre></div><p>Finally, we&rsquo;ll open up the necessary ports on the firewall to ensure Traefik can receive traffic.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo firewall-cmd --add-service<span style="color:#f92672">={</span>http,https<span style="color:#f92672">}</span> --permanent
+</span></span><span style="display:flex;"><span>sudo firewall-cmd --reload
+</span></span></code></pre></div><hr>
+<h2 id="2-directory-structure-and-certificates">2. Directory Structure and Certificates</h2>
+<p>To keep our configuration organized, we&rsquo;ll create a dedicated directory for Traefik and generate a self-signed certificate. This certificate will be used for all our local services.</p>
+<h3 id="directory-structure">Directory Structure</h3>
+<p>We&rsquo;ll create a base directory for Traefik and two subdirectories: <code>certs</code> for our SSL certificates and <code>dynamic</code> for dynamic Traefik configurations.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>BASE_DIR<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;~/traefik&#34;</span>
+</span></span><span style="display:flex;"><span>mkdir -p <span style="color:#e6db74">&#34;</span>$BASE_DIR<span style="color:#e6db74">/certs&#34;</span>
+</span></span><span style="display:flex;"><span>mkdir -p <span style="color:#e6db74">&#34;</span>$BASE_DIR<span style="color:#e6db74">/dynamic&#34;</span>
+</span></span><span style="display:flex;"><span>cd <span style="color:#e6db74">&#34;</span>$BASE_DIR<span style="color:#e6db74">&#34;</span>
+</span></span></code></pre></div><h3 id="self-signed-certificate-generation">Self-Signed Certificate Generation</h3>
+<p>This script will generate a <strong>wildcard self-signed certificate</strong> for <code>*.ak</code>. This means any subdomain like <code>homeassistant.ak</code> or <code>traefik.ak</code> will be trusted by Traefik.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># FOR DNS:*.ak</span>
+</span></span><span style="display:flex;"><span>domain<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;.ak&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> ! -f certs/local.crt <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">[</span> ! -f certs/local.key <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>  echo <span style="color:#e6db74">&#34;Generating wildcard self-signed certificate for *.</span>$domain<span style="color:#e6db74">...&#34;</span>
+</span></span><span style="display:flex;"><span>  openssl req -x509 -newkey rsa:4096 -nodes -days <span style="color:#ae81ff">825</span> -sha256 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -keyout certs/local.key -out certs/local.crt <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -subj <span style="color:#e6db74">&#34;/C=PK/ST=Punjab/L=Lahore/O=HomeLab/OU=Development/CN=</span>$domain<span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -addext <span style="color:#e6db74">&#34;subjectAltName=DNS:</span>$domain<span style="color:#e6db74">,DNS:*.</span>$domain<span style="color:#e6db74">&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -addext <span style="color:#e6db74">&#34;basicConstraints=CA:FALSE&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -addext <span style="color:#e6db74">&#34;keyUsage=keyEncipherment,dataEncipherment,digitalSignature&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -addext <span style="color:#e6db74">&#34;extendedKeyUsage=serverAuth&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -addext <span style="color:#e6db74">&#34;authorityKeyIdentifier=keyid,issuer&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  echo <span style="color:#e6db74">&#34;✅ Certificate generated:&#34;</span>
+</span></span><span style="display:flex;"><span>  openssl x509 -in certs/local.crt -noout -text | grep -A1 <span style="color:#e6db74">&#34;Subject Alternative Name&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>  echo <span style="color:#e6db74">&#34;⚠️ Local certificate already exists, skipping generation.&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
+</span></span></code></pre></div><div style="background-color: #904f4fff; padding: 2px; border-left: 10px solid red;">
+<p>⚠️ WARNING: For browsers to trust this certificate, you&rsquo;ll need to manually import it into your system&rsquo;s trust store.</p>
+</div>
+<hr>
+<h2 id="3-traefik-configuration-files">3. Traefik Configuration Files</h2>
+<p>Traefik uses two types of configuration files: <strong>static</strong> and <strong>dynamic</strong>. The static configuration defines the core settings, while the dynamic configuration sets up routers, services, and middleware.</p>
+<h3 id="static-configuration-traefikyml">Static Configuration (<code>traefik.yml</code>)</h3>
+<p>This file defines Traefik&rsquo;s entry points (ports 80 and 443), enables the API dashboard, and configures the <code>docker</code> provider to monitor Podman containers. It also enables a file provider for dynamic configurations.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#ae81ff">tee ~/traefik/traefik.yml &gt; /dev/null &lt;&lt;&#39;EOL&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">entryPoints</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">http</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">address</span>: <span style="color:#e6db74">&#34;:80&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">http</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">redirections</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">entryPoint</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">to</span>: <span style="color:#ae81ff">https</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">scheme</span>: <span style="color:#ae81ff">https</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">https</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">address</span>: <span style="color:#e6db74">&#34;:443&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">api</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">dashboard</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">insecure</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">providers</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">docker</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">endpoint</span>: <span style="color:#e6db74">&#34;unix:///var/run/docker.sock&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">exposedByDefault</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">file</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">directory</span>: <span style="color:#ae81ff">/etc/traefik/dynamic</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">watch</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">EOL</span>
+</span></span></code></pre></div><h3 id="dynamic-tls-configuration-dynamicyml">Dynamic TLS Configuration (<code>dynamic.yml</code>)</h3>
+<p>This file tells Traefik where to find the self-signed certificates we generated earlier.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#ae81ff">tee ~/traefik/dynamic/dynamic.yml &gt; /dev/null &lt;&lt;&#39;EOL&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">tls</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">certificates</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">certFile</span>: <span style="color:#ae81ff">/certs/local.crt</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">keyFile</span>: <span style="color:#ae81ff">/certs/local.key</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">EOL</span>
+</span></span></code></pre></div><h3 id="dynamic-routers-and-services">Dynamic Routers and Services</h3>
+<p>To expose your services (like Home Assistant), you&rsquo;ll create a separate dynamic configuration file. This file defines a <strong>router</strong> to match incoming traffic and a <strong>service</strong> to forward that traffic to the correct backend.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#ae81ff">tee ~/traefik/dynamic/homeassistant.yml &gt; /dev/null &lt;&lt;&#39;EOL&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">http</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">routers</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">homeassistant</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">rule</span>: <span style="color:#e6db74">&#34;Host(`homeassistant.ak`)&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">service</span>: <span style="color:#ae81ff">homeassistant</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">entryPoints</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#ae81ff">https</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">tls</span>: {}
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">middlewares</span>: []
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">priority</span>: <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">services</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">homeassistant</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">loadBalancer</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">servers</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#f92672">url</span>: <span style="color:#e6db74">&#34;http://192.168.50.202:8123&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">EOL</span>
+</span></span></code></pre></div><hr>
+<h2 id="4-deploying-with-podman-compose">4. Deploying with Podman Compose</h2>
+<p>We&rsquo;ll use a <code>podman-compose.yml</code> file to define and run our Traefik container.</p>
+<h3 id="podman-composeyml"><code>podman-compose.yml</code></h3>
+<p>This file sets up the Traefik container, maps ports, and mounts the necessary configuration directories and the Podman socket. The labels on the <code>traefik</code> service configure Traefik&rsquo;s own dashboard.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#ae81ff">tee /home/neo/traefik/podman-compose.yml &gt; /dev/null &lt;&lt;&#39;EOL&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#34;3.3&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">services</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">traefik</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">docker.io/library/traefik:latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">traefik</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">security_opt</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">label=type:container_runtime_t</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;80:80&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;443:443&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;8080:8080&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">/run/user/1000/podman/podman.sock:/var/run/docker.sock:z</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">./certs:/certs:ro,Z</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">./traefik.yml:/etc/traefik/traefik.yml:ro,Z</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">./dynamic:/etc/traefik/dynamic:ro,Z</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.enable=true&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.traefik.rule=Host(`traefik.ak`)&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.traefik.entrypoints=https&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.services.traefik.loadbalancer.server.port=8080&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.traefik.tls=true&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">EOL</span>
+</span></span></code></pre></div><h3 id="starting-traefik">Starting Traefik</h3>
+<p>Now, you can start Traefik with the <code>podman compose up</code> command.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>podman compose -f ~/traefik/podman-compose.yml up -d --force-recreate
+</span></span></code></pre></div><div style="background-color: #255021ff; padding: 2px; border-left: 10px solid red;">
+<p>🟢 NOTE: You can access the Traefik dashboard at <a href="http://192.168.50.200:8080/dashboard/#/">http://192.168.50.200:8080</a></p>
+</div>
+<h3 id="auto-start">Auto start</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>containers<span style="color:#f92672">=(</span>traefik<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> name in <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>containers[@]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  podman update --restart<span style="color:#f92672">=</span>no <span style="color:#e6db74">&#34;</span>$name<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>  podman generate systemd --name <span style="color:#e6db74">&#34;</span>$name<span style="color:#e6db74">&#34;</span> --restart-policy<span style="color:#f92672">=</span>always --container-prefix<span style="color:#f92672">=</span>container --files
+</span></span><span style="display:flex;"><span>  mv <span style="color:#e6db74">&#34;container-</span>$name<span style="color:#e6db74">.service&#34;</span> ~/.config/systemd/user/
+</span></span><span style="display:flex;"><span>  systemctl --user enable <span style="color:#e6db74">&#34;container-</span>$name<span style="color:#e6db74">.service&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># systemctl --user start &#34;container-$name.service&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span>systemctl --user daemon-reload
+</span></span></code></pre></div><p>This setup gives you a powerful and flexible reverse proxy for all your homelab services, secured with local certificates. You can easily add new services by simply creating a new configuration file in the <code>dynamic</code> directory. 🚀</p>
+<hr>
+</section></main>
+        <footer id="main-footer">
+<script src="/js/copy-button.min.4876b98121977026b3ce53c9cb225d818299becf2f6ba9c345fdfbc99911d6dd.js" integrity="sha256-SHa5gSGXcCazzlPJyyJdgYKZvs8va6nDRf37yZkR1t0="></script>
+</footer>
+      </div><aside id="side-pane" class="side-sticky"><div class="side-content">
+      <h3>Disclaimer</h3><p><ul>
+<li>This content is for educational and experimental purposes only, provided “as is” without warranties. You are solely responsible for how you use it</li>
+</ul>
+</p>
+    </div><div class="side-details">
+    <span>837 words</span>
+    <span>6 - 8 minutes read</span><div class="side-details-taxonomy">
+        <small>series: 
+          <span class="details-taxonomy"><a href="//localhost:1313/series/homelab">homelab</a></span></small>
+      </div><div class="side-details-taxonomy">
+        <small>topics: 
+          <span class="details-taxonomy"><a href="//localhost:1313/topics/reverse-proxy">reverse-proxy</a></span><span class="details-taxonomy"><a href="//localhost:1313/topics/self-signed-certificates">self-signed-certificates</a></span></small>
+      </div></div><h3>Table Of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#1-prerequisites-and-system-configuration">1. Prerequisites and System Configuration</a>
+      <ul>
+        <li><a href="#system-setup">System Setup</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-directory-structure-and-certificates">2. Directory Structure and Certificates</a>
+      <ul>
+        <li><a href="#directory-structure">Directory Structure</a></li>
+        <li><a href="#self-signed-certificate-generation">Self-Signed Certificate Generation</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-traefik-configuration-files">3. Traefik Configuration Files</a>
+      <ul>
+        <li><a href="#static-configuration-traefikyml">Static Configuration (<code>traefik.yml</code>)</a></li>
+        <li><a href="#dynamic-tls-configuration-dynamicyml">Dynamic TLS Configuration (<code>dynamic.yml</code>)</a></li>
+        <li><a href="#dynamic-routers-and-services">Dynamic Routers and Services</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-deploying-with-podman-compose">4. Deploying with Podman Compose</a>
+      <ul>
+        <li><a href="#podman-composeyml"><code>podman-compose.yml</code></a></li>
+        <li><a href="#starting-traefik">Starting Traefik</a></li>
+        <li><a href="#auto-start">Auto start</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav><h3>Related</h3>
+    <ul><li><a href="/homelab/homelab-kubernetes/">Homelab: Kubernetes</a></li><li><a href="/posts/featured/argocd-app-of-apps/">Mastering Kubernetes Deployments with the GitOps based App of Apps Pattern</a></li></ul></aside></div>
+  </div>
+</body>
+</html>

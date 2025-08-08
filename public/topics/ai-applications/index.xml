@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ai-Applications on AK Blogs</title>
+    <link>//localhost:1313/topics/ai-applications/</link>
+    <description>Recent content in Ai-Applications on AK Blogs</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 08 Aug 2025 20:36:01 +1000</lastBuildDate>
+    <atom:link href="//localhost:1313/topics/ai-applications/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Dify: A Podman Deployment Guide</title>
+      <link>//localhost:1313/posts/ai/dify-on-podman/</link>
+      <pubDate>Fri, 08 Aug 2025 20:36:01 +1000</pubDate>
+      <guid>//localhost:1313/posts/ai/dify-on-podman/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;Welcome to another guide in our homelab series! Today, we&amp;rsquo;re going to deploy Dify, an AI application development platform, using Podman and &lt;code&gt;podman-compose&lt;/code&gt;. Dify provides a powerful, visual way to build and manage AI applications, and deploying it on your local homelab gives you full control.&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://images.unsplash.com/photo-1716637644831-e046c73be197?q=80&amp;amp;w=1287&amp;amp;auto=format&amp;amp;fit=crop&amp;amp;ixlib=rb-4.1.0&amp;amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&#34; alt=&#34;Dify AI platform&#34;&gt;&lt;/p&gt;&#xA;&lt;h3 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h3&gt;&#xA;&lt;p&gt;Before we start, make sure you have Podman and &lt;code&gt;podman-compose&lt;/code&gt; installed. If you haven&amp;rsquo;t, you can refer to my previous blog post on how to set up Podman.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,5 +1,5 @@
 home:
-  image: 'images/AK1.png'
+  image: 'images/AK1.jpeg'
   greetings: 'Welcome to AK Blogs'
   text: 'Tech & Engineering'
 side:
@@ -11,5 +11,5 @@ side:
   - title: 'سبق پھر پڑھ صداقت کا، عدالت کا، شجاعت کا، لیا جائے گا تجھ سے کام دنیا کی امامت کا'
     content: 'Learn again the lessons of truth, justice, and courage — for you are destined to lead.'
   single:
-  - title: 'Please note'
-    content: 'Code blocks can be EDITED before you copy'
+  - title: 'Disclaimer'
+    content: ' - This content is for educational and experimental purposes only, provided “as is” without warranties. You are solely responsible for how you use it'

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Arrstack on AK Blogs</title>
+    <link>//localhost:1313/tags/arrstack/</link>
+    <description>Recent content in Arrstack on AK Blogs</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 08 Aug 2025 14:45:38 +1000</lastBuildDate>
+    <atom:link href="//localhost:1313/tags/arrstack/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Podman Arr Stack</title>
+      <link>//localhost:1313/hidden/podman-arr-stack/</link>
+      <pubDate>Fri, 08 Aug 2025 14:45:38 +1000</pubDate>
+      <guid>//localhost:1313/hidden/podman-arr-stack/</guid>
+      <description>&lt;h1 id=&#34;run-arr-stack-as-rootless-container-in-podman&#34;&gt;run arr stack as rootless container in podman&lt;/h1&gt;&#xA;&lt;h2 id=&#34;what-is-arr-stack&#34;&gt;what is arr stack&lt;/h2&gt;&#xA;&lt;p&gt;&lt;to do&gt; purpose of each&lt;/p&gt;&#xA;&lt;h3 id=&#34;create-dir&#34;&gt;create dir&lt;/h3&gt;&#xA;&lt;p&gt;dir=/home/neo/arr-stack # hardcorded in script in some places&#xA;mkdir -p $dir&#xA;cd $dir&lt;/p&gt;&#xA;&lt;p&gt;mkdir -p $dir/tvshows&#xA;mkdir -p $dir/movies&#xA;mkdir -p $dir/books&#xA;mkdir -p $dir/transmission/downloads/complete/radarr&#xA;mkdir -p $dir/transmission/downloads/complete/tv-sonarr&#xA;mkdir -p $dir/transmission/downloads/incomplete/&#xA;mkdir -p $dir/transmission/watch&#xA;mkdir -p $dir/prowler&lt;/p&gt;&#xA;&lt;h3 id=&#34;mount-external-harddrive&#34;&gt;Mount external harddrive&lt;/h3&gt;&#xA;&lt;h1 id=&#34;if-despite-uid1000-options-it-keeps-on-mounting-with-rootuid0-permissions-then-try-rebooting-the-system&#34;&gt;If despite uid=1000 options it keeps on mounting with root(uid=0) permissions, then try rebooting the system.&lt;/h1&gt;&#xA;&lt;h1 id=&#34;manually-mount-external-drive&#34;&gt;Manually mount external drive&lt;/h1&gt;&#xA;&lt;p&gt;mkdir -p $dir/external-drive&#xA;lsblk&#xA;sudo mount -t exfat -o users,noexec,uid=1000,gid=1000,context=&amp;ldquo;system_u:object_r:svirt_sandbox_file_t:s0&amp;rdquo; /dev/sda1 ~/arr-stack/external-drive&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

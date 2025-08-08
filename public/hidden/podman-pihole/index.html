@@ -4,10 +4,10 @@
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Podman: Pihole | AK Blogs</title>
+<title>Pihole - Installation on Podman | AK Blogs</title>
 <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" /><meta property="og:url" content="//localhost:1313/hidden/podman-pihole/">
   <meta property="og:site_name" content="AK Blogs">
-  <meta property="og:title" content="Podman: Pihole">
+  <meta property="og:title" content="Pihole - Installation on Podman">
   <meta property="og:description" content="What Pi-hole Does Pi-hole is a network-level ad blocker that acts as a DNS sinkhole. Here’s how to run it securely on your Fedora-based homelab using Podman and Traefik, with a clean and idempotent setup.
 Step-by-Step Setup 1. Prepare System # Create working directory mkdir ~/pihole &amp;&amp; cd ~/pihole 2. Allow Binding to Port 53 (as non-root) echo &#39;net.ipv4.ip_unprivileged_port_start=53&#39; | sudo tee -a /etc/sysctl.conf sudo sysctl -p # Reloads kernel parameters from the config /etc/sysctl.conf 3. Create podman-compose.yml tee ~/pihole/podman-compose.yml &gt; /dev/null &lt;&lt;&#39;EOL&#39; version: &#39;3&#39; services: pihole: container_name: pihole image: docker.io/pihole/pihole:latest restart: unless-stopped ports: - &#34;192.168.50.100:53:53/tcp&#34; # &lt;--- Change - &#34;192.168.50.100:53:53/udp&#34; # &lt;--- Change - &#34;192.168.50.100:8099:80/tcp&#34; # &lt;--- Change environment: TZ: &#34;Australia/Sydney&#34; FTLCONF_webserver_api_password: &#34;pihole&#34; # &lt;--- Change volumes: - pihole-etc:/etc/pihole - pihole-dnsmasq:/etc/dnsmasq.d cap_add: - NET_ADMIN dns: - 9.9.9.9 - 45.90.30.0 labels: - &#34;traefik.enable=true&#34; - &#34;traefik.http.routers.pihole.rule=Host(`pihole.node1`)&#34; # &lt;--- Change - &#34;traefik.http.routers.pihole.entrypoints=https&#34; - &#34;traefik.http.routers.pihole.tls=true&#34; - &#34;traefik.http.services.pihole.loadbalancer.server.port=80&#34; volumes: pihole-etc: pihole-dnsmasq: EOL 4. Deploy Pi-hole # Ensure clean state podman compose -f ~/pihole/podman-compose.yml down # Deploy podman compose -f ~/pihole/podman-compose.yml up -d --force-recreate Auto start # Allow the user&#39;s user services (like systemd --user) to run even when not logged in sudo loginctl enable-linger &#34;$USER&#34; # Enable and start the Podman API socket for the current user, required for systemd &#43; Podman integration systemctl --user enable --now podman.socket # Ensure the user systemd service directory exists mkdir -p ~/.config/systemd/user/ # Generate a systemd service unit file for the container containers=(pihole) # &lt;--- Change to your container name for name in &#34;${containers[@]}&#34;; do podman update --restart=no &#34;$name&#34; podman generate systemd --name &#34;$name&#34; --restart-policy=always --container-prefix=container --files mv &#34;container-$name.service&#34; ~/.config/systemd/user/ systemctl --user enable &#34;container-$name.service&#34; # systemctl --user start &#34;container-$name.service&#34; done systemctl --user daemon-reload 5. Post-deploy Actions # Check HTTP response curl -kI http://192.168.50.100:8099/admin/login # Set or reset password sudo podman exec -it pihole pihole setpassword 6. Open Firewall for DNS sudo firewall-cmd --permanent --add-service=dns sudo firewall-cmd --reload 7. Access Service Address Pi-hole UI https://pihole.node1 (via Traefik) Direct IP http://192.168.50.100:8099/admin 8. DNS: Enter your local DNS entries in pihole So you don’t have to add them manually to each devices /etc/hosts file">
   <meta property="og:locale" content="en_us">
@@ -20,7 +20,7 @@ Step-by-Step Setup 1. Prepare System # Create working directory mkdir ~/pihole &
     <meta property="article:tag" content="Fedora">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Podman: Pihole">
+  <meta name="twitter:title" content="Pihole - Installation on Podman">
   <meta name="twitter:description" content="What Pi-hole Does Pi-hole is a network-level ad blocker that acts as a DNS sinkhole. Here’s how to run it securely on your Fedora-based homelab using Podman and Traefik, with a clean and idempotent setup.
 Step-by-Step Setup 1. Prepare System # Create working directory mkdir ~/pihole &amp;&amp; cd ~/pihole 2. Allow Binding to Port 53 (as non-root) echo &#39;net.ipv4.ip_unprivileged_port_start=53&#39; | sudo tee -a /etc/sysctl.conf sudo sysctl -p # Reloads kernel parameters from the config /etc/sysctl.conf 3. Create podman-compose.yml tee ~/pihole/podman-compose.yml &gt; /dev/null &lt;&lt;&#39;EOL&#39; version: &#39;3&#39; services: pihole: container_name: pihole image: docker.io/pihole/pihole:latest restart: unless-stopped ports: - &#34;192.168.50.100:53:53/tcp&#34; # &lt;--- Change - &#34;192.168.50.100:53:53/udp&#34; # &lt;--- Change - &#34;192.168.50.100:8099:80/tcp&#34; # &lt;--- Change environment: TZ: &#34;Australia/Sydney&#34; FTLCONF_webserver_api_password: &#34;pihole&#34; # &lt;--- Change volumes: - pihole-etc:/etc/pihole - pihole-dnsmasq:/etc/dnsmasq.d cap_add: - NET_ADMIN dns: - 9.9.9.9 - 45.90.30.0 labels: - &#34;traefik.enable=true&#34; - &#34;traefik.http.routers.pihole.rule=Host(`pihole.node1`)&#34; # &lt;--- Change - &#34;traefik.http.routers.pihole.entrypoints=https&#34; - &#34;traefik.http.routers.pihole.tls=true&#34; - &#34;traefik.http.services.pihole.loadbalancer.server.port=80&#34; volumes: pihole-etc: pihole-dnsmasq: EOL 4. Deploy Pi-hole # Ensure clean state podman compose -f ~/pihole/podman-compose.yml down # Deploy podman compose -f ~/pihole/podman-compose.yml up -d --force-recreate Auto start # Allow the user&#39;s user services (like systemd --user) to run even when not logged in sudo loginctl enable-linger &#34;$USER&#34; # Enable and start the Podman API socket for the current user, required for systemd &#43; Podman integration systemctl --user enable --now podman.socket # Ensure the user systemd service directory exists mkdir -p ~/.config/systemd/user/ # Generate a systemd service unit file for the container containers=(pihole) # &lt;--- Change to your container name for name in &#34;${containers[@]}&#34;; do podman update --restart=no &#34;$name&#34; podman generate systemd --name &#34;$name&#34; --restart-policy=always --container-prefix=container --files mv &#34;container-$name.service&#34; ~/.config/systemd/user/ systemctl --user enable &#34;container-$name.service&#34; # systemctl --user start &#34;container-$name.service&#34; done systemctl --user daemon-reload 5. Post-deploy Actions # Check HTTP response curl -kI http://192.168.50.100:8099/admin/login # Set or reset password sudo podman exec -it pihole pihole setpassword 6. Open Firewall for DNS sudo firewall-cmd --permanent --add-service=dns sudo firewall-cmd --reload 7. Access Service Address Pi-hole UI https://pihole.node1 (via Traefik) Direct IP http://192.168.50.100:8099/admin 8. DNS: Enter your local DNS entries in pihole So you don’t have to add them manually to each devices /etc/hosts file">
 
@@ -118,7 +118,7 @@ Step-by-Step Setup 1. Prepare System # Create working directory mkdir ~/pihole &
     </li>
     <span>&nbsp»&nbsp</span>
 </ol>
-<h1>Podman: Pihole</h1><time class="dim" datetime="2025-08-07T20:53:55&#43;10:00">August 7, 2025</time><div class="term-container"><div class="tag">
+<h1>Pihole - Installation on Podman</h1><time class="dim" datetime="2025-08-07T20:53:55&#43;10:00">August 7, 2025</time><div class="term-container"><div class="tag">
         <a href="//localhost:1313/tags/pihole/">#pihole</a>
       </div><div class="tag">
         <a href="//localhost:1313/tags/install/">#install</a>
@@ -287,7 +287,10 @@ sudo firewall-cmd --reload
 <script src="/js/copy-button.min.4876b98121977026b3ce53c9cb225d818299becf2f6ba9c345fdfbc99911d6dd.js" integrity="sha256-SHa5gSGXcCazzlPJyyJdgYKZvs8va6nDRf37yZkR1t0="></script>
 </footer>
       </div><aside id="side-pane" class="side-sticky"><div class="side-content">
-      <h3>Please note</h3><p>Code blocks can be EDITED before you copy</p>
+      <h3>Disclaimer</h3><p><ul>
+<li>This content is for educational and experimental purposes only, provided “as is” without warranties. You are solely responsible for how you use it</li>
+</ul>
+</p>
     </div><div class="side-details">
     <span>540 words</span>
     <span>4 - 5 minutes read</span><div class="side-details-taxonomy">
@@ -320,7 +323,7 @@ sudo firewall-cmd --reload
     <li><a href="#11-delete">11. Delete</a></li>
   </ul>
 </nav><h3>Related</h3>
-    <ul><li><a href="/homelab/haos-setup/">HomeLab: Home Assistant VM - Non-root deployment on Fedora</a></li><li><a href="/homelab/ansible-fedora/">Homelab: Initial setup for a Fedora VM</a></li><li><a href="/posts/kubernetes/k3s-install/">Kubernetes: Install K3s on Fedora</a></li></ul></aside></div>
+    <ul><li><a href="/homelab/homeassistant-setup/">HomeLab: Home Assistant VM - Non-root deployment on Fedora</a></li><li><a href="/homelab/ansible-fedora/">Homelab: Initial setup for a Fedora VM</a></li><li><a href="/posts/kubernetes/k3s-install/">Kubernetes: Install K3s on Fedora</a></li></ul></aside></div>
   </div>
 </body>
 </html>

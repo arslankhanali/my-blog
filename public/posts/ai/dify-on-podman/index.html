@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dify: A Podman Deployment Guide | AK Blogs</title>
+<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" /><meta property="og:url" content="//localhost:1313/posts/ai/dify-on-podman/">
+  <meta property="og:site_name" content="AK Blogs">
+  <meta property="og:title" content="Dify: A Podman Deployment Guide">
+  <meta property="og:description" content="Introduction Today, we’re going to deploy Dify, an AI application development platform, using Podman and podman-compose. Dify provides a powerful, visual way to build and manage AI applications, and deploying it on your local fedora server gives you full control.
+Prerequisites Before we start, make sure you have Podman and podman-compose installed. If you haven’t, you can refer to my previous blog post on how to set up Podman.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-08-08T20:36:01+10:00">
+    <meta property="article:modified_time" content="2025-08-08T20:36:01+10:00">
+    <meta property="article:tag" content="Dify">
+    <meta property="article:tag" content="Podman">
+    <meta property="article:tag" content="Ai">
+    <meta property="article:tag" content="Langgenius">
+    <meta property="article:tag" content="Docker-Compose">
+      <meta property="og:see_also" content="//localhost:1313/posts/ai/openwebui-on-podman/">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Dify: A Podman Deployment Guide">
+  <meta name="twitter:description" content="Introduction Today, we’re going to deploy Dify, an AI application development platform, using Podman and podman-compose. Dify provides a powerful, visual way to build and manage AI applications, and deploying it on your local fedora server gives you full control.
+Prerequisites Before we start, make sure you have Podman and podman-compose installed. If you haven’t, you can refer to my previous blog post on how to set up Podman.">
+
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/root.css">
+    <link rel="stylesheet" href="/css/bundle.css">
+
+      <script src="/js/copy-button.js"></script>
+      <script src="/js/bundle.js"></script><script defer src="/js/search/flexsearch.compact.64594b125f7b78bdf4fa8316955922bbebb1cd6baef3f16654bfca20309f18f8.js" integrity="sha256-ZFlLEl97eL30&#43;oMWlVkiu&#43;uxzWuu8/FmVL/KIDCfGPg="></script>
+<script defer src="/js/search/search.1d980f84df11f3eb7c8c5f17f541d49a0611608df179dd74fa7f06225eb56ace.js" integrity="sha256-HZgPhN8R8&#43;t8jF8X9UHUmgYRYI3xed10&#43;n8GIl61as4="></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+
+</head>
+<body class="notransition">
+  <div id="container">
+    <header id="main-header"><div role="navigation" aria-label="Main">
+  <div class="nav-left">
+    <a href="//localhost:1313/" style="color: inherit;">AK Blogs</a>
+  </div>
+  <div class="nav-right">
+    <div style="position:absolute;width:0px;height:0px;">
+      <div id="nav-dropdown-menu" class="hidden" href="#">
+    <div class="nav-item">
+      <a aria-current="true" class="ancestor" href="/posts/"
+      >Posts</a>
+    </div>
+    <div class="nav-item">
+      <a href="/homelab/"
+      >Homelab</a>
+    </div>
+    <div class="nav-item">
+      <a href="/hidden/"
+      >Shadow</a>
+    </div>
+    <div class="nav-item">
+      <a href="/about/"
+      >About</a>
+    </div>
+</div>
+    </div>
+    <a id="nav-dropdown-button" href="#"><svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a>
+    <div id="nav-menu">
+    <div class="nav-item">
+      <a aria-current="true" class="ancestor" href="/posts/"
+      >Posts</a>
+    </div>
+    <div class="nav-item">
+      <a href="/homelab/"
+      >Homelab</a>
+    </div>
+    <div class="nav-item">
+      <a href="/hidden/"
+      >Shadow</a>
+    </div>
+    <div class="nav-item">
+      <a href="/about/"
+      >About</a>
+    </div>
+</div>
+    <a id="theme-switcher" href="#">
+<svg class="light-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 3V4M12 20V21M4 12H3M6.31412 6.31412L5.5 5.5M17.6859 6.31412L18.5 5.5M6.31412 17.69L5.5 18.5001M17.6859 17.69L18.5 18.5001M21 12H20M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+<svg class="dark-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.32031 11.6835C3.32031 16.6541 7.34975 20.6835 12.3203 20.6835C16.1075 20.6835 19.3483 18.3443 20.6768 15.032C19.6402 15.4486 18.5059 15.6834 17.3203 15.6834C12.3497 15.6834 8.32031 11.654 8.32031 6.68342C8.32031 5.50338 8.55165 4.36259 8.96453 3.32996C5.65605 4.66028 3.32031 7.89912 3.32031 11.6835Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a>
+  </div>
+</div>
+</header>
+    <div class="flex grow">
+      <div id="main-pane">
+        <main id="main-content"><div class="single-header">
+<ol class="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="//localhost:1313/">
+        <span itemprop="name">Home</span>
+      </a>
+      <meta itemprop="position" content='1' />
+    </li>
+    <span>&nbsp»&nbsp</span>
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="//localhost:1313/posts/">
+        <span itemprop="name">Posts</span>
+      </a>
+      <meta itemprop="position" content='2' />
+    </li>
+    <span>&nbsp»&nbsp</span>
+</ol>
+<h1>Dify: A Podman Deployment Guide</h1><time class="dim" datetime="2025-08-08T20:36:01&#43;10:00">August 8, 2025</time><div class="term-container"><div class="tag">
+        <a href="//localhost:1313/tags/dify/">#dify</a>
+      </div><div class="tag">
+        <a href="//localhost:1313/tags/podman/">#podman</a>
+      </div><div class="tag">
+        <a href="//localhost:1313/tags/ai/">#ai</a>
+      </div><div class="tag">
+        <a href="//localhost:1313/tags/langgenius/">#langgenius</a>
+      </div><div class="tag">
+        <a href="//localhost:1313/tags/docker-compose/">#docker-compose</a>
+      </div></ol></div>
+  <section class="page-section"><h2 id="introduction">Introduction</h2>
+<p>Today, we&rsquo;re going to deploy Dify, an AI application development platform, using Podman and <code>podman-compose</code>. Dify provides a powerful, visual way to build and manage AI applications, and deploying it on your local fedora server gives you full control.</p>
+<p><img src="https://images.unsplash.com/photo-1716637644831-e046c73be197?q=80&amp;w=1287&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Dify AI platform"></p>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>Before we start, make sure you have Podman and <code>podman-compose</code> installed. If you haven&rsquo;t, you can refer to my previous blog post on how to set up Podman.</p>
+<div style="background-color: #255021ff; padding: 2px; border-left: 10px solid red;">
+<h4 id="-note">🟢 NOTE:</h4>
+<p>This guide assumes you are running on a RHEL-based system with SELinux enabled, which is a common setup for fedora environments. The steps for SELinux are crucial for a smooth deployment.</p>
+</div>
+<h2 id="step-1-clone-the-dify-repository">Step 1: Clone the Dify Repository</h2>
+<p>First, we need to clone the Dify repository from GitHub. This will give us the necessary configuration files to deploy the application.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>git clone <span style="color:#f92672">[</span>https://github.com/langgenius/dify.git<span style="color:#f92672">](</span>https://github.com/langgenius/dify.git<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>cd ~/dify/docker
+</span></span><span style="display:flex;"><span>cp .env.example .env
+</span></span></code></pre></div><p>After cloning, we move into the docker directory and copy the example environment file to .env. This file contains the configuration variables for our Dify deployment.</p>
+<h2 id="step-2-configure-selinux">Step 2: Configure SELinux</h2>
+<p>For systems with SELinux enabled, you&rsquo;ll need to adjust the security context of the Dify volumes. This step prevents permission errors when Podman tries to access the files. By setting the context correctly, we avoid having to use the :z flag in our compose file.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>chcon -Rt container_file_t /home/neo/dify/docker/
+</span></span><span style="display:flex;"><span>ls -Z
+</span></span></code></pre></div><h2 id="step-3-modify-the-docker-composeyaml">Step 3: Modify the docker-compose.yaml</h2>
+<p>We need to make a couple of small but important changes to the docker-compose.yaml file to ensure Dify runs smoothly with Podman.</p>
+<pre tabindex="0"><code>vim docker-compose.yaml
+</code></pre><h4 id="change-1-add-default-networks">Change 1: Add Default Networks</h4>
+<p>Add a default network to the end of the file. This ensures all services that don&rsquo;t have an explicit network defined can communicate.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Go to end of file `shift+g`</span>
+</span></span><span style="display:flex;"><span>networks:
+</span></span><span style="display:flex;"><span>  ssrf_proxy_network:
+</span></span><span style="display:flex;"><span>    driver: bridge 
+</span></span><span style="display:flex;"><span>    internal: true 
+</span></span><span style="display:flex;"><span>  milvus:
+</span></span><span style="display:flex;"><span>    driver: bridge
+</span></span><span style="display:flex;"><span>  opensearch-net:
+</span></span><span style="display:flex;"><span>    driver: bridge
+</span></span><span style="display:flex;"><span>    internal: true
+</span></span><span style="display:flex;"><span>  default:
+</span></span><span style="display:flex;"><span>    driver: bridge
+</span></span></code></pre></div><h4 id="change-2-ports">Change 2: Ports</h4>
+<p>Adjust the NGINX ports to avoid conflicts on your host. We&rsquo;ll change the host ports from 80 and 443 to 980 and 9443 respectively. Remember to also change the corresponding variables in the .env file you copied earlier.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-YAML" data-lang="YAML"><span style="display:flex;"><span><span style="color:#75715e"># Search `/NGINX_PORT`</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#39;980:${NGINX_PORT:-80}&#39;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#39;9443:${NGINX_SSL_PORT:-443}&#39;</span>
+</span></span></code></pre></div><blockquote>
+<p>Might also have to change nginx port in <code>.env</code> file 980 and 9443</p></blockquote>
+<h2 id="step-4-deploy-and-verify">Step 4: Deploy and Verify</h2>
+<p>Now we&rsquo;re ready to deploy Dify using podman-compose.</p>
+<p>Start the containers</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>podman-compose up -d
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>podman pod logs pod_docker -f
+</span></span></code></pre></div><h2 id="step-5-open-ports">Step 5: Open Ports</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo firewall-cmd --add-port<span style="color:#f92672">=</span>980/tcp --permanent
+</span></span><span style="display:flex;"><span>sudo firewall-cmd --reload
+</span></span></code></pre></div><h2 id="step-6-test-and-access">Step 6: Test and Access</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>podman pod logs pod_docker -f
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl http://localhost:980/apps
+</span></span><span style="display:flex;"><span>curl http://192.168.50.200:980/apps
+</span></span></code></pre></div><p>That&rsquo;s it! You now have Dify running on your server. You can start building AI applications and experimenting with the platform.</p>
+</section></main>
+        <footer id="main-footer">
+<script src="/js/copy-button.min.4876b98121977026b3ce53c9cb225d818299becf2f6ba9c345fdfbc99911d6dd.js" integrity="sha256-SHa5gSGXcCazzlPJyyJdgYKZvs8va6nDRf37yZkR1t0="></script>
+</footer>
+      </div><aside id="side-pane" class="side-sticky"><div class="side-content">
+      <h3>Disclaimer</h3><p><ul>
+<li>This content is for educational and experimental purposes only, provided “as is” without warranties. You are solely responsible for how you use it</li>
+</ul>
+</p>
+    </div><div class="side-details">
+    <span>432 words</span>
+    <span>3 - 3 minutes read</span><div class="side-details-taxonomy">
+        <small>series: 
+          <span class="details-taxonomy"><a href="//localhost:1313/series/ai">AI</a></span></small>
+      </div><div class="side-details-taxonomy">
+        <small>topics: 
+          <span class="details-taxonomy"><a href="//localhost:1313/topics/ai-applications">ai-applications</a></span><span class="details-taxonomy"><a href="//localhost:1313/topics/containerization">containerization</a></span></small>
+      </div></div><h3>Table Of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+      </ul>
+    </li>
+    <li><a href="#step-1-clone-the-dify-repository">Step 1: Clone the Dify Repository</a></li>
+    <li><a href="#step-2-configure-selinux">Step 2: Configure SELinux</a></li>
+    <li><a href="#step-3-modify-the-docker-composeyaml">Step 3: Modify the docker-compose.yaml</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#step-4-deploy-and-verify">Step 4: Deploy and Verify</a></li>
+    <li><a href="#step-5-open-ports">Step 5: Open Ports</a></li>
+    <li><a href="#step-6-test-and-access">Step 6: Test and Access</a></li>
+  </ul>
+</nav><h3>Related</h3>
+    <ul><li><a href="/hidden/podman-arr-stack-configuration/">Arr Stack - Configuration</a></li><li><a href="/hidden/podman-arr-stack/">Arr stack - Installation</a></li><li><a href="/hidden/podman-101/">Podman 101 - Always Run Rootless!</a></li><li><a href="/hidden/podman-traefik/">Traefik on Podman with Local Certificates</a></li></ul></aside></div>
+  </div>
+</body>
+</html>

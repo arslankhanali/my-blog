@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Arr stack - Installation | AK Blogs</title>
+<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" /><meta property="og:url" content="//localhost:1313/hidden/podman-arr-stack/">
+  <meta property="og:site_name" content="AK Blogs">
+  <meta property="og:title" content="Arr stack - Installation">
+  <meta property="og:description" content="Part of series on Arr-stack:
+Arr-Stack Installation Arr-Stack Configuration Introduction The “arr stack” is a popular collection of applications used for managing media libraries. By running these applications as rootless containers with Podman, you can enhance security by preventing the containers from having root privileges on the host machine.
+This guide will walk you through setting up the arr stack, including Jellyfin, Jellyseerr, Prowlarr, Sonarr, Radarr, and Transmission as rootless containers. We will cover directory preparation, mounting an external hard drive, and configuring the services using a podman-compose.yaml file.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="hidden">
+    <meta property="article:published_time" content="2025-08-08T14:45:38+10:00">
+    <meta property="article:modified_time" content="2025-08-08T14:45:38+10:00">
+    <meta property="article:tag" content="Arr-Stack">
+    <meta property="article:tag" content="Podman">
+    <meta property="article:tag" content="Homelab">
+      <meta property="og:see_also" content="//localhost:1313/hidden/podman-101/">
+      <meta property="og:see_also" content="//localhost:1313/hidden/podman-traefik/">
+      <meta property="og:see_also" content="//localhost:1313/homelab/ansible-fedora/">
+      <meta property="og:see_also" content="//localhost:1313/homelab/terminal-zsh/">
+      <meta property="og:see_also" content="//localhost:1313/hidden/podman-arr-stack-configuration/">
+      <meta property="og:see_also" content="//localhost:1313/homelab/homeassistant-setup/">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Arr stack - Installation">
+  <meta name="twitter:description" content="Part of series on Arr-stack:
+Arr-Stack Installation Arr-Stack Configuration Introduction The “arr stack” is a popular collection of applications used for managing media libraries. By running these applications as rootless containers with Podman, you can enhance security by preventing the containers from having root privileges on the host machine.
+This guide will walk you through setting up the arr stack, including Jellyfin, Jellyseerr, Prowlarr, Sonarr, Radarr, and Transmission as rootless containers. We will cover directory preparation, mounting an external hard drive, and configuring the services using a podman-compose.yaml file.">
+
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/root.css">
+    <link rel="stylesheet" href="/css/bundle.css">
+
+      <script src="/js/copy-button.js"></script>
+      <script src="/js/bundle.js"></script><script defer src="/js/search/flexsearch.compact.64594b125f7b78bdf4fa8316955922bbebb1cd6baef3f16654bfca20309f18f8.js" integrity="sha256-ZFlLEl97eL30&#43;oMWlVkiu&#43;uxzWuu8/FmVL/KIDCfGPg="></script>
+<script defer src="/js/search/search.1d980f84df11f3eb7c8c5f17f541d49a0611608df179dd74fa7f06225eb56ace.js" integrity="sha256-HZgPhN8R8&#43;t8jF8X9UHUmgYRYI3xed10&#43;n8GIl61as4="></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+
+</head>
+<body class="notransition">
+  <div id="container">
+    <header id="main-header"><div role="navigation" aria-label="Main">
+  <div class="nav-left">
+    <a href="//localhost:1313/" style="color: inherit;">AK Blogs</a>
+  </div>
+  <div class="nav-right">
+    <div style="position:absolute;width:0px;height:0px;">
+      <div id="nav-dropdown-menu" class="hidden" href="#">
+    <div class="nav-item">
+      <a href="/posts/"
+      >Posts</a>
+    </div>
+    <div class="nav-item">
+      <a href="/homelab/"
+      >Homelab</a>
+    </div>
+    <div class="nav-item">
+      <a aria-current="true" class="ancestor" href="/hidden/"
+      >Shadow</a>
+    </div>
+    <div class="nav-item">
+      <a href="/about/"
+      >About</a>
+    </div>
+</div>
+    </div>
+    <a id="nav-dropdown-button" href="#"><svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a>
+    <div id="nav-menu">
+    <div class="nav-item">
+      <a href="/posts/"
+      >Posts</a>
+    </div>
+    <div class="nav-item">
+      <a href="/homelab/"
+      >Homelab</a>
+    </div>
+    <div class="nav-item">
+      <a aria-current="true" class="ancestor" href="/hidden/"
+      >Shadow</a>
+    </div>
+    <div class="nav-item">
+      <a href="/about/"
+      >About</a>
+    </div>
+</div>
+    <a id="theme-switcher" href="#">
+<svg class="light-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 3V4M12 20V21M4 12H3M6.31412 6.31412L5.5 5.5M17.6859 6.31412L18.5 5.5M6.31412 17.69L5.5 18.5001M17.6859 17.69L18.5 18.5001M21 12H20M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+<svg class="dark-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.32031 11.6835C3.32031 16.6541 7.34975 20.6835 12.3203 20.6835C16.1075 20.6835 19.3483 18.3443 20.6768 15.032C19.6402 15.4486 18.5059 15.6834 17.3203 15.6834C12.3497 15.6834 8.32031 11.654 8.32031 6.68342C8.32031 5.50338 8.55165 4.36259 8.96453 3.32996C5.65605 4.66028 3.32031 7.89912 3.32031 11.6835Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a>
+  </div>
+</div>
+</header>
+    <div class="flex grow">
+      <div id="main-pane">
+        <main id="main-content"><div class="single-header">
+<ol class="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="//localhost:1313/">
+        <span itemprop="name">Home</span>
+      </a>
+      <meta itemprop="position" content='1' />
+    </li>
+    <span>&nbsp»&nbsp</span>
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="//localhost:1313/hidden/">
+        <span itemprop="name">Hiddens</span>
+      </a>
+      <meta itemprop="position" content='2' />
+    </li>
+    <span>&nbsp»&nbsp</span>
+</ol>
+<h1>Arr stack - Installation</h1><time class="dim" datetime="2025-08-08T14:45:38&#43;10:00">August 8, 2025</time><div class="term-container"><div class="tag">
+        <a href="//localhost:1313/tags/arr-stack/">#arr-stack</a>
+      </div><div class="tag">
+        <a href="//localhost:1313/tags/podman/">#podman</a>
+      </div><div class="tag">
+        <a href="//localhost:1313/tags/homelab/">#homelab</a>
+      </div></ol></div>
+  <section class="page-section"><p>Part of series on Arr-stack:</p>
+<ol>
+<li><a href="/hidden/podman-arr-stack/">Arr-Stack Installation</a></li>
+<li><a href="/hidden/podman-arr-stack-configuration/">Arr-Stack Configuration</a></li>
+</ol>
+<h2 id="introduction">Introduction</h2>
+<p>The &ldquo;arr stack&rdquo; is a popular collection of applications used for managing media libraries. By running these applications as <strong>rootless containers</strong> with Podman, you can enhance security by preventing the containers from having root privileges on the host machine.</p>
+<p>This guide will walk you through setting up the arr stack, including <strong>Jellyfin</strong>, <strong>Jellyseerr</strong>, <strong>Prowlarr</strong>, <strong>Sonarr</strong>, <strong>Radarr</strong>, and <strong>Transmission</strong> as rootless containers. We will cover directory preparation, mounting an external hard drive, and configuring the services using a <code>podman-compose.yaml</code> file.</p>
+<p><img src="https://images.unsplash.com/photo-1586899028174-e7098604235b?q=80&amp;w=2942&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="A person typing on a laptop with a plant in the background"></p>
+<h3 id="what-is-the-arr-stack-">What is the &ldquo;arr stack&rdquo;? 🗃️</h3>
+<div style="background-color: #ffcccc; padding: 2px; border-left: 10px solid red;">
+<h5 id="-check-legal-obligations-where-you-live">⚠️ Check legal obligations where you live</h5>
+</div>
+<p>The arr stack is a suite of applications that work together to automate the process of finding, downloading, and organizing movies, TV shows, and other media.</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Application</th>
+          <th style="text-align: left">Purpose</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>Jellyfin</strong></td>
+          <td style="text-align: left">A free software media system that lets you control the management and streaming of your media.</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Jellyseerr</strong></td>
+          <td style="text-align: left">A request management and media discovery tool for Jellyfin and other &lsquo;arr&rsquo; apps.</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Prowlarr</strong></td>
+          <td style="text-align: left">An indexer manager for the other &lsquo;arr&rsquo; apps, providing a centralized way to manage your indexers (sources for media).</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Sonarr</strong></td>
+          <td style="text-align: left">Manages and automates the downloading of TV shows.</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Radarr</strong></td>
+          <td style="text-align: left">Manages and automates the downloading of movies.</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Transmission</strong></td>
+          <td style="text-align: left">A lightweight BitTorrent client used for downloading the media files.</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Before you start, make sure you have Podman and <code>podman-compose</code> installed. For Podman, you can often find it in your distribution&rsquo;s package manager. For <code>podman-compose</code>, it&rsquo;s a Python script that you can install with pip.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Example for a Fedora-based system</span>
+</span></span><span style="display:flex;"><span>sudo dnf install podman podman-docker
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># install podman-compose</span>
+</span></span><span style="display:flex;"><span>pip install podman-compose
+</span></span></code></pre></div><h2 id="setup-directories-and-external-drive">Setup Directories and External Drive</h2>
+<p>First, we need to create the necessary directory structure for our applications and media files. This setup ensures that all your data is organized and easily accessible to the containers.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Set up a base directory for the arr stack</span>
+</span></span><span style="display:flex;"><span>dir<span style="color:#f92672">=</span>~/arr-stack
+</span></span><span style="display:flex;"><span>mkdir -p $dir
+</span></span><span style="display:flex;"><span>cd $dir
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create subdirectories for media and application downloads</span>
+</span></span><span style="display:flex;"><span>mkdir -p $dir/tvshows
+</span></span><span style="display:flex;"><span>mkdir -p $dir/movies
+</span></span><span style="display:flex;"><span>mkdir -p $dir/books
+</span></span><span style="display:flex;"><span>mkdir -p $dir/transmission/downloads/complete/radarr
+</span></span><span style="display:flex;"><span>mkdir -p $dir/transmission/downloads/complete/tv-sonarr
+</span></span><span style="display:flex;"><span>mkdir -p $dir/transmission/downloads/incomplete/
+</span></span><span style="display:flex;"><span>mkdir -p $dir/transmission/watch
+</span></span><span style="display:flex;"><span>mkdir -p $dir/prowler
+</span></span></code></pre></div><h3 id="mount-an-external-hard-drive">Mount an External Hard Drive</h3>
+<p>If you have a large media library, it&rsquo;s best to store it on an external hard drive. This section shows you how to mount the drive manually or automatically.</p>
+<h4 id="manual-mount">Manual Mount</h4>
+<p>To manually mount your external drive, first find its device name and then mount it with the correct permissions. The <code>uid=1000</code> and <code>gid=1000</code> options ensure the drive is owned by your user, which is crucial for rootless containers. The <code>context</code> option is important for SELinux.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># First, create a mount point</span>
+</span></span><span style="display:flex;"><span>mkdir -p $dir/external-drive
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># List block devices to find your external drive (e.g., /dev/sda1)</span>
+</span></span><span style="display:flex;"><span>lsblk
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># sda           8:0    0   1.8T  0 disk </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># └─sda1        8:1    0   1.8T  0 part ~/arr-stack/external-drive</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Manually mount the drive. Replace /dev/sda1 with your device.</span>
+</span></span><span style="display:flex;"><span>sudo mount -t exfat -o users,noexec,uid<span style="color:#f92672">=</span>1000,gid<span style="color:#f92672">=</span>1000,context<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;system_u:object_r:svirt_sandbox_file_t:s0&#34;</span> /dev/sda1 ~/arr-stack/external-drive
+</span></span></code></pre></div><h4 id="automatic-mount-with-etcfstab">Automatic Mount with <code>/etc/fstab</code></h4>
+<p>To have your drive automatically mount at startup, you need to add an entry to <code>/etc/fstab</code>.</p>
+<ol>
+<li><strong>Find the UUID</strong>: The UUID is a unique identifier for your drive.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Find the UUID of your external drive</span>
+</span></span><span style="display:flex;"><span>sudo blkid /dev/sda1
+</span></span></code></pre></div></li>
+<li><strong>Add to <code>/etc/fstab</code></strong>: Append a new line to <code>/etc/fstab</code> using <code>tee -a</code> to avoid overwriting the file.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Path to your UUID and path</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#39;UUID=ECA3-DE06  /home/neo/arr-stack/external-drive  exfat  rw,users,noexec,nofail,async,auto,uid=1000,gid=1000,umask=0022,context=system_u:object_r:svirt_sandbox_file_t:s0 0 0&#39;</span> | sudo tee -a /etc/fstab
+</span></span></code></pre></div></li>
+<li><strong>Reload and Mount</strong>: Apply the new fstab entry.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>systemctl daemon-reload
+</span></span><span style="display:flex;"><span>sudo mount -a
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ls -la arr-stack
+</span></span></code></pre></div></li>
+<li><strong>Check permission</strong>: Make sure your user (non-root) owns the folder
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ls -la ~/arr-stack
+</span></span></code></pre></div></li>
+</ol>
+<p>You can verify the mount by running <code>ls -la ~/arr-stack/external-drive</code>.</p>
+<p><em><strong>Note:</strong></em> The <code>umount</code> command is used to unmount the drive.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo umount ~/arr-stack/external-drive
+</span></span></code></pre></div><hr>
+<h2 id="the-podman-composeyaml-file">The <code>podman-compose.yaml</code> File</h2>
+<p>This file defines all the services in your arr stack. Each service is a container with specific configurations like image, port mappings, and volume mounts. A crucial aspect here is the <strong>volume mapping</strong> (<code>- /path/on/host:/path/in/container:z</code>). The <code>:z</code> option is essential for Podman to handle SELinux permissions correctly in a rootless environment.</p>
+<p>Let&rsquo;s briefly explain some key configurations:</p>
+<ul>
+<li><strong><code>image</code></strong>: Specifies the container image to use.</li>
+<li><strong><code>container_name</code></strong>: Sets a friendly name for the container.</li>
+<li><strong><code>environment</code></strong>: Defines environment variables, such as <code>PUID</code> and <code>PGID</code> for user and group IDs, and <code>TZ</code> for the timezone.</li>
+<li><strong><code>volumes</code></strong>: Connects host directories to container directories. This is how the applications can access your media files.</li>
+<li><strong><code>ports</code></strong>: Maps container ports to host ports, allowing you to access the web UIs.</li>
+<li><strong><code>labels</code></strong>: Used for services like <strong>Traefik</strong> to automatically configure reverse proxying and SSL/TLS.</li>
+</ul>
+<p>Some services, like <strong>Sonarr</strong>, <strong>Radarr</strong>, and <strong>Transmission</strong>, are run with <code>PUID=0</code> and <code>PGID=0</code> inside the container. This is a common practice for these specific images to avoid permission issues when writing to the <code>/downloads</code> directory, which is shared among them. The rootless Podman environment handles this by mapping the container&rsquo;s root user (UID 0) to your host user (UID 1000).</p>
+<!-- <details style="background-color: #6e68c6ff; border: 1px solid #12cb37ff; padding: 10px; border-radius: 5px;">
+<summary style="font-weight: bold; color: #edf2f7ff;"> EXPAND: See podman-compose.yaml</summary> -->
+<p>You can ignore traefik section</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#ae81ff">tee ~/arr-stack/podman-compose.yaml &gt; /dev/null &lt;&lt;&#39;EOL&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#34;3&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">services</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># https://docs.linuxserver.io/images/docker-jellyfin/</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">jellyfin</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">docker.io/jellyfin/jellyfin:latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">jellyfin</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">environment</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">TZ=Australia/Sydney</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">jellyfin-config:/config:z</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">jellyfin-cache:/cache:z</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">~/arr-stack/external-drive:/media_external-drive:z</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">~/arr-stack/movies:/media_movies:z</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">~/arr-stack/tvshows:/media_tvshows:z</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">~/arr-stack/prowler:/media_prowler:z</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">~/arr-stack/transmission:/media_transmission:z</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">8096</span>:<span style="color:#ae81ff">8096</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">restart</span>: <span style="color:#ae81ff">unless-stopped</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.enable=true&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.jellyfin.rule=Host(`jellyfin.ak`)&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.jellyfin.entrypoints=https&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.services.jellyfin.loadbalancer.server.port=8096&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.jellyfin.tls=true&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># https://docs.jellyseerr.dev/getting-started/docker?docker-methods=docker-compose</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">jellyseerr</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">docker.io/fallenbagel/jellyseerr:latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">jellyseerr</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">environment</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">PUID=1000</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">PGID=1000</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">LOG_LEVEL=debug</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">TZ=Australia/Sydney</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">5055</span>:<span style="color:#ae81ff">5055</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">jellyseerr-config:/app/config:z</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">restart</span>: <span style="color:#ae81ff">unless-stopped</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.enable=true&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.jellyseerr.rule=Host(`jellyseerr.ak`)&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.jellyseerr.entrypoints=https&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.services.jellyseerr.loadbalancer.server.port=5055&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.jellyseerr.tls=true&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># https://docs.linuxserver.io/images/docker-prowlarr/#application-setup</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">prowlarr</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">lscr.io/linuxserver/prowlarr:latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">prowlarr</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">environment</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">PUID=1000</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">PGID=1000</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">TZ=Australia/Sydney</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">prowlarr-config:/config:z</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">~/arr-stack/prowler/downloads:/downloads:z</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">9696</span>:<span style="color:#ae81ff">9696</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">restart</span>: <span style="color:#ae81ff">unless-stopped</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.enable=true&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.prowlarr.rule=Host(`prowlarr.ak`)&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.prowlarr.entrypoints=https&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.services.prowlarr.loadbalancer.server.port=9696&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.prowlarr.tls=true&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># https://docs.linuxserver.io/images/docker-sonarr/</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">sonarr</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">lscr.io/linuxserver/sonarr:latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">sonarr</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">environment</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">PUID=0</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">PGID=0</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">TZ=Australia/Sydney</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">sonarr-config:/config:z</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">~/arr-stack/tvshows:/tvshows:z</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">~/arr-stack/transmission/downloads:/downloads:z</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">8989</span>:<span style="color:#ae81ff">8989</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">restart</span>: <span style="color:#ae81ff">unless-stopped</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.enable=true&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.sonarr.rule=Host(`sonarr.ak`)&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.sonarr.entrypoints=https&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.services.sonarr.loadbalancer.server.port=8989&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.sonarr.tls=true&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># https://docs.linuxserver.io/images/docker-radarr/</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">radarr</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">lscr.io/linuxserver/radarr:latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">radarr</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">environment</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">PUID=0</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">PGID=0</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">TZ=Australia/Sydney</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">radarr-config:/config:z</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">~/arr-stack/movies:/movies:z</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">~/arr-stack/transmission/downloads:/downloads:z</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">7878</span>:<span style="color:#ae81ff">7878</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">restart</span>: <span style="color:#ae81ff">unless-stopped</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.enable=true&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.radarr.rule=Host(`radarr.ak`)&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.radarr.entrypoints=https&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.services.radarr.loadbalancer.server.port=7878&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.radarr.tls=true&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># https://docs.linuxserver.io/images/docker-transmission/</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">transmission</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">lscr.io/linuxserver/transmission:latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">transmission</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">environment</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">PUID=0</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">PGID=0</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">TZ=Australia/Sydney</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">transmission-config:/config:z</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">~/arr-stack/transmission/downloads:/downloads:z</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">~/arr-stack/transmission/watch:/watch:z</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">9091</span>:<span style="color:#ae81ff">9091</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">51413</span>:<span style="color:#ae81ff">51413</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">51413</span>:<span style="color:#ae81ff">51413</span><span style="color:#ae81ff">/udp</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">restart</span>: <span style="color:#ae81ff">unless-stopped</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.enable=true&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.transmission.rule=Host(`transmission.ak`)&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.transmission.entrypoints=https&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.services.transmission.loadbalancer.server.port=9091&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.transmission.tls=true&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># It always run as UID=1111(flare_bypasser)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># https://github.com/yoori/flare-bypasser</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">flare-bypasser</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">ghcr.io/yoori/flare-bypasser:latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">flare-bypasser</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">environment</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">PUID=1000</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">PGID=1000</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">TZ=Australia/Sydney</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">flare-bypasser-config:/config:z</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">8191</span>:<span style="color:#ae81ff">8080</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">restart</span>: <span style="color:#ae81ff">unless-stopped</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">labels</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.enable=true&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.flare-bypasser.rule=Host(`flare-bypasser.ak`)&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.flare-bypasser.entrypoints=https&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.services.flare-bypasser.loadbalancer.server.port=8191&#34;</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;traefik.http.routers.flare-bypasser.tls=true&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">jellyfin-config</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">jellyfin-cache</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">sonarr-config</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">radarr-config</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">jellyseerr-config</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">prowlarr-config</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">transmission-config</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">flare-bypasser-config</span>:
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">EOL</span>
+</span></span></code></pre></div></details>
+<hr>
+<h2 id="deploying-the-stack">Deploying the Stack</h2>
+<p>Once the <code>podman-compose.yaml</code> file is created, you can deploy the entire stack with a single command.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Make sure you&#39;re in the ~/arr-stack directory</span>
+</span></span><span style="display:flex;"><span>cd ~/arr-stack
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Deploy the services in detached mode</span>
+</span></span><span style="display:flex;"><span>podman-compose -f podman-compose.yaml up -d --force-recreate
+</span></span></code></pre></div><p>The <code>--force-recreate</code> flag ensures that if any configuration changes have been made, the containers will be rebuilt from scratch.</p>
+<p>To check if the containers are running and to verify user permissions, you can use the following commands:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>podman ps
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># To check the user inside a container</span>
+</span></span><span style="display:flex;"><span>podman exec -it sonarr whoami
+</span></span></code></pre></div><p>This will show you the user that the container is running as, which should be <code>abc</code> (uid 1000) for most services, or <code>root</code> (uid 0) for the <code>PUID=0</code> services, which is correctly mapped to your user.</p>
+<hr>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Service</th>
+          <th style="text-align: left">Address</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>Jellyfin</strong></td>
+          <td style="text-align: left"><a href="http://192.168.50.200:8096">http://192.168.50.200:8096</a></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Jellyserr</strong></td>
+          <td style="text-align: left"><a href="http://192.168.50.200:5055">http://192.168.50.200:5055</a></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Prowlarr</strong></td>
+          <td style="text-align: left"><a href="http://192.168.50.200:9696">http://192.168.50.200:9696</a></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Sonarr</strong></td>
+          <td style="text-align: left"><a href="http://192.168.50.200:8989">http://192.168.50.200:8989</a></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Radarr</strong></td>
+          <td style="text-align: left"><a href="http://192.168.50.200:7878">http://192.168.50.200:7878</a></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Transmission</strong></td>
+          <td style="text-align: left"><a href="http://192.168.50.200:9091">http://192.168.50.200:9091</a></td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>flare-bypasser</strong></td>
+          <td style="text-align: left"><a href="http://192.168.50.200:8191">http://192.168.50.200:8191</a></td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h3 id="enable-auto-start">Enable Auto start</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Remove old service files - That automatically start containers</span>
+</span></span><span style="display:flex;"><span>containers<span style="color:#f92672">=(</span>prowlarr transmission flare-bypasser sonarr radarr jellyseerr jellyfin<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> container in <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>containers[@]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  rm ~/.config/systemd/user/container-$container.service
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span>systemctl --user daemon-reload
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create new service files</span>
+</span></span><span style="display:flex;"><span>containers<span style="color:#f92672">=(</span>prowlarr transmission flare-bypasser sonarr radarr jellyseerr jellyfin<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> name in <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>containers[@]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  podman update --restart<span style="color:#f92672">=</span>no <span style="color:#e6db74">&#34;</span>$name<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>  podman generate systemd --name <span style="color:#e6db74">&#34;</span>$name<span style="color:#e6db74">&#34;</span> --restart-policy<span style="color:#f92672">=</span>always --container-prefix<span style="color:#f92672">=</span>container --files
+</span></span><span style="display:flex;"><span>  mv <span style="color:#e6db74">&#34;container-</span>$name<span style="color:#e6db74">.service&#34;</span> ~/.config/systemd/user/
+</span></span><span style="display:flex;"><span>  systemctl --user enable <span style="color:#e6db74">&#34;container-</span>$name<span style="color:#e6db74">.service&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># systemctl --user start &#34;container-$name.service&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span>systemctl --user daemon-reload
+</span></span></code></pre></div><hr>
+<h3 id="update-all">Update all</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cd ~/arr-stack
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;Pulling all images used by running containers...&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> img in <span style="color:#66d9ef">$(</span>podman ps --format <span style="color:#e6db74">&#34;{{.Image}}&#34;</span> | sort -u<span style="color:#66d9ef">)</span>; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    echo <span style="color:#e6db74">&#34;Pulling: </span>$img<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    podman pull <span style="color:#e6db74">&#34;</span>$img<span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Remove old service files</span>
+</span></span><span style="display:flex;"><span>containers<span style="color:#f92672">=(</span>prowlarr transmission flare-bypasser sonarr radarr jellyseerr jellyfin<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> container in <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>containers[@]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  rm ~/.config/systemd/user/container-$container.service
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span>systemctl --user daemon-reload
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Re-generate and enable new service files</span>
+</span></span><span style="display:flex;"><span>containers<span style="color:#f92672">=(</span>prowlarr transmission flare-bypasser sonarr radarr jellyseerr jellyfin<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> name in <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>containers[@]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># This command generates a new systemd service file for the container</span>
+</span></span><span style="display:flex;"><span>  podman generate systemd --name <span style="color:#e6db74">&#34;</span>$name<span style="color:#e6db74">&#34;</span> --restart-policy<span style="color:#f92672">=</span>always --container-prefix<span style="color:#f92672">=</span>container --files
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># This moves the newly generated service file to the correct systemd user directory</span>
+</span></span><span style="display:flex;"><span>  mv <span style="color:#e6db74">&#34;container-</span>$name<span style="color:#e6db74">.service&#34;</span> ~/.config/systemd/user/
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Enable and start the new service</span>
+</span></span><span style="display:flex;"><span>  systemctl --user enable <span style="color:#e6db74">&#34;container-</span>$name<span style="color:#e6db74">.service&#34;</span>
+</span></span><span style="display:flex;"><span>  systemctl --user start <span style="color:#e6db74">&#34;container-</span>$name<span style="color:#e6db74">.service&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Reload the systemd manager configuration</span>
+</span></span><span style="display:flex;"><span>systemctl --user daemon-reload
+</span></span></code></pre></div><h3 id="remove-all">Remove all</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cd ~/arr-stack
+</span></span><span style="display:flex;"><span>podman-compose down -v
+</span></span><span style="display:flex;"><span>podman image prune
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>containers<span style="color:#f92672">=(</span>prowlarr transmission flare-bypasser sonarr radarr jellyseerr jellyfin<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> container in <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>containers[@]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  rm ~/.config/systemd/user/container-$container.service
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span><span style="display:flex;"><span>systemctl --user daemon-reload
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sudo umount ~/arr-stack/external-drive
+</span></span><span style="display:flex;"><span>sudo nano /etc/fstab
+</span></span><span style="display:flex;"><span>systemctl daemon-reload
+</span></span><span style="display:flex;"><span>rm -rf ~/arr-stack
+</span></span></code></pre></div><hr>
+<p><img src="https://images.unsplash.com/photo-1499744937866-d7e566a20a61?q=80&amp;w=2070&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="thank you"></p>
+</section></main>
+        <footer id="main-footer">
+<script src="/js/copy-button.min.4876b98121977026b3ce53c9cb225d818299becf2f6ba9c345fdfbc99911d6dd.js" integrity="sha256-SHa5gSGXcCazzlPJyyJdgYKZvs8va6nDRf37yZkR1t0="></script>
+</footer>
+      </div><aside id="side-pane" class="side-sticky"><div class="side-content">
+      <h3>Disclaimer</h3><p><ul>
+<li>This content is for educational and experimental purposes only, provided “as is” without warranties. You are solely responsible for how you use it</li>
+</ul>
+</p>
+    </div><div class="side-details">
+    <span>1500 words</span>
+    <span>14 - 18 minutes read</span><div class="side-details-taxonomy">
+        <small>series: 
+          <span class="details-taxonomy"><a href="//localhost:1313/series/homelab">homelab</a></span></small>
+      </div><div class="side-details-taxonomy">
+        <small>topics: 
+          <span class="details-taxonomy"><a href="//localhost:1313/topics/arr-stack">arr-stack</a></span></small>
+      </div></div><h3>Table Of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a>
+      <ul>
+        <li><a href="#what-is-the-arr-stack-">What is the &ldquo;arr stack&rdquo;? 🗃️</a></li>
+      </ul>
+    </li>
+    <li><a href="#prerequisites">Prerequisites</a></li>
+    <li><a href="#setup-directories-and-external-drive">Setup Directories and External Drive</a>
+      <ul>
+        <li><a href="#mount-an-external-hard-drive">Mount an External Hard Drive</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-podman-composeyaml-file">The <code>podman-compose.yaml</code> File</a></li>
+    <li><a href="#deploying-the-stack">Deploying the Stack</a>
+      <ul>
+        <li><a href="#enable-auto-start">Enable Auto start</a></li>
+        <li><a href="#update-all">Update all</a></li>
+        <li><a href="#remove-all">Remove all</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav><h3>Related</h3>
+    <ul><li><a href="/hidden/podman-101/">Podman 101 - Always Run Rootless!</a></li><li><a href="/hidden/podman-traefik/">Traefik on Podman with Local Certificates</a></li></ul></aside></div>
+  </div>
+</body>
+</html>
