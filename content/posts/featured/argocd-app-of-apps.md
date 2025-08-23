@@ -106,7 +106,7 @@ kubectl apply -f root-app.yaml
    
 ![oprah](https://github.com/arslankhanali/my-blog/blob/main/static/argocd-app-of-apps/oprah.png?raw=true)
 
-#### Access apps
+### Access apps
 - Kubernetes Dashboard [k3s.node1](https://k3s.node1)
 ```
 # Get Bearer Token
@@ -117,7 +117,7 @@ kubectl get secret admin-user -n kubernetes-dashboard -o jsonpath="{.data.token}
  
 You can now stop the Timer. It tooks me < 1min to deploy everything.
 
-# ArgoCD has : 
+###  ArgoCD has : 
 1. Synced the `env/{k3s}/` directory.
 2. Created child applications in {platform & workloads} folders.
 3. Deployed all components declaratively.

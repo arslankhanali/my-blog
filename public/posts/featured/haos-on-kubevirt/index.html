@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Home Assistant VM on Kubevirt | AK Blogs</title>
+<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" /><meta property="og:url" content="//localhost:1313/posts/featured/haos-on-kubevirt/">
+  <meta property="og:site_name" content="AK Blogs">
+  <meta property="og:title" content="Home Assistant VM on Kubevirt">
+  <meta property="og:description" content="1. Introduction: What is Home Assistant? Home Assistant is a powerful, open-source home automation platform that puts local control and privacy first. It can be run on various devices, from single-board computers like the Raspberry Pi to virtual machines and containers. It’s a great tool for anyone looking to automate their home without relying on big tech companies, giving you complete control over your smart devices.
+2. Installation Methods Home Assistant offers a few different ways to get started, but two of the most common are:">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-08-17T15:56:30+10:00">
+    <meta property="article:modified_time" content="2025-08-17T15:56:30+10:00">
+    <meta property="article:tag" content="Kubernetes">
+    <meta property="article:tag" content="Podman">
+      <meta property="og:see_also" content="//localhost:1313/hidden/k3s-logins/">
+      <meta property="og:see_also" content="//localhost:1313/hidden/k3s/">
+      <meta property="og:see_also" content="//localhost:1313/hidden/podman-arr-stack/">
+      <meta property="og:see_also" content="//localhost:1313/hidden/podman-101/">
+      <meta property="og:see_also" content="//localhost:1313/hidden/podman-traefik/">
+      <meta property="og:see_also" content="//localhost:1313/homelab/ansible-fedora/">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Home Assistant VM on Kubevirt">
+  <meta name="twitter:description" content="1. Introduction: What is Home Assistant? Home Assistant is a powerful, open-source home automation platform that puts local control and privacy first. It can be run on various devices, from single-board computers like the Raspberry Pi to virtual machines and containers. It’s a great tool for anyone looking to automate their home without relying on big tech companies, giving you complete control over your smart devices.
+2. Installation Methods Home Assistant offers a few different ways to get started, but two of the most common are:">
+
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/root.css">
+    <link rel="stylesheet" href="/css/bundle.css">
+
+      <script src="/js/copy-button.js"></script>
+      <script src="/js/bundle.js"></script><script defer src="/js/search/flexsearch.compact.64594b125f7b78bdf4fa8316955922bbebb1cd6baef3f16654bfca20309f18f8.js" integrity="sha256-ZFlLEl97eL30&#43;oMWlVkiu&#43;uxzWuu8/FmVL/KIDCfGPg="></script>
+<script defer src="/js/search/search.1d980f84df11f3eb7c8c5f17f541d49a0611608df179dd74fa7f06225eb56ace.js" integrity="sha256-HZgPhN8R8&#43;t8jF8X9UHUmgYRYI3xed10&#43;n8GIl61as4="></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+
+</head>
+<body class="notransition">
+  <div id="container">
+    <header id="main-header"><div role="navigation" aria-label="Main">
+  <div class="nav-left">
+    <a href="//localhost:1313/" style="color: inherit;">AK Blogs</a>
+  </div>
+  <div class="nav-right">
+    <div style="position:absolute;width:0px;height:0px;">
+      <div id="nav-dropdown-menu" class="hidden" href="#">
+    <div class="nav-item">
+      <a aria-current="true" class="ancestor" href="/posts/"
+      >Posts</a>
+    </div>
+    <div class="nav-item">
+      <a href="/homelab/"
+      >Homelab</a>
+    </div>
+    <div class="nav-item">
+      <a href="/hidden/"
+      >Shadow</a>
+    </div>
+    <div class="nav-item">
+      <a href="/about/"
+      >About</a>
+    </div>
+</div>
+    </div>
+    <a id="nav-dropdown-button" href="#"><svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a>
+    <div id="nav-menu">
+    <div class="nav-item">
+      <a aria-current="true" class="ancestor" href="/posts/"
+      >Posts</a>
+    </div>
+    <div class="nav-item">
+      <a href="/homelab/"
+      >Homelab</a>
+    </div>
+    <div class="nav-item">
+      <a href="/hidden/"
+      >Shadow</a>
+    </div>
+    <div class="nav-item">
+      <a href="/about/"
+      >About</a>
+    </div>
+</div>
+    <a id="theme-switcher" href="#">
+<svg class="light-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 3V4M12 20V21M4 12H3M6.31412 6.31412L5.5 5.5M17.6859 6.31412L18.5 5.5M6.31412 17.69L5.5 18.5001M17.6859 17.69L18.5 18.5001M21 12H20M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+<svg class="dark-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.32031 11.6835C3.32031 16.6541 7.34975 20.6835 12.3203 20.6835C16.1075 20.6835 19.3483 18.3443 20.6768 15.032C19.6402 15.4486 18.5059 15.6834 17.3203 15.6834C12.3497 15.6834 8.32031 11.654 8.32031 6.68342C8.32031 5.50338 8.55165 4.36259 8.96453 3.32996C5.65605 4.66028 3.32031 7.89912 3.32031 11.6835Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a>
+  </div>
+</div>
+</header>
+    <div class="flex grow">
+      <div id="main-pane">
+        <main id="main-content"><div class="single-header">
+<ol class="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="//localhost:1313/">
+        <span itemprop="name">Home</span>
+      </a>
+      <meta itemprop="position" content='1' />
+    </li>
+    <span>&nbsp»&nbsp</span>
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="//localhost:1313/posts/">
+        <span itemprop="name">Posts</span>
+      </a>
+      <meta itemprop="position" content='2' />
+    </li>
+    <span>&nbsp»&nbsp</span>
+</ol>
+<h1>Home Assistant VM on Kubevirt</h1><time class="dim" datetime="2025-08-17T15:56:30&#43;10:00">August 17, 2025</time><div class="term-container"><div class="tag">
+        <a href="//localhost:1313/tags/kubernetes/">#kubernetes</a>
+      </div><div class="tag">
+        <a href="//localhost:1313/tags/podman/">#podman</a>
+      </div></ol></div>
+  <section class="page-section"><h2 id="1-introduction-what-is-home-assistant">1. Introduction: What is Home Assistant?</h2>
+<p><strong>Home Assistant</strong> is a powerful, open-source home automation platform that puts local control and privacy first. It can be run on various devices, from single-board computers like the Raspberry Pi to virtual machines and containers. It&rsquo;s a great tool for anyone looking to automate their home without relying on big tech companies, giving you complete control over your smart devices.</p>
+<hr>
+<h2 id="2-installation-methods">2. Installation Methods</h2>
+<p>Home Assistant offers a few different ways to get started, but two of the most common are:</p>
+<ul>
+<li>
+<p><strong>Home Assistant Operating System (HaOS):</strong> This is the recommended and most popular installation method. <strong>HaOS</strong> is a lightweight, embedded operating system designed specifically to run Home Assistant and its ecosystem. It&rsquo;s easy to install on a dedicated device like a Home Assistant Green, a Raspberry Pi, or a virtual machine. This method gives you access to the full Home Assistant experience, including the convenience of <strong>add-ons</strong>, which are pre-packaged applications that extend its functionality.</p>
+</li>
+<li>
+<p><strong>Home Assistant Container:</strong> This method is for more advanced users who want to run Home Assistant within a container environment (like Docker or Podman). You&rsquo;re responsible for managing the underlying operating system and the container yourself. While this offers flexibility, it comes with a trade-off: you don&rsquo;t get access to the official add-ons.</p>
+</li>
+</ul>
+<hr>
+<h2 id="3-haos-on-kubevirt-the-best-of-both-worlds">3. HaOS on KubeVirt: The Best of Both Worlds</h2>
+<p>If you&rsquo;re already running a Kubernetes homelab and prefer the flexibility of containerized applications but still want the convenience and features of the full HaOS experience, <strong>KubeVirt</strong> is the perfect solution. KubeVirt is a Kubernetes add-on that lets you run traditional virtual machines (VMs) alongside your container workloads. This means you can run the full HaOS as a VM right inside your Kubernetes cluster, giving you a powerful, unified platform for both your containers and your home automation.</p>
+<hr>
+<h2 id="4-install-kubevirt-and-cdi">4. Install KubeVirt and CDI</h2>
+<p>The first step is to get KubeVirt and its dependencies up and running in your cluster. We will also install the <strong>Containerized Data Importer (CDI)</strong>, which is essential for importing the virtual machine disk image into Kubernetes.</p>
+<h3 id="install-kubevirt--cdi">Install Kubevirt &amp; CDI</h3>
+<details style="background-color: #6e68c6ff; border: 1px solid #12cb37ff; padding: 10px; border-radius: 5px;">
+<summary style="font-weight: bold; color: #edf2f7ff;"> Install Kubevirt </summary>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yml" data-lang="yml"><span style="display:flex;"><span><span style="color:#75715e"># Install KuberVirt</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">export KUBEVIRT_VERSION=$(curl -s https://api.github.com/repos/kubevirt/kubevirt/releases/latest | jq -r .tag_name)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">echo $KUBEVIRT_VERSION</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">kubectl create -f https://github.com/kubevirt/kubevirt/releases/download/$KUBEVIRT_VERSION/kubevirt-operator.yaml</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">kubectl create -f https://github.com/kubevirt/kubevirt/releases/download/$KUBEVIRT_VERSION/kubevirt-cr.yaml</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">kubectl get pods -n kubevirt</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Install Containerized Data Importer (CDI)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">export CDI_VERSION=$(curl -s https://api.github.com/repos/kubevirt/containerized-data-importer/releases/latest | jq -r .tag_name)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">echo $CDI_VERSION</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">kubectl create -f https://github.com/kubevirt/containerized-data-importer/releases/download/$CDI_VERSION/cdi-operator.yaml</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">kubectl create -f https://github.com/kubevirt/containerized-data-importer/releases/download/$CDI_VERSION/cdi-cr.yaml</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">kubectl get pods -n cdi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># kubectl -n cdi port-forward svc/cdi-uploadproxy 8443:443</span>
+</span></span></code></pre></div></details> 
+<hr>
+<div style="background-color: #03f90cff; padding: 1px; border-left: 10px solid black; border-radius: 10px;">
+<p>⭐️ NOTE: Steps 5-7 are about creating your own HaOS containerdisks. If you are happy to use my image based on HomeAssistant 16.1 then go to <a href="#8-deploy-the-vm-on-kubevirt">step-8</a> directly.</p>
+</div>
+<p>In case you are interested. <a href="https://quay.io/organization/containerdisks">Here</a> are the official containerdisk images for various OS</p>
+<h2 id="5-download-the-haos-image">5. Download the HaOS image</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Download the HaOS qcow2 image</span>
+</span></span><span style="display:flex;"><span>wget https://github.com/home-assistant/operating-system/releases/download/16.1/haos_ova-16.1.qcow2.xz
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># unzip</span>
+</span></span><span style="display:flex;"><span>xz -dk haos_ova-16.1.qcow2.xz
+</span></span></code></pre></div><h2 id="6-convert-the-image">6. Convert the image</h2>
+<p>Convert the image into a foramt that is understood by Kubevirt</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo dnf install podman libguestfs-tools guestfs-tools -y
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># machine-id gave error</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># virt-sysprep -a haos_ova-16.1.qcow2 --operations machine-id,bash-history,logfiles,tmp-files,net-hostname,net-hwaddr  </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Image_name<span style="color:#f92672">=</span>haos_ova-16.1.qcow2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Make Golden Image by removing unique identifiers and temporary files from the image.</span>
+</span></span><span style="display:flex;"><span>virt-sysprep -a $Image_name --operations bash-history,logfiles,tmp-files,net-hostname,net-hwaddr  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Conpress image</span>
+</span></span><span style="display:flex;"><span>qemu-img convert -c -O qcow2 $Image_name <span style="color:#e6db74">&#34;</span>$Image_name<span style="color:#e6db74">-containerimage.qcow2&#34;</span>
+</span></span></code></pre></div><h2 id="7-build-the-image-and-push-to-your-repo">7. Build the image and push to your repo</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Create your Containerfile</span>
+</span></span><span style="display:flex;"><span>tee Containerfile &gt; /dev/null <span style="color:#e6db74">&lt;&lt;EOL
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">FROM kubevirt/container-disk-v1alpha
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">ADD $Image_name-containerimage.qcow2 /disk/
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOL</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Login to your repo</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>podman login quay.io -u arslankhanali -p &lt;&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Make sure `homeassistant` repo exists and it is public</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Buld the image</span>
+</span></span><span style="display:flex;"><span>podman build -t quay.io/arslankhanali/homeassistant:v1 .
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Push the image</span>
+</span></span><span style="display:flex;"><span>podman push quay.io/arslankhanali/homeassistant:v1
+</span></span></code></pre></div><h2 id="8-deploy-the-vm-on-kubevirt">8. Deploy the VM on Kubevirt</h2>
+<p>I will deploy in the namespace <code>vm</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>kubectl create ns vm
+</span></span><span style="display:flex;"><span>kubectl config set-context --current --namespace<span style="color:#f92672">=</span>vm
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt; EOF | oc apply -f-
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: kubevirt.io/v1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: VirtualMachineInstance
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  name: haos
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  namespace: vm # &lt;-- Change as per need
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">spec:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  domain:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    resources:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      requests:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        memory: 2048Mi
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        cpu: 1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      limits:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        memory: 4096Mi
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        cpu: 2
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    devices:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      disks:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      - name: containerdisk
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        disk:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          bus: virtio
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      rng: {}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    firmware:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      bootloader:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        efi:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          secureBoot: false   # ✅ disable SecureBoot to avoid SMM requirement
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  terminationGracePeriodSeconds: 0
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  volumes:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  - name: containerdisk
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    containerDisk:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      image: quay.io/arslankhanali/homeassistant:v1 # &lt;-- Change as per need
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">---
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">apiVersion: v1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">kind: Service
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">metadata:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  name: haos
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  namespace: vm
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">spec:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  type: NodePort
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  selector:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    vmi: haos
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  ports:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  - name: haos-ui
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    port: 8123
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    protocol: TCP
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    targetPort: 8123
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    nodePort: 30003 # &lt;-- Change as per need - Will be random it not set
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
+</span></span></code></pre></div><h2 id="9-console-and-port-forward">9. Console and port forward</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>virtctl console haos
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Password is ususlly set in cloud init inside vmi yaml</span>
+</span></span></code></pre></div><h2 id="10-console-and-port-forward">10. Console and port forward</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>virtctl port-forward vmi/haos 8123:8123
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl -kI http://localhost:8123/onboarding.html
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl -kI http://192.168.50.200:30003
+</span></span></code></pre></div><h2 id="delete">Delete</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>oc delete -f vm-haos.yaml
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>oc delete vmi haos
+</span></span><span style="display:flex;"><span>oc delete svc haos
+</span></span></code></pre></div><p>References:</p>
+<ul>
+<li><a href="https://github.com/ormergi/vm-image-builder/tree/main?tab=readme-ov-file">https://github.com/ormergi/vm-image-builder/tree/main?tab=readme-ov-file</a></li>
+</ul>
+<p><img src="https://images.unsplash.com/photo-1499744937866-d7e566a20a61?q=80&amp;w=2070&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="thank you"></p>
+</section></main>
+        <footer id="main-footer">
+<script src="/js/copy-button.min.4876b98121977026b3ce53c9cb225d818299becf2f6ba9c345fdfbc99911d6dd.js" integrity="sha256-SHa5gSGXcCazzlPJyyJdgYKZvs8va6nDRf37yZkR1t0="></script>
+</footer>
+      </div><aside id="side-pane" class="side-sticky"><div class="side-content">
+      <h3>Disclaimer</h3><p><ul>
+<li>This content is for educational and experimental purposes only, provided “as is” without warranties. You are solely responsible for how you use it</li>
+</ul>
+</p>
+    </div><div class="side-details">
+    <span>780 words</span>
+    <span>6 - 8 minutes read</span><div class="side-details-taxonomy">
+        <small>series: 
+          <span class="details-taxonomy"><a href="//localhost:1313/series/homelab">homelab</a></span></small>
+      </div><div class="side-details-taxonomy">
+        <small>topics: 
+          <span class="details-taxonomy"><a href="//localhost:1313/topics/"></a></span></small>
+      </div></div><h3>Table Of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-introduction-what-is-home-assistant">1. Introduction: What is Home Assistant?</a></li>
+    <li><a href="#2-installation-methods">2. Installation Methods</a></li>
+    <li><a href="#3-haos-on-kubevirt-the-best-of-both-worlds">3. HaOS on KubeVirt: The Best of Both Worlds</a></li>
+    <li><a href="#4-install-kubevirt-and-cdi">4. Install KubeVirt and CDI</a>
+      <ul>
+        <li><a href="#install-kubevirt--cdi">Install Kubevirt &amp; CDI</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-download-the-haos-image">5. Download the HaOS image</a></li>
+    <li><a href="#6-convert-the-image">6. Convert the image</a></li>
+    <li><a href="#7-build-the-image-and-push-to-your-repo">7. Build the image and push to your repo</a></li>
+    <li><a href="#8-deploy-the-vm-on-kubevirt">8. Deploy the VM on Kubevirt</a></li>
+    <li><a href="#9-console-and-port-forward">9. Console and port forward</a></li>
+    <li><a href="#10-console-and-port-forward">10. Console and port forward</a></li>
+    <li><a href="#delete">Delete</a></li>
+  </ul>
+</nav><h3>Related</h3>
+    <ul><li><a href="/hidden/k3s-logins/">K3s Logins</a></li><li><a href="/hidden/k3s/">K3s</a></li><li><a href="/hidden/podman-traefik/">Traefik on Podman with Local Certificates</a></li><li><a href="/posts/ai/openwebui-on-podman/">Open WebUI with Podman</a></li><li><a href="/posts/ai/dify-on-podman/">Dify: A Podman Deployment Guide</a></li></ul></aside></div>
+  </div>
+  
+</body>
+</html>

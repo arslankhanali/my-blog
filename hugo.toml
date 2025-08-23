@@ -25,7 +25,7 @@ enableRobotsTXT = true
   showFeatured = true
   showRecent = true
   hideRecentWhenFeatured = true
-  countRecent = 5
+  countRecent = 10
 
 [params.rtwt.side.home]
   sidePaneSticky = false

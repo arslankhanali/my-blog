@@ -6,13 +6,27 @@
     <description>Recent content in Series on AK Blogs</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 08 Aug 2025 17:18:26 +1000</lastBuildDate>
+    <lastBuildDate>Sat, 23 Aug 2025 17:33:52 +1000</lastBuildDate>
     <atom:link href="//localhost:1313/series/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Kubevirt</title>
+      <link>//localhost:1313/series/kubevirt/</link>
+      <pubDate>Sat, 23 Aug 2025 17:33:52 +1000</pubDate>
+      <guid>//localhost:1313/series/kubevirt/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Homelab</title>
       <link>//localhost:1313/series/homelab/</link>
-      <pubDate>Fri, 08 Aug 2025 17:18:26 +1000</pubDate>
+      <pubDate>Sun, 17 Aug 2025 15:56:30 +1000</pubDate>
       <guid>//localhost:1313/series/homelab/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>AI</title>
+      <link>//localhost:1313/series/ai/</link>
+      <pubDate>Fri, 08 Aug 2025 20:52:03 +1000</pubDate>
+      <guid>//localhost:1313/series/ai/</guid>
       <description></description>
     </item>
     <item>

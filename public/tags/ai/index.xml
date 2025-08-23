@@ -6,14 +6,21 @@
     <description>Recent content in Ai on AK Blogs</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 08 Aug 2025 20:36:01 +1000</lastBuildDate>
+    <lastBuildDate>Fri, 08 Aug 2025 20:52:03 +1000</lastBuildDate>
     <atom:link href="//localhost:1313/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Open WebUI with Podman</title>
+      <link>//localhost:1313/posts/ai/openwebui-on-podman/</link>
+      <pubDate>Fri, 08 Aug 2025 20:52:03 +1000</pubDate>
+      <guid>//localhost:1313/posts/ai/openwebui-on-podman/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;Welcome to another installment in our AI series! Today, we&amp;rsquo;re going to set up &lt;strong&gt;Open WebUI&lt;/strong&gt;, a powerful, self-hosted web interface for interacting with various large language models (LLMs). This tool provides a beautiful user experience similar to ChatGPT but on your own terms. We&amp;rsquo;ll be using Podman to containerize Open WebUI, making it a breeze to manage.&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://images.unsplash.com/photo-1494869042583-f6c911f04b4c?q=80&amp;amp;w=2940&amp;amp;auto=format&amp;amp;fit=crop&amp;amp;ixlib=rb-4.1.0&amp;amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&#34; alt=&#34;Open WebUI&#34;&gt;&lt;/p&gt;&#xA;&lt;h3 id=&#34;why-open-webui&#34;&gt;Why Open WebUI?&lt;/h3&gt;&#xA;&lt;p&gt;Open WebUI acts as a central hub for your LLMs. It can connect to local models running on &lt;strong&gt;Ollama&lt;/strong&gt; or &lt;strong&gt;LM Studio&lt;/strong&gt;, as well as remote services like &lt;strong&gt;MaaS&lt;/strong&gt; (Model as a Service). This flexibility allows you to experiment with different models and backends all from a single, consistent interface.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Dify: A Podman Deployment Guide</title>
       <link>//localhost:1313/posts/ai/dify-on-podman/</link>
       <pubDate>Fri, 08 Aug 2025 20:36:01 +1000</pubDate>
       <guid>//localhost:1313/posts/ai/dify-on-podman/</guid>
-      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;Welcome to another guide in our homelab series! Today, we&amp;rsquo;re going to deploy Dify, an AI application development platform, using Podman and &lt;code&gt;podman-compose&lt;/code&gt;. Dify provides a powerful, visual way to build and manage AI applications, and deploying it on your local homelab gives you full control.&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://images.unsplash.com/photo-1716637644831-e046c73be197?q=80&amp;amp;w=1287&amp;amp;auto=format&amp;amp;fit=crop&amp;amp;ixlib=rb-4.1.0&amp;amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&#34; alt=&#34;Dify AI platform&#34;&gt;&lt;/p&gt;&#xA;&lt;h3 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h3&gt;&#xA;&lt;p&gt;Before we start, make sure you have Podman and &lt;code&gt;podman-compose&lt;/code&gt; installed. If you haven&amp;rsquo;t, you can refer to my previous blog post on how to set up Podman.&lt;/p&gt;</description>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;Today, we&amp;rsquo;re going to deploy Dify, an AI application development platform, using Podman and &lt;code&gt;podman-compose&lt;/code&gt;. Dify provides a powerful, visual way to build and manage AI applications, and deploying it on your local fedora server gives you full control.&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://images.unsplash.com/photo-1716637644831-e046c73be197?q=80&amp;amp;w=1287&amp;amp;auto=format&amp;amp;fit=crop&amp;amp;ixlib=rb-4.1.0&amp;amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&#34; alt=&#34;Dify AI platform&#34;&gt;&lt;/p&gt;&#xA;&lt;h3 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h3&gt;&#xA;&lt;p&gt;Before we start, make sure you have Podman and &lt;code&gt;podman-compose&lt;/code&gt; installed. If you haven&amp;rsquo;t, you can refer to my previous blog post on how to set up Podman.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

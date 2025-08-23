@@ -18,6 +18,12 @@ Part of series on Arr-stack:
 1. [Arr-Stack Installation]({{<  relref "hidden/podman-arr-stack.md"  >}})
 2. [Arr-Stack Configuration]({{<  relref "hidden/podman-arr-stack-configuration.md"  >}})
 
+# Ref other Sections
+# -------------------------------------- 
+
+To link section with heading `## 8 Deploy the vm on kubevirt` , Use
+[step-8](#8-deploy-the-vm-on-kubevirt)
+
 # collapsable code block - if code is too long
 # -------------------------------------- 
 <details style="background-color: #6e68c6ff; border: 1px solid #12cb37ff; padding: 10px; border-radius: 5px;">
@@ -31,19 +37,19 @@ EOL
 
 # Highlited sections
 # --------------------------------------
-<div style="background-color: #d3cd22ff; padding: 2px; border-left: 10px solid red;">
+<div style="background-color: #d3cd22ff; padding: 2px; border-left: 10px solid red; border-radius: 5px;">
 
 ⚠️ WARNING: 
 </div>
 
 
-<div style="background-color: #255021ff; padding: 2px; border-left: 10px solid red;">
+<div style="background-color: #255021ff; padding: 2px; border-left: 10px solid red; border-radius: 5px;">
 
-🟢 NOTE: 
+⭐️ NOTE: 
 </div>
 
 
-<div style="background-color: #904f4fff; padding: 2px; border-left: 10px solid red;">
+<div style="background-color: #904f4fff; padding: 2px; border-left: 10px solid red; border-radius: 5px;">
 
 🚨 DANGER: 
 </div>

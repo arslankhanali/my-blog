@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>K3s | AK Blogs</title>
+<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" /><meta property="og:url" content="//localhost:1313/hidden/k3s/">
+  <meta property="og:site_name" content="AK Blogs">
+  <meta property="og:title" content="K3s">
+  <meta property="og:description" content="Notes REMEMBER to run kubectl and kustomize apply commands from the correct Namespace/Project! Helm will fuck up otherwise Resources Keep requests.cpu and requests.mem very low. So not a lot of resource is dedicated to the workload. No point giving 512Mi to a workload that is only using 100Mi. Do not put any limits.cpu and limits.mem. Pods crash saying OOM (out of memory) i.e. prometheus Only set it if you fear that a spike from this workload will overwhelm the node. Replicas Keep them to 1 ERROR: _non_namespaceable_&#34;},&#34;name&#34;:&#34;olm&#34;}}] error: no objects passed to apply Remove namespace when resource has its own namespace e.g. olm Always use ClusterIP and expose via Ingress. LoadBalancer and NodePort will clash with host ports service: type: ClusterIP When you run the kustomize build or helm commands, it will download the chart in the directory. You can get the default values.yaml file in it. It is always a good idea to search for terms like enabled replicas resources ingress There should be only one storage class local-path is faster - so keep it default - also you might have to delete longhorn , it would mess up everything Use longhorn when a pod needs RWX storage # Check oc get storageclass # Remove default oc annotate storageclass longhorn storageclass.kubernetes.io/is-default-class- # Make default oc annotate storageclass local-path storageclass.kubernetes.io/is-default-class=true Cert-manager uses a webhook to validate resources like Certificate and Issuer before they are stored in etcd. Remove it in testing/dev env oc patch validatingwebhookconfiguration cert-manager-webhook --type=&#39;json&#39; -p=&#39;[{&#34;op&#34;: &#34;replace&#34;, &#34;path&#34;: &#34;/webhooks/0/failurePolicy&#34;, &#34;value&#34;:&#34;Ignore&#34;}]&#39; Homepage Annotations annotations: gethomepage.dev/enabled: &#34;true&#34; gethomepage.dev/name: &lt;&gt; gethomepage.dev/description: &lt;&gt; gethomepage.dev/group: Cluster Management | Developer Tools | Storage | Security | Monitoring | Server gethomepage.dev/icon: &lt;&gt;.png # &lt;-- https://github.com/homarr-labs/dashboard-icons/tree/main/png # e.g. &#34;app.kubernetes.io/name: longhorn&#34; , This provides running status in homepage UI gethomepage.dev/pod-selector: |- app.kubernetes.io/name in ( longhorn ) gethomepage.dev/weight: &#39;0&#39; 1. Create ns=grafana oc create ns $ns oc project $ns # For Kustomize with Helm kustomize build ~/Codes/homelab-kubernetes/apps/$ns/overlays/k3s/ --enable-helm | oc apply -f - # For Kustomize oc apply -k ~/Codes/homelab-kubernetes/apps/$ns/overlays/k3s/ # For a simple Yaml manifest oc apply -f ~/Codes/homelab-kubernetes/apps/$ns/overlays/k3s/ingress.yaml 2. Verify ns=grafana oc get all -A oc get all curl -Ik --resolve $ns.node1:443:192.168.50.200 https://$ns.node1 # after /etc/hosts file is updated curl -Ik https://$ns.node1 # Node: See all requests and limits for cpu and mem oc describe nodes node1 2.1 Logs ns=grafana oc project $ns oc logs pods/ oc describe pods/ 2.2 Use --previous flag for why the pods/container crashed oc logs pods/prometheus-server-7ffd965767-jhdpc -c prometheus-server --previous">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="hidden">
+    <meta property="article:published_time" content="2025-08-15T18:34:49+10:00">
+    <meta property="article:modified_time" content="2025-08-15T18:34:49+10:00">
+    <meta property="article:tag" content="Kubernetes">
+    <meta property="article:tag" content="Podman">
+      <meta property="og:see_also" content="//localhost:1313/posts/featured/haos-on-kubevirt/">
+      <meta property="og:see_also" content="//localhost:1313/hidden/k3s-logins/">
+      <meta property="og:see_also" content="//localhost:1313/hidden/podman-arr-stack/">
+      <meta property="og:see_also" content="//localhost:1313/hidden/podman-101/">
+      <meta property="og:see_also" content="//localhost:1313/hidden/podman-traefik/">
+      <meta property="og:see_also" content="//localhost:1313/homelab/ansible-fedora/">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="K3s">
+  <meta name="twitter:description" content="Notes REMEMBER to run kubectl and kustomize apply commands from the correct Namespace/Project! Helm will fuck up otherwise Resources Keep requests.cpu and requests.mem very low. So not a lot of resource is dedicated to the workload. No point giving 512Mi to a workload that is only using 100Mi. Do not put any limits.cpu and limits.mem. Pods crash saying OOM (out of memory) i.e. prometheus Only set it if you fear that a spike from this workload will overwhelm the node. Replicas Keep them to 1 ERROR: _non_namespaceable_&#34;},&#34;name&#34;:&#34;olm&#34;}}] error: no objects passed to apply Remove namespace when resource has its own namespace e.g. olm Always use ClusterIP and expose via Ingress. LoadBalancer and NodePort will clash with host ports service: type: ClusterIP When you run the kustomize build or helm commands, it will download the chart in the directory. You can get the default values.yaml file in it. It is always a good idea to search for terms like enabled replicas resources ingress There should be only one storage class local-path is faster - so keep it default - also you might have to delete longhorn , it would mess up everything Use longhorn when a pod needs RWX storage # Check oc get storageclass # Remove default oc annotate storageclass longhorn storageclass.kubernetes.io/is-default-class- # Make default oc annotate storageclass local-path storageclass.kubernetes.io/is-default-class=true Cert-manager uses a webhook to validate resources like Certificate and Issuer before they are stored in etcd. Remove it in testing/dev env oc patch validatingwebhookconfiguration cert-manager-webhook --type=&#39;json&#39; -p=&#39;[{&#34;op&#34;: &#34;replace&#34;, &#34;path&#34;: &#34;/webhooks/0/failurePolicy&#34;, &#34;value&#34;:&#34;Ignore&#34;}]&#39; Homepage Annotations annotations: gethomepage.dev/enabled: &#34;true&#34; gethomepage.dev/name: &lt;&gt; gethomepage.dev/description: &lt;&gt; gethomepage.dev/group: Cluster Management | Developer Tools | Storage | Security | Monitoring | Server gethomepage.dev/icon: &lt;&gt;.png # &lt;-- https://github.com/homarr-labs/dashboard-icons/tree/main/png # e.g. &#34;app.kubernetes.io/name: longhorn&#34; , This provides running status in homepage UI gethomepage.dev/pod-selector: |- app.kubernetes.io/name in ( longhorn ) gethomepage.dev/weight: &#39;0&#39; 1. Create ns=grafana oc create ns $ns oc project $ns # For Kustomize with Helm kustomize build ~/Codes/homelab-kubernetes/apps/$ns/overlays/k3s/ --enable-helm | oc apply -f - # For Kustomize oc apply -k ~/Codes/homelab-kubernetes/apps/$ns/overlays/k3s/ # For a simple Yaml manifest oc apply -f ~/Codes/homelab-kubernetes/apps/$ns/overlays/k3s/ingress.yaml 2. Verify ns=grafana oc get all -A oc get all curl -Ik --resolve $ns.node1:443:192.168.50.200 https://$ns.node1 # after /etc/hosts file is updated curl -Ik https://$ns.node1 # Node: See all requests and limits for cpu and mem oc describe nodes node1 2.1 Logs ns=grafana oc project $ns oc logs pods/ oc describe pods/ 2.2 Use --previous flag for why the pods/container crashed oc logs pods/prometheus-server-7ffd965767-jhdpc -c prometheus-server --previous">
+
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/root.css">
+    <link rel="stylesheet" href="/css/bundle.css">
+
+      <script src="/js/copy-button.js"></script>
+      <script src="/js/bundle.js"></script><script defer src="/js/search/flexsearch.compact.64594b125f7b78bdf4fa8316955922bbebb1cd6baef3f16654bfca20309f18f8.js" integrity="sha256-ZFlLEl97eL30&#43;oMWlVkiu&#43;uxzWuu8/FmVL/KIDCfGPg="></script>
+<script defer src="/js/search/search.1d980f84df11f3eb7c8c5f17f541d49a0611608df179dd74fa7f06225eb56ace.js" integrity="sha256-HZgPhN8R8&#43;t8jF8X9UHUmgYRYI3xed10&#43;n8GIl61as4="></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+
+</head>
+<body class="notransition">
+  <div id="container">
+    <header id="main-header"><div role="navigation" aria-label="Main">
+  <div class="nav-left">
+    <a href="//localhost:1313/" style="color: inherit;">AK Blogs</a>
+  </div>
+  <div class="nav-right">
+    <div style="position:absolute;width:0px;height:0px;">
+      <div id="nav-dropdown-menu" class="hidden" href="#">
+    <div class="nav-item">
+      <a href="/posts/"
+      >Posts</a>
+    </div>
+    <div class="nav-item">
+      <a href="/homelab/"
+      >Homelab</a>
+    </div>
+    <div class="nav-item">
+      <a aria-current="true" class="ancestor" href="/hidden/"
+      >Shadow</a>
+    </div>
+    <div class="nav-item">
+      <a href="/about/"
+      >About</a>
+    </div>
+</div>
+    </div>
+    <a id="nav-dropdown-button" href="#"><svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a>
+    <div id="nav-menu">
+    <div class="nav-item">
+      <a href="/posts/"
+      >Posts</a>
+    </div>
+    <div class="nav-item">
+      <a href="/homelab/"
+      >Homelab</a>
+    </div>
+    <div class="nav-item">
+      <a aria-current="true" class="ancestor" href="/hidden/"
+      >Shadow</a>
+    </div>
+    <div class="nav-item">
+      <a href="/about/"
+      >About</a>
+    </div>
+</div>
+    <a id="theme-switcher" href="#">
+<svg class="light-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 3V4M12 20V21M4 12H3M6.31412 6.31412L5.5 5.5M17.6859 6.31412L18.5 5.5M6.31412 17.69L5.5 18.5001M17.6859 17.69L18.5 18.5001M21 12H20M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+<svg class="dark-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.32031 11.6835C3.32031 16.6541 7.34975 20.6835 12.3203 20.6835C16.1075 20.6835 19.3483 18.3443 20.6768 15.032C19.6402 15.4486 18.5059 15.6834 17.3203 15.6834C12.3497 15.6834 8.32031 11.654 8.32031 6.68342C8.32031 5.50338 8.55165 4.36259 8.96453 3.32996C5.65605 4.66028 3.32031 7.89912 3.32031 11.6835Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a>
+  </div>
+</div>
+</header>
+    <div class="flex grow">
+      <div id="main-pane">
+        <main id="main-content"><div class="single-header">
+<ol class="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="//localhost:1313/">
+        <span itemprop="name">Home</span>
+      </a>
+      <meta itemprop="position" content='1' />
+    </li>
+    <span>&nbsp»&nbsp</span>
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="//localhost:1313/hidden/">
+        <span itemprop="name">Hiddens</span>
+      </a>
+      <meta itemprop="position" content='2' />
+    </li>
+    <span>&nbsp»&nbsp</span>
+</ol>
+<h1>K3s</h1><time class="dim" datetime="2025-08-15T18:34:49&#43;10:00">August 15, 2025</time><div class="term-container"><div class="tag">
+        <a href="//localhost:1313/tags/kubernetes/">#kubernetes</a>
+      </div><div class="tag">
+        <a href="//localhost:1313/tags/podman/">#podman</a>
+      </div></ol></div>
+  <section class="page-section"><h3 id="notes">Notes</h3>
+<ol>
+<li>REMEMBER to run kubectl and kustomize apply commands from the correct <code>Namespace/Project</code>!
+<ol>
+<li>Helm will fuck up otherwise</li>
+</ol>
+</li>
+<li>Resources
+<ol>
+<li>Keep <code>requests.cpu</code> and <code>requests.mem</code> very low. So not a lot of resource is dedicated to the workload. No point giving 512Mi to a workload that is only using 100Mi.</li>
+<li>Do not put any <code>limits.cpu</code> and <code>limits.mem</code>. Pods crash saying OOM (out of memory) i.e. <code>prometheus</code></li>
+<li>Only set it if you fear that a spike from this workload will overwhelm the node.</li>
+</ol>
+</li>
+<li>Replicas
+<ol>
+<li>Keep them to <code>1</code></li>
+</ol>
+</li>
+<li>ERROR: <code>_non_namespaceable_&quot;},&quot;name&quot;:&quot;olm&quot;}}] error: no objects passed to apply</code>
+<ol>
+<li>Remove namespace when resource has its own namespace e.g. olm</li>
+</ol>
+</li>
+<li>Always use <code>ClusterIP</code> and expose via Ingress. <code>LoadBalancer</code> and <code>NodePort</code> will clash with host ports
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">service</span>:
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">type</span>: <span style="color:#ae81ff">ClusterIP</span>
+</span></span></code></pre></div></li>
+<li>When you run the <code>kustomize build</code> or <code>helm</code> commands, it will download the chart in the directory. You can get the default <code>values.yaml</code> file in it. It is always a good idea to search for terms like
+<ol>
+<li>enabled</li>
+<li>replicas</li>
+<li>resources</li>
+<li>ingress</li>
+</ol>
+</li>
+<li>There should be only one storage class
+<ol>
+<li><code>local-path</code> is faster - so keep it default - also you might have to delete longhorn , it would mess up everything</li>
+<li>Use longhorn when a pod needs RWX storage</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Check </span>
+</span></span><span style="display:flex;"><span>oc get storageclass
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Remove default</span>
+</span></span><span style="display:flex;"><span>oc annotate storageclass longhorn storageclass.kubernetes.io/is-default-class-
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Make default</span>
+</span></span><span style="display:flex;"><span>oc annotate storageclass local-path storageclass.kubernetes.io/is-default-class<span style="color:#f92672">=</span>true
+</span></span></code></pre></div></li>
+<li>Cert-manager uses a webhook to validate resources like Certificate and Issuer before they are stored in etcd. Remove it in testing/dev env
+<ol>
+<li><code>oc patch validatingwebhookconfiguration cert-manager-webhook --type='json' -p='[{&quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;/webhooks/0/failurePolicy&quot;, &quot;value&quot;:&quot;Ignore&quot;}]'</code></li>
+</ol>
+</li>
+<li>Homepage Annotations
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">annotations</span>:
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">gethomepage.dev/enabled</span>: <span style="color:#e6db74">&#34;true&#34;</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">gethomepage.dev/name</span>: <span style="color:#ae81ff">&lt;&gt; </span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">gethomepage.dev/description</span>: <span style="color:#ae81ff">&lt;&gt;</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">gethomepage.dev/group</span>: <span style="color:#ae81ff">Cluster Management | Developer Tools | Storage | Security | Monitoring | Server</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">gethomepage.dev/icon</span>: <span style="color:#ae81ff">&lt;&gt;.png</span> <span style="color:#75715e"># &lt;-- https://github.com/homarr-labs/dashboard-icons/tree/main/png </span>
+</span></span><span style="display:flex;"><span> <span style="color:#75715e"># e.g. &#34;app.kubernetes.io/name: longhorn&#34; , This provides running status in homepage UI</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">gethomepage.dev/pod-selector</span>: |-<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">       app.kubernetes.io/name in ( 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">           longhorn
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">       )</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">gethomepage.dev/weight</span>: <span style="color:#e6db74">&#39;0&#39;</span>
+</span></span></code></pre></div></li>
+<li></li>
+</ol>
+<h2 id="1-create">1. Create</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ns<span style="color:#f92672">=</span>grafana
+</span></span><span style="display:flex;"><span>oc create ns $ns
+</span></span><span style="display:flex;"><span>oc project $ns
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># For Kustomize with Helm </span>
+</span></span><span style="display:flex;"><span>kustomize build ~/Codes/homelab-kubernetes/apps/$ns/overlays/k3s/ --enable-helm | oc apply -f -
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># For Kustomize</span>
+</span></span><span style="display:flex;"><span>oc apply -k ~/Codes/homelab-kubernetes/apps/$ns/overlays/k3s/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># For a simple Yaml manifest</span>
+</span></span><span style="display:flex;"><span>oc apply -f ~/Codes/homelab-kubernetes/apps/$ns/overlays/k3s/ingress.yaml
+</span></span></code></pre></div><hr>
+<h2 id="2-verify">2. Verify</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ns<span style="color:#f92672">=</span>grafana
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>oc get all -A
+</span></span><span style="display:flex;"><span>oc get all
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl -Ik --resolve $ns.node1:443:192.168.50.200 https://$ns.node1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># after /etc/hosts file is updated</span>
+</span></span><span style="display:flex;"><span>curl -Ik https://$ns.node1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Node: See all requests and limits for cpu and mem</span>
+</span></span><span style="display:flex;"><span>oc describe nodes node1
+</span></span></code></pre></div><h2 id="21-logs">2.1 Logs</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ns<span style="color:#f92672">=</span>grafana
+</span></span><span style="display:flex;"><span>oc project $ns
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>oc logs pods/
+</span></span><span style="display:flex;"><span>oc describe pods/
+</span></span></code></pre></div><hr>
+<h3 id="22-use---previous-flag-for-why-the-podscontainer-crashed">2.2 Use <code>--previous</code> flag for why the pods/container crashed</h3>
+<p><code>oc logs pods/prometheus-server-7ffd965767-jhdpc -c prometheus-server --previous</code></p>
+<h2 id="3-stop">3. Stop</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>oc scale deployment --all --replicas<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> -n grafana
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>oc scale deployment --all --replicas<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> -n grafana
+</span></span></code></pre></div><hr>
+<h2 id="4-delete-all">4. Delete all</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ns<span style="color:#f92672">=</span>grafana
+</span></span><span style="display:flex;"><span>oc project $ns
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>kustomize build ~/Codes/homelab-kubernetes/apps/$ns/overlays/k3s/ --enable-helm | oc delete -f -
+</span></span><span style="display:flex;"><span>oc delete --all all  -n $ns
+</span></span><span style="display:flex;"><span>oc delete --all pods  -n $ns --force --grace-period<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>oc delete --all pvc  -n $ns
+</span></span><span style="display:flex;"><span>oc delete ns $ns
+</span></span></code></pre></div><h3 id="41-delete-pods">4.1. Delete pods</h3>
+<p>Use <code>--grace-period=0 --force</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>oc delete --all pods --force --grace-period<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> -n $ns
+</span></span></code></pre></div><h3 id="42-delete-kube-proxy-method">4.2. Delete: Kube proxy method</h3>
+<p>e.g. Delete PVC</p>
+<ol>
+<li>Create namespace for it again if deleted</li>
+<li>delete any webhooks</li>
+<li>start <code>oc proxy</code> in another terminal</li>
+<li>Run below: remember to change <ns> and <pvc></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>oc proxy
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Delete Namespace</span>
+</span></span><span style="display:flex;"><span>ns<span style="color:#f92672">=</span>cattle-system
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl -X PATCH http://127.0.0.1:8001/api/v1/namespaces/$ns <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -H <span style="color:#e6db74">&#34;Content-Type: application/json-patch+json&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --data <span style="color:#e6db74">&#39;[{&#34;op&#34;:&#34;remove&#34;,&#34;path&#34;:&#34;/metadata/finalizers&#34;}]&#39;</span>
+</span></span></code></pre></div><h3 id="43-delete-remove-finalizer">4.3. Delete: Remove Finalizer</h3>
+<p>e.g. Delete namespace</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ns<span style="color:#f92672">=</span>grafana
+</span></span><span style="display:flex;"><span>oc get ns $ns -o json | jq <span style="color:#e6db74">&#39;.spec.finalizers=[]&#39;</span> | oc replace --raw /api/v1/namespaces/$ns/finalize -f -
+</span></span></code></pre></div><hr>
+<h2 id="5-exec-in-container-in-a-pod">5. Exec in container in a pod</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>oc exec -it &lt;pod&gt; -c &lt;container&gt; -- sh  
+</span></span></code></pre></div><hr>
+<h2 id="6-ingresss">6. Ingresss</h2>
+<p>K3s is bound to 192.168.50.200 IP - and podman uses 192.168.50.100 IP for Traefik.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>kubectl logs -n kube-system deploy/traefik
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Get Traefik version</span>
+</span></span><span style="display:flex;"><span>kubectl -n kube-system get deploy traefik -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.spec.template.spec.containers[0].image}&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>oc -n kube-system get svc traefik
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># NAME      TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)                      AGE</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># traefik   LoadBalancer   10.43.148.201   192.168.50.200   80:30854/TCP,443:31067/TCP   3d1h</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># No other svc will have EXTERNAL-IP. because they are only exposed via Ingress</span>
+</span></span></code></pre></div><h3 id="61-dns">6.1. DNS</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>nslookup jellyseerr.ak
+</span></span><span style="display:flex;"><span>Server:         192.168.50.100
+</span></span><span style="display:flex;"><span>Address:        192.168.50.100#53
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Name:   jellyseerr.ak
+</span></span><span style="display:flex;"><span>Address: 192.168.50.100
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>nslookup jellyseerr.node1
+</span></span><span style="display:flex;"><span>Server:         192.168.50.100
+</span></span><span style="display:flex;"><span>Address:        192.168.50.100#53
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Name:   jellyseerr.node1
+</span></span><span style="display:flex;"><span>Address: 192.168.50.200
+</span></span></code></pre></div><hr>
+<h2 id="7-error-failed-to-allocate-directory-watch-too-many-open-files">7. ERROR: Failed to allocate directory watch: <code>Too many open files</code></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># Check Limits</span>
+</span></span><span style="display:flex;"><span>ssh node1 ulimit -n
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1024</span>
+</span></span><span style="display:flex;"><span>cat /proc/<span style="color:#66d9ef">$(</span>pgrep -f kubelet<span style="color:#66d9ef">)</span>/limits | grep <span style="color:#e6db74">&#34;open files&#34;</span>
+</span></span><span style="display:flex;"><span>Max open files            <span style="color:#ae81ff">1048576</span>              <span style="color:#ae81ff">1048576</span>              files 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cat /proc/sys/fs/inotify/max_user_watches
+</span></span><span style="display:flex;"><span>cat /proc/sys/fs/inotify/max_user_instances
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">122145</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">128</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Increase limits: Temporarily</span>
+</span></span><span style="display:flex;"><span>sudo sysctl -w fs.inotify.max_user_watches<span style="color:#f92672">=</span><span style="color:#ae81ff">524288</span>
+</span></span><span style="display:flex;"><span>sudo sysctl -w fs.inotify.max_user_instances<span style="color:#f92672">=</span><span style="color:#ae81ff">1024</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Restart all</span>
+</span></span><span style="display:flex;"><span>sudo systemctl restart k3s
+</span></span><span style="display:flex;"><span>oc delete pod -n kubevirt -l kubevirt.io<span style="color:#f92672">=</span>virt-handler
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Increase limits: Permanently (survives reboot)</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;fs.inotify.max_user_watches=524288&#34;</span> | sudo tee -a /etc/sysctl.conf
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;fs.inotify.max_user_instances=1024&#34;</span> | sudo tee -a /etc/sysctl.conf
+</span></span><span style="display:flex;"><span>sudo sysctl -p
+</span></span></code></pre></div><p><img src="https://images.unsplash.com/photo-1499744937866-d7e566a20a61?q=80&amp;w=2070&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="thank you"></p>
+<h2 id="8-check-version-of-helm">8. Check version of Helm</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+</span></span><span style="display:flex;"><span>helm repo update
+</span></span><span style="display:flex;"><span>helm search repo prometheus-community/prometheus --versions
+</span></span><span style="display:flex;"><span>helm search repo prometheus-community/prometheus --versions | grep <span style="color:#e6db74">&#39;prometheus-community/prometheus &#39;</span>
+</span></span></code></pre></div></section></main>
+        <footer id="main-footer">
+<script src="/js/copy-button.min.4876b98121977026b3ce53c9cb225d818299becf2f6ba9c345fdfbc99911d6dd.js" integrity="sha256-SHa5gSGXcCazzlPJyyJdgYKZvs8va6nDRf37yZkR1t0="></script>
+</footer>
+      </div><aside id="side-pane" class="side-sticky"><div class="side-content">
+      <h3>Disclaimer</h3><p><ul>
+<li>This content is for educational and experimental purposes only, provided “as is” without warranties. You are solely responsible for how you use it</li>
+</ul>
+</p>
+    </div><div class="side-details">
+    <span>768 words</span>
+    <span>6 - 7 minutes read</span><div class="side-details-taxonomy">
+        <small>series: 
+          <span class="details-taxonomy"><a href="//localhost:1313/series/homelab">homelab</a></span></small>
+      </div><div class="side-details-taxonomy">
+        <small>topics: 
+          <span class="details-taxonomy"><a href="//localhost:1313/topics/"></a></span></small>
+      </div></div><h3>Table Of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#notes">Notes</a></li>
+      </ul>
+    </li>
+    <li><a href="#1-create">1. Create</a></li>
+    <li><a href="#2-verify">2. Verify</a></li>
+    <li><a href="#21-logs">2.1 Logs</a>
+      <ul>
+        <li><a href="#22-use---previous-flag-for-why-the-podscontainer-crashed">2.2 Use <code>--previous</code> flag for why the pods/container crashed</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-stop">3. Stop</a></li>
+    <li><a href="#4-delete-all">4. Delete all</a>
+      <ul>
+        <li><a href="#41-delete-pods">4.1. Delete pods</a></li>
+        <li><a href="#42-delete-kube-proxy-method">4.2. Delete: Kube proxy method</a></li>
+        <li><a href="#43-delete-remove-finalizer">4.3. Delete: Remove Finalizer</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-exec-in-container-in-a-pod">5. Exec in container in a pod</a></li>
+    <li><a href="#6-ingresss">6. Ingresss</a>
+      <ul>
+        <li><a href="#61-dns">6.1. DNS</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-error-failed-to-allocate-directory-watch-too-many-open-files">7. ERROR: Failed to allocate directory watch: <code>Too many open files</code></a></li>
+    <li><a href="#8-check-version-of-helm">8. Check version of Helm</a></li>
+  </ul>
+</nav><h3>Related</h3>
+    <ul><li><a href="/hidden/podman-traefik/">Traefik on Podman with Local Certificates</a></li><li><a href="/posts/ai/openwebui-on-podman/">Open WebUI with Podman</a></li><li><a href="/posts/ai/dify-on-podman/">Dify: A Podman Deployment Guide</a></li><li><a href="/hidden/podman-arr-stack-configuration/">Arr Stack - Configuration</a></li><li><a href="/hidden/podman-arr-stack/">Arr stack - Installation</a></li></ul></aside></div>
+  </div>
+</body>
+</html>

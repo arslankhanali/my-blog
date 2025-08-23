@@ -6,8 +6,22 @@
     <description>Recent content in Posts on AK Blogs</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 08 Aug 2025 20:52:03 +1000</lastBuildDate>
+    <lastBuildDate>Sat, 23 Aug 2025 17:33:52 +1000</lastBuildDate>
     <atom:link href="//localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Setup Bridge Network for a Kubevirt VM</title>
+      <link>//localhost:1313/posts/kubevirt_bridge/</link>
+      <pubDate>Sat, 23 Aug 2025 17:33:52 +1000</pubDate>
+      <guid>//localhost:1313/posts/kubevirt_bridge/</guid>
+      <description>&lt;h3 id=&#34;part-of-series-on-kubevirt&#34;&gt;Part of series on Kubevirt&lt;/h3&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;a href=&#34;//localhost:1313/posts/featured/haos-on-kubevirt/&#34;&gt;Create a (homeassistant VM) containerdisk&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;//localhost:1313/posts/kubevirt_bridge/&#34;&gt;Setup Bridge Network for a Kubevirt VM&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://images.unsplash.com/photo-1516176966905-58371240ba28?q=80&amp;amp;w=1035&amp;amp;auto=format&amp;amp;fit=crop&amp;amp;ixlib=rb-4.1.0&amp;amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&#34; alt=&#34;Bridge&#34;&gt;&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;1-prerequisites&#34;&gt;1. Prerequisites&lt;/h2&gt;&#xA;&lt;p&gt;Before diving in, ensure you have:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;A K3s cluster with &lt;code&gt;kubectl&lt;/code&gt; or &lt;code&gt;oc&lt;/code&gt; access.&lt;/li&gt;&#xA;&lt;li&gt;Linux bridge configured on host (&lt;code&gt;bridge0&lt;/code&gt;).&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;jq&lt;/code&gt; installed (&lt;code&gt;sudo dnf install jq&lt;/code&gt; or &lt;code&gt;brew install jq&lt;/code&gt;).&lt;/li&gt;&#xA;&lt;li&gt;Basic knowledge of KubeVirt, CDI, and Kubernetes networking.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;hld&#34;&gt;HLD&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;strong&gt;Home Network&lt;/strong&gt;&lt;br&gt;&#xA;1.1 &lt;strong&gt;Router (192.168.50.1):&lt;/strong&gt; Provides LAN IPs via DHCP.&lt;br&gt;&#xA;1.2 &lt;strong&gt;User Device:&lt;/strong&gt; Laptop/Phone accessing VM or cluster services.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Home Assistant VM on Kubevirt</title>
+      <link>//localhost:1313/posts/featured/haos-on-kubevirt/</link>
+      <pubDate>Sun, 17 Aug 2025 15:56:30 +1000</pubDate>
+      <guid>//localhost:1313/posts/featured/haos-on-kubevirt/</guid>
+      <description>&lt;h2 id=&#34;1-introduction-what-is-home-assistant&#34;&gt;1. Introduction: What is Home Assistant?&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;Home Assistant&lt;/strong&gt; is a powerful, open-source home automation platform that puts local control and privacy first. It can be run on various devices, from single-board computers like the Raspberry Pi to virtual machines and containers. It&amp;rsquo;s a great tool for anyone looking to automate their home without relying on big tech companies, giving you complete control over your smart devices.&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;2-installation-methods&#34;&gt;2. Installation Methods&lt;/h2&gt;&#xA;&lt;p&gt;Home Assistant offers a few different ways to get started, but two of the most common are:&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Open WebUI with Podman</title>
       <link>//localhost:1313/posts/ai/openwebui-on-podman/</link>

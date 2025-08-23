@@ -1,0 +1,51 @@
+```mermaid
+graph TD
+    subgraph "Home Network"
+        LAN_Router[Router/DHCP]
+        User_Device[User Device (Laptop/Phone)]
+    end
+
+    subgraph "Kubernetes Host"
+        direction LR
+        Host_NIC[Physical NIC: enp3s0]
+        Linux_Bridge[Linux Bridge: bridge0]
+    end
+
+    subgraph "Kubernetes Cluster"
+        Kube_Host[KubeVirt Host Node]
+        Kube_API[Kubernetes API Server]
+        Multus[Multus CNI]
+        KubeVirt_VM[KubeVirt VM]
+        Host_NIC -- 1. Connects to --> Linux_Bridge
+    end
+
+    style Kube_Host fill:#f9f,stroke:#333,stroke-width:2px
+    style Linux_Bridge fill:#bbf,stroke:#333,stroke-width:2px
+    style KubeVirt_VM fill:#9f9,stroke:#333,stroke-width:2px
+    style Multus fill:#ff9,stroke:#333,stroke-width:2px
+    style Host_NIC fill:#ffc,stroke:#333,stroke-width:2px
+    style User_Device fill:#cff,stroke:#333,stroke-width:2px
+    style LAN_Router fill:#fcf,stroke:#333,stroke-width:2px
+
+    LAN_Router -- "LAN IP address" --> User_Device
+    LAN_Router -- "Provides LAN IP" --> Linux_Bridge
+    User_Device -- "Communicates with" --> Linux_Bridge
+
+    Linux_Bridge -- "4. Provides Network" --> KubeVirt_VM
+    KubeVirt_VM -- "5. Gets LAN IP" --> LAN_Router
+    KubeVirt_VM -- "Can communicate with" --> User_Device
+
+    KubeVirt_VM -- "Interface Request (via Multus)" --> Multus
+    Multus -- "Interface provided by" --> Kube_Host
+    Multus -- "References `homenet` NAD" --> Kube_API
+    Kube_API -- "Deploys VM" --> KubeVirt_VM
+    Kube_Host -- "Runs pods & VMs" --> KubeVirt_VM
+    Kube_Host -- "Configures bridge" --> Linux_Bridge
+    Linux_Bridge -- "2. Connects to" --> Host_NIC
+    Host_NIC -- "3. Connects to" --> LAN_Router
+
+    subgraph "Process Flow"
+        direction TB
+        A[Create Linux Bridge on Host] --> B[Install KubeVirt & CDI] --> C[Install Multus] --> D[Create NetworkAttachmentDefinition] --> E[Deploy VM with Network Attachment]
+    end
+```
