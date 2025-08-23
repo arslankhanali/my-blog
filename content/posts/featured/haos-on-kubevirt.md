@@ -7,7 +7,7 @@ topics = ['']
 weight = 1
 indexable = true
 featured = true
-draft = true
+draft = false
 +++
 
 ## 1. Introduction: What is Home Assistant?
