@@ -10,6 +10,10 @@ featured = true
 draft = false
 +++
 
+## Introduction
+
+Kubevirt VM connect to the cluster CNI (Flannel, Calico, etc), which is perfect for pod-to-pod communication but limits VMs that need full LAN access. We will address that by attaching it to the bridge network on host.
+
 ### Part of series on Kubevirt
 1. [Create a (homeassistant VM) containerdisk]({{< relref "featured/haos-on-kubevirt.md" >}})
 2. [Setup Bridge Network for a Kubevirt VM]({{< relref "kubevirt_bridge.md" >}})
